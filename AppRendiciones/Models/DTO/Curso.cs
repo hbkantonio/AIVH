@@ -38,6 +38,7 @@ namespace AppRendiciones.Models.DTO
         public string numeroChequeTans { get; set; }
         public string estatus { get; set; }
         public int estatusId { get; set; }
+        public string usuarioGenero { get; set; }
         public List<Participante> participantes { get; set; }
         public List<CursoGastoDetalle> gastos { get; set; }
     }

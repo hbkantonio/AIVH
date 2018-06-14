@@ -183,6 +183,7 @@
                 fn.BlockScreen(true);
                 cursosFn.editarCurso(curso);
             } else {
+                cursosFn.generatePdf(curso.cursoId);
                 fn.BlockScreen(true);
             }
         },
@@ -389,9 +390,8 @@
             lstGastos = lstGastos.filter(function (e) { return e.consecutivoId !== gasto.consecutivoId; });
             cursosFn.loadTableGastos(lstGastos);
         },
-
         generatePdf(cursoId) {
-            fn.Api("Gastos/ReporteGastos/" + gastoId, "GET", "")
+            fn.Api("Cursos/ReporteCurso/" + cursoId, "GET", "")
                 .done(function (data) {
                     let pdfWindow = window.open("");
                     pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64," + data + "'></iframe>");
@@ -400,7 +400,7 @@
                 .fail(function (data) {
                     fn.BlockScreen(false);
                     console.log(data);
-                    alertify.alert("Gastos", data);
+                    alertify.alert("Cursos", data);
                 });
         }
 

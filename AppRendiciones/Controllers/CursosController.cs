@@ -4,6 +4,7 @@ using AppRendiciones.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -259,6 +260,85 @@ namespace AppRendiciones.Controllers
             catch (Exception Ex)
             {
                 return BadRequest("Error al guardar curso");
+            }
+
+        }
+
+        [HttpGet]
+        [Route("ReporteCurso/{cursoId:int}")]
+        public IHttpActionResult ReporteCurso(int cursoId)
+        {
+            try
+            {
+                var cursoDb = db.Curso.Where(a => a.CursoId == cursoId).ToList();
+                var curso = cursoDb.Select(a => new Models.DTO.Curso
+                {
+                    folio = a.CentroCosto.Nomenglatura + a.CursoId,
+                    centroCostos = a.CentroCosto.Descripcion,
+                    sede = a.Sede.Descripcion,
+                    lugarCurso = a.LugarCurso,
+                    cursoTipo = a.CursoTipo.Descripcion,
+                    instructor1 = a.Usuario.Nombre + " " + a.Usuario.Paterno + " " + a.Usuario.Materno,
+                    comision1 = a.Comision1,
+                    instructor2 = db.Usuario.Where(b=> b.UsuarioId == a.UsuarioId2).Select(c => c.Nombre + " " + c.Paterno + " " + c.Materno).FirstOrDefault(),
+                    comision2 = a.Comision2,
+                    fechaCurso = a.FechaCurso.ToString("dd/MM/yyyy", Cultura),
+                    efectivo = a.Efectivo,
+                    chequeTans = a.ChequeTans,
+                    fechachequeTans = a.FechasChequeTans != null ? a.FechasChequeTans?.ToString("dd/MM/yyyy", Cultura) : "SF",
+                    numeroChequeTans = a.NumeroChequeTans != "" ? a.NumeroChequeTans : "SN",
+                    usuarioGenero = a.Usuario1.Nombre + " " + a.Usuario1.Paterno + " " + a.Usuario1.Materno
+                }).ToList();
+
+
+                var participantes = cursoDb.FirstOrDefault().CursoParticipante.Select(b => new Participante
+                {
+                    participanteId = b.ParticipanteId,
+                    nombre = b.Nombre + " " + b.Apellido,
+                    efectivo = b.Efectivo,
+                    deposito = b.DepositooTransferencia,
+                    cheque = b.Cheque,
+                    tarjeta = b.TarjetaCredito,
+                    email = b.Email,
+                    celular = b.Celular
+                }).ToList();
+
+                var gastos = cursoDb.FirstOrDefault().CursoGastoDetalle.Select(b => new Models.DTO.CursoGastoDetalle
+                {
+                    instructor = b.Usuario.Nombre +" "+ b.Usuario.Paterno + " " + b.Usuario.Materno,
+                    comprobanteTipo = b.ComprobanteTipo.Descripcion,
+                    fecha = b.Fecha.ToString("dd/MM/yyyy", Cultura),
+                    concepto = b.SubConcepto.Concepto.Descripcion,
+                    subConcepto = b.SubConcepto.Descripcion,
+                    descripcion = b.Descripcion,
+                    proveedor = b.Proveedor,
+                    subTotal = b.SubTotal,
+                    iva = b.Iva,
+                    total = b.Total
+                }).ToList();
+
+                reports.Cursos rptCurso = new reports.Cursos();
+
+                rptCurso.Database.Tables["Curso"].SetDataSource(curso);
+                rptCurso.Database.Tables["CursoParticipante"].SetDataSource(participantes);
+                //reports.CursoGastos rptCursoGastos = new reports.CursoGastos();
+                rptCurso.Database.Tables["CursoGastoDetalle"].SetDataSource(gastos);
+
+                Stream PDFContrato;
+                PDFContrato = rptCurso.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+
+                var MemoryStream = new MemoryStream();
+                PDFContrato.CopyTo(MemoryStream);
+
+                byte[] result = MemoryStream.ToArray();
+
+                var res = Convert.ToBase64String(result);
+
+                return Ok(res);
+            }
+            catch (Exception Ex)
+            {
+                return BadRequest("Error");
             }
 
         }
