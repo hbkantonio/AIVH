@@ -1,0 +1,58 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>AIVH</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/login/login.css" />
+    <link rel="stylesheet" href="css/index/load.css" />
+</head>
+<body>
+    <div class="container  text-center mb-3">
+        <img src="img/logo.png" width="120" height="130" />
+        <form class="form-signin" id="frmSign">
+            <h2 class="form-signin-heading">Iniciar sesión</h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="txtUsername" class="sr-only">Usuario</label>
+                    <input type="text" id="txtUsername" class="form-control" placeholder="Número de Usuario" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="txtPassword" class="sr-only">Contraseña</label>
+                    <input type="password" id="txtPassword" class="form-control" placeholder="Password" required>
+                </div>
+            </div>
+            <br />
+            <button class="btn btn-primary btn-block" type="submit">Entrar</button>
+        </form>
+    </div>
+    <div id="load" class="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <svg wwidth="300" height="300" viewBox="0 0 300 300">
+                                <image xlink:href="img/logo.png" height="90" width="90" x="105" y="105"></image>
+                                <circle id="barr" r="100" cy="150" cx="150" stroke-width="7" stroke="#e1052c" fill="none" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script src="js/plugin/jquery.blockUI.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/login/login.js"></script>
+</body>
+</html>

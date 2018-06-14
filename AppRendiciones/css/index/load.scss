@@ -1,0 +1,5 @@
+﻿$radius: 90;
+$percent: 83;
+
+$circumference: (pi() * (2 * $radius));
+$stroke_percentage: $circumference - (($percent / 100) * $circumference);

@@ -1,0 +1,227 @@
+﻿<link href="css/global.css" rel="stylesheet" />
+<div class="container-fluid">
+    <div class="row flex-wrap">
+        <main class="col-md-12" role="main">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <h6 class="card-header">AIVH – CURSOS</h6>
+                        <br />
+                        <div class="card-body">
+                            <div class="col-md-12">
+
+                                <div id="divTabla">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="txtBusqueda">Buscar:</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtBusqueda" />
+                                        </div><div class="col-md-1"></div>
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-2 float-right">
+                                            <label for="slcLength">Mostrar</label>
+                                            <select id="slcLength" name="slcLength" aria-controls="tblReporteGastos" class="form-control form-control-sm">
+                                                <option value="-1">Todos</option>
+                                                <option value="20">20</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <button id="btnNuevo" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp;Nuevo Curso</button>
+                                        </div>
+                                    </div>
+                                    <table id="tblCursos" class="table  table-striped table-hover table-bordered table-response" cellspacing="1">
+                                        <thead class="table-secondary">
+                                            <tr>
+                                                <th>Folio</th>
+                                                <th>Centro de costos </th>
+                                                <th>Sede</th>
+                                                <th>Lugar </th>
+                                                <th>Tipo de cursos</th>
+                                                <th>Instructor 1</th>
+                                                <th>Instructor 2</th>
+                                                <th>Fecha de curso</th>
+                                                <th>Estatus</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
+                                <div id="divGenerales" style="display:none;">
+                                    <form id="frmCurso">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="form-group  col-md-6">
+                                                    <label>Centro de costos</label>
+                                                    <select id="slcCentroCostos" class="form-control" required></select>
+                                                </div>
+                                                <div class="form-group  col-md-6">
+                                                    <label>Sede</label>
+                                                    <select id="slcSede" class="form-control" required></select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label>Lugar</label>
+                                                    <input type="text" class="form-control" id="txtLugar" placeholder="" required>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group  col-md-6">
+                                                    <label>Tipo de curso </label>
+                                                    <select id="slcCursoTipo" class="form-control" required></select>
+                                                </div>
+                                                <div class="form-group  col-md-6">
+                                                    <label>Fecha de curso</label>
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" required id="txtFecha"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group  col-md-4">
+                                                    <label>Instructor 1 </label>
+                                                    <select id="slcInstructor1" class="form-control" required></select>
+                                                </div>
+                                                <div class="form-group  col-md-2">
+                                                    <label>Comisión % </label>
+                                                    <select id="slcComision1" class="form-control" required>
+                                                        <option value="5">5%</option>
+                                                        <option value="10">10%</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group  col-md-4">
+                                                    <label>Instructor 2 </label>
+                                                    <select id="slcInstructor2" class="form-control" required></select>
+                                                </div>
+                                                <div class="form-group  col-md-2">
+                                                    <label>Comisión % </label>
+                                                    <select id="slcComision2" class="form-control" required>
+                                                        <option value="5">5%</option>
+                                                        <option value="10">10%</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="card border-dark">
+                                            <div class="card-header bg-transparent border-dark font-weight-bold form-inline">Participantes. &nbsp; </div>
+                                            <div class="card-body">
+                                                <div class="form-group  col-md-12">
+                                                    <button id="btnNew" type="button" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp; Agregar </button>
+                                                </div>
+                                                <div class="col-md-12  table-responsive">
+                                                    <table id="tblParticipantes" class="table  table-striped  table-bordered responsive " style="font-size: 10pt;font-family: 'Segoe UI';">
+                                                        <thead class="table-secondary ">
+                                                            <tr>
+                                                                <th>Nombre </th>
+                                                                <th>Monto</th>
+                                                                <th>Email</th>
+                                                                <th>Celular</th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-12">
+                                                    <button id="btnreturn" type="button" class="btn btn-secondary"><i class="fa fa-reply" aria-hidden="true"></i> &nbsp; Cancelar</button>
+                                                    <button id="btnSave" type="submit" class="btn btn-primary float-right"><i class="fas fa-save" aria-hidden="true"></i>  &nbsp; Guardar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--modal-->
+                    <div class="modal fade" id="modalParticipante" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Participante</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form id="frmParticipante">
+                                    <div class="modal-body">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="form-group  col-md-6">
+                                                    <label>Nombre</label>
+                                                    <input type="text" class="form-control" id="txtNombre" required>
+                                                </div>
+                                                <div class="form-group  col-md-6">
+                                                    <label>Apellido</label>
+                                                    <input type="text" class="form-control" id="txtApellido" required>
+                                                </div>
+                                            </div>
+                                            <div class="card border-primary">
+                                                <div class="card-header bg-transparent border-primary font-weight-bold form-inline">Formas de pago. &nbsp; </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="form-group  col-md-6">
+                                                            <label>Efectivo</label>
+                                                            <input type="number" step="0.01" class="form-control" id="txtEfectivo" value="0" min="0" required>
+                                                        </div>
+                                                        <div class="form-group  col-md-6">
+                                                            <label>Deposito / Transferencia</label>
+                                                            <input type="number" step="0.01" class="form-control" id="txtDeposito" value="0" min="0" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group  col-md-6">
+                                                            <label>Cheque</label>
+                                                            <input type="number" step="0.01" class="form-control" id="txtCheque" value="0" min="0" required>
+                                                        </div>
+                                                        <div class="form-group  col-md-6">
+                                                            <label>Tarjeta de credito</label>
+                                                            <input type="number" step="0.01" class="form-control" id="txtTarjeta" value="0" min="0" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="form-group  col-md-6">
+                                                    <label>Email</label>
+                                                    <input type="text" class="form-control" id="txtEmail" required>
+                                                </div>
+                                                <div class="form-group  col-md-6">
+                                                    <label>Celular</label>
+                                                    <input type="text" class="form-control" id="txtCelular" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="btnAdd" type="submit" class="btn btn-primary"><i class="fas fa-check" aria-hidden="true"></i>  &nbsp;Aceptar</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> &nbsp; Cerrar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script src="js/global.js"></script>
+<script src="js/administracion/cursos.js"></script>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="af9af9d2d5314ef3bfc940d3f6eab1b3" Name="Diagram1">
+        <EntityTypeShape EntityType="AIVHModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="2" />
+        <EntityTypeShape EntityType="AIVHModel.AspNetRoles" Width="1.5" PointX="14.75" PointY="3.875" />
+        <EntityTypeShape EntityType="AIVHModel.AspNetUserClaims" Width="1.5" PointX="19.25" PointY="2.375" />
+        <EntityTypeShape EntityType="AIVHModel.AspNetUserLogins" Width="1.5" PointX="19.25" PointY="5.125" />
+        <EntityTypeShape EntityType="AIVHModel.AspNetUsers" Width="1.5" PointX="17" PointY="2.625" />
+        <EntityTypeShape EntityType="AIVHModel.CentroCosto" Width="1.5" PointX="6.75" PointY="18.875" />
+        <EntityTypeShape EntityType="AIVHModel.ComprobanteTipo" Width="1.5" PointX="12" PointY="13.75" />
+        <EntityTypeShape EntityType="AIVHModel.Concepto" Width="1.5" PointX="9.75" PointY="3.125" />
+        <EntityTypeShape EntityType="AIVHModel.Curso" Width="1.5" PointX="9" PointY="8.25" />
+        <EntityTypeShape EntityType="AIVHModel.CursoGastoDetalle" Width="1.5" PointX="14.25" PointY="9.375" />
+        <EntityTypeShape EntityType="AIVHModel.CursoParticipante" Width="1.5" PointX="11.25" PointY="9.75" />
+        <EntityTypeShape EntityType="AIVHModel.CursoTipo" Width="1.5" PointX="6.75" PointY="14.25" />
+        <EntityTypeShape EntityType="AIVHModel.Estatus" Width="1.5" PointX="0.75" PointY="10.375" />
+        <EntityTypeShape EntityType="AIVHModel.EventoTipo" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="AIVHModel.Gasto" Width="1.5" PointX="3" PointY="8.875" />
+        <EntityTypeShape EntityType="AIVHModel.GastoDetalle" Width="1.5" PointX="5.25" PointY="5.5" />
+        <EntityTypeShape EntityType="AIVHModel.Menu" Width="1.5" PointX="3.75" PointY="15.375" />
+        <EntityTypeShape EntityType="AIVHModel.PagoForma" Width="1.5" PointX="0.75" PointY="7.5" />
+        <EntityTypeShape EntityType="AIVHModel.Sede" Width="1.5" PointX="6.75" PointY="16.5" />
+        <EntityTypeShape EntityType="AIVHModel.SubConcepto" Width="1.5" PointX="12" PointY="2.875" />
+        <EntityTypeShape EntityType="AIVHModel.SubMenu" Width="1.5" PointX="6" PointY="10" />
+        <EntityTypeShape EntityType="AIVHModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="15" />
+        <EntityTypeShape EntityType="AIVHModel.Usuario" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AIVHModel.UsuarioRol" Width="1.5" PointX="4.5" PointY="2.125" />
+        <EntityTypeShape EntityType="AIVHModel.UsuarioRolAcceso" Width="1.5" PointX="11.25" PointY="6" />
+        <AssociationConnector Association="AIVHModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="AIVHModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="AIVHModel.FK_Curso_CentroCosto" />
+        <AssociationConnector Association="AIVHModel.FK_RendicionGasto_CentroCosto" />
+        <AssociationConnector Association="AIVHModel.FK_CursoGastoDetalle_ComprobanteTipo" />
+        <AssociationConnector Association="AIVHModel.FK_RendicionGastoDetalle_ComprobanteTipo" />
+        <AssociationConnector Association="AIVHModel.FK_SubConcepto_Concepto" />
+        <AssociationConnector Association="AIVHModel.FK_Curso_CursoTipo" />
+        <AssociationConnector Association="AIVHModel.FK_Curso_Estatus" />
+        <AssociationConnector Association="AIVHModel.FK_Curso_Sede" />
+        <AssociationConnector Association="AIVHModel.FK_Curso_Usuario1" />
+        <AssociationConnector Association="AIVHModel.FK_Curso_Usuario2" />
+        <AssociationConnector Association="AIVHModel.FK_CursoGastoDetalle_Curso" />
+        <AssociationConnector Association="AIVHModel.FK_CursoParticipante_Curso" />
+        <AssociationConnector Association="AIVHModel.FK_CursoGastoDetalle_SubConcepto" />
+        <AssociationConnector Association="AIVHModel.FK_CursoGastoDetalle_Usuario" />
+        <AssociationConnector Association="AIVHModel.FK_Gasto_Estatus" />
+        <AssociationConnector Association="AIVHModel.FK_SubMenu_Estatus" />
+        <AssociationConnector Association="AIVHModel.FK_RendicionGasto_PagoForma" />
+        <AssociationConnector Association="AIVHModel.FK_RendicionGasto_Usuario" />
+        <AssociationConnector Association="AIVHModel.FK_RendicionGasto_Usuario1" />
+        <AssociationConnector Association="AIVHModel.FK_RendicionGastoDetalle_RendicionGasto" />
+        <AssociationConnector Association="AIVHModel.FK_RendicionGastoDetalle_SubConcepto" />
+        <AssociationConnector Association="AIVHModel.FK_SubMenu_Menu" />
+        <AssociationConnector Association="AIVHModel.FK_UsuarioRolAcceso_SubMenu" />
+        <AssociationConnector Association="AIVHModel.FK_Usuario_UsuarioRol" />
+        <AssociationConnector Association="AIVHModel.FK_UsuarioRolAcceso_Usuario" />
+        <AssociationConnector Association="AIVHModel.FK_UsuarioRolAcceso_UsuarioRol" />
+        <AssociationConnector Association="AIVHModel.AspNetUserRoles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

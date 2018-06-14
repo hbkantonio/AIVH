@@ -1,0 +1,16 @@
+﻿body {
+    font-size: 11pt;
+    font-family: 'Segoe UI';
+}
+
+.dataTables_filter {
+    display: none;
+}
+
+.dataTables_length {
+    display: none;
+}
+
+.custom-file-control:before {
+    content: "Examinar" !important;
+}

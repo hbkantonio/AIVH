@@ -1,0 +1,34 @@
+﻿body {
+    background: #eee;
+    font-family: 'Roboto', sans-serif;
+}
+
+.toggle {
+    color: #666;
+    display: block;
+    height: 72px;
+    line-height: 72px;
+    text-align: center;
+    width: 72px;
+}
+
+h1 {
+    margin: 30px auto;
+    text-align: center;
+}
+
+.home {
+    width: 35px;
+    height: 35px;
+    color: #dd0032;
+    font-size: 35px;
+}
+
+    .home:hover {
+        color: #ff0000;
+    }
+
+.contenido {
+    top: 80px;
+    position: relative;
+}

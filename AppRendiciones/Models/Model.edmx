@@ -1,0 +1,1959 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AIVHModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CentroCosto">
+          <Key>
+            <PropertyRef Name="CentroCostoId" />
+          </Key>
+          <Property Name="CentroCostoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Nomenglatura" Type="varchar" MaxLength="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ComprobanteTipo">
+          <Key>
+            <PropertyRef Name="ComprobanteTipoId" />
+          </Key>
+          <Property Name="ComprobanteTipoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="EsFiscal" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Concepto">
+          <Key>
+            <PropertyRef Name="ConceptoId" />
+          </Key>
+          <Property Name="ConceptoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="CursoId" />
+          </Key>
+          <Property Name="CursoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CentroCostoId" Type="int" Nullable="false" />
+          <Property Name="SedeId" Type="int" Nullable="false" />
+          <Property Name="LugarCurso" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="CursoTipoId" Type="int" Nullable="false" />
+          <Property Name="UsuarioId1" Type="int" Nullable="false" />
+          <Property Name="Comision1" Type="int" Nullable="false" />
+          <Property Name="UsuarioId2" Type="int" Nullable="false" />
+          <Property Name="Comision2" Type="int" Nullable="false" />
+          <Property Name="FechaCurso" Type="date" Nullable="false" />
+          <Property Name="Efectivo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ChequeTans" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="FechasChequeTans" Type="date" />
+          <Property Name="NumeroChequeTans" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Hora" Type="time" Precision="0" Nullable="false" />
+          <Property Name="UsuarioIdGenero" Type="int" Nullable="false" />
+          <Property Name="EstatusId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CursoGastoDetalle">
+          <Key>
+            <PropertyRef Name="CursoId" />
+            <PropertyRef Name="ConsecutivoId" />
+          </Key>
+          <Property Name="CursoId" Type="int" Nullable="false" />
+          <Property Name="ConsecutivoId" Type="int" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="ComprobanteTipoId" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="SubConceptoId" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="Proveedor" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="SubTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Iva" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CursoParticipante">
+          <Key>
+            <PropertyRef Name="CursoId" />
+            <PropertyRef Name="ParticipanteId" />
+          </Key>
+          <Property Name="CursoId" Type="int" Nullable="false" />
+          <Property Name="ParticipanteId" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Apellido" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Efectivo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DepositooTransferencia" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Cheque" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TarjetaCredito" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Celular" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CursoTipo">
+          <Key>
+            <PropertyRef Name="CursoTipoId" />
+          </Key>
+          <Property Name="CursoTipoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estatus">
+          <Key>
+            <PropertyRef Name="EstatusId" />
+          </Key>
+          <Property Name="EstatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="Evento">
+          <Property Name="EventoId" Type="nchar" MaxLength="10" />
+          <Property Name="CentroCostoId" Type="int" />
+          <Property Name="Lugar" Type="varchar" MaxLength="200" />
+          <Property Name="Nombre" Type="varchar" MaxLength="200" />
+          <Property Name="TipoEventoId" Type="int" />
+          <Property Name="UsuarioId" Type="int" />
+          <Property Name="FechaEvento" Type="date" />
+          <Property Name="Efectivo" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChequeTans" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="FechasChequeTans" Type="date" />
+          <Property Name="NumeroChequeTans" Type="varchar" MaxLength="50" />
+          <Property Name="Fecha" Type="date" />
+          <Property Name="Hora" Type="time" Precision="0" />
+          <Property Name="UsuarioIdGenero" Type="int" />
+          <Property Name="EstatusId" Type="int" />
+        </EntityType>-->
+        <EntityType Name="EventoTipo">
+          <Key>
+            <PropertyRef Name="EventoTipoId" />
+          </Key>
+          <Property Name="EventoTipoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Gasto">
+          <Key>
+            <PropertyRef Name="GastoId" />
+          </Key>
+          <Property Name="GastoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CentroCostoId" Type="int" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="PagoFormaId" Type="int" Nullable="false" />
+          <Property Name="FechaInicio" Type="date" Nullable="false" />
+          <Property Name="FechaFin" Type="date" Nullable="false" />
+          <Property Name="Efectivo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ChequeTans" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="FechasChequeTans" Type="date" />
+          <Property Name="NumeroChequeTans" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Hora" Type="time" Precision="0" Nullable="false" />
+          <Property Name="UsuarioIdGenero" Type="int" Nullable="false" />
+          <Property Name="EstatusId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GastoDetalle">
+          <Key>
+            <PropertyRef Name="GastoId" />
+            <PropertyRef Name="ConsecutivoId" />
+          </Key>
+          <Property Name="GastoId" Type="int" Nullable="false" />
+          <Property Name="ConsecutivoId" Type="int" Nullable="false" />
+          <Property Name="ComprobanteTipoId" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="SubConceptoId" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="Proveedor" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="SubTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Iva" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Icono" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PagoForma">
+          <Key>
+            <PropertyRef Name="PagoFormaId" />
+          </Key>
+          <Property Name="PagoFormaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sede">
+          <Key>
+            <PropertyRef Name="SedeId" />
+          </Key>
+          <Property Name="SedeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubConcepto">
+          <Key>
+            <PropertyRef Name="SubConceptoId" />
+          </Key>
+          <Property Name="ConceptoId" Type="int" Nullable="false" />
+          <Property Name="SubConceptoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubMenu">
+          <Key>
+            <PropertyRef Name="SubMenuId" />
+          </Key>
+          <Property Name="MenuId" Type="int" Nullable="false" />
+          <Property Name="SubMenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Link" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="EstatusId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Paterno" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Materno" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UsuarioRolId" Type="int" Nullable="false" />
+          <Property Name="EstatusId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsuarioRol">
+          <Key>
+            <PropertyRef Name="UsuarioRolId" />
+          </Key>
+          <Property Name="UsuarioRolId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsuarioRolAcceso">
+          <Key>
+            <PropertyRef Name="UsuarioRolId" />
+            <PropertyRef Name="SubMenuId" />
+          </Key>
+          <Property Name="UsuarioRolId" Type="int" Nullable="false" />
+          <Property Name="SubMenuId" Type="int" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Hora" Type="time" Precision="0" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Curso_CentroCosto">
+          <End Role="CentroCosto" Type="Self.CentroCosto" Multiplicity="1" />
+          <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CentroCosto">
+              <PropertyRef Name="CentroCostoId" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="CentroCostoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_CursoTipo">
+          <End Role="CursoTipo" Type="Self.CursoTipo" Multiplicity="1" />
+          <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CursoTipo">
+              <PropertyRef Name="CursoTipoId" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="CursoTipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_Estatus">
+          <End Role="Estatus" Type="Self.Estatus" Multiplicity="1" />
+          <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="EstatusId" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_Sede">
+          <End Role="Sede" Type="Self.Sede" Multiplicity="1" />
+          <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sede">
+              <PropertyRef Name="SedeId" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="SedeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="UsuarioId1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_Usuario2">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="UsuarioIdGenero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CursoGastoDetalle_ComprobanteTipo">
+          <End Role="ComprobanteTipo" Type="Self.ComprobanteTipo" Multiplicity="1" />
+          <End Role="CursoGastoDetalle" Type="Self.CursoGastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ComprobanteTipo">
+              <PropertyRef Name="ComprobanteTipoId" />
+            </Principal>
+            <Dependent Role="CursoGastoDetalle">
+              <PropertyRef Name="ComprobanteTipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CursoGastoDetalle_Curso">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+          <End Role="CursoGastoDetalle" Type="Self.CursoGastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="CursoId" />
+            </Principal>
+            <Dependent Role="CursoGastoDetalle">
+              <PropertyRef Name="CursoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CursoGastoDetalle_SubConcepto">
+          <End Role="SubConcepto" Type="Self.SubConcepto" Multiplicity="1" />
+          <End Role="CursoGastoDetalle" Type="Self.CursoGastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubConcepto">
+              <PropertyRef Name="SubConceptoId" />
+            </Principal>
+            <Dependent Role="CursoGastoDetalle">
+              <PropertyRef Name="SubConceptoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CursoGastoDetalle_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="CursoGastoDetalle" Type="Self.CursoGastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="CursoGastoDetalle">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CursoParticipante_Curso">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+          <End Role="CursoParticipante" Type="Self.CursoParticipante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="CursoId" />
+            </Principal>
+            <Dependent Role="CursoParticipante">
+              <PropertyRef Name="CursoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gasto_Estatus">
+          <End Role="Estatus" Type="Self.Estatus" Multiplicity="1" />
+          <End Role="Gasto" Type="Self.Gasto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="EstatusId" />
+            </Principal>
+            <Dependent Role="Gasto">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendicionGasto_CentroCosto">
+          <End Role="CentroCosto" Type="Self.CentroCosto" Multiplicity="1" />
+          <End Role="Gasto" Type="Self.Gasto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CentroCosto">
+              <PropertyRef Name="CentroCostoId" />
+            </Principal>
+            <Dependent Role="Gasto">
+              <PropertyRef Name="CentroCostoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendicionGasto_PagoForma">
+          <End Role="PagoForma" Type="Self.PagoForma" Multiplicity="1" />
+          <End Role="Gasto" Type="Self.Gasto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PagoForma">
+              <PropertyRef Name="PagoFormaId" />
+            </Principal>
+            <Dependent Role="Gasto">
+              <PropertyRef Name="PagoFormaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendicionGasto_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Gasto" Type="Self.Gasto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Gasto">
+              <PropertyRef Name="UsuarioIdGenero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendicionGasto_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Gasto" Type="Self.Gasto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Gasto">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendicionGastoDetalle_ComprobanteTipo">
+          <End Role="ComprobanteTipo" Type="Self.ComprobanteTipo" Multiplicity="1" />
+          <End Role="GastoDetalle" Type="Self.GastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ComprobanteTipo">
+              <PropertyRef Name="ComprobanteTipoId" />
+            </Principal>
+            <Dependent Role="GastoDetalle">
+              <PropertyRef Name="ComprobanteTipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendicionGastoDetalle_RendicionGasto">
+          <End Role="Gasto" Type="Self.Gasto" Multiplicity="1" />
+          <End Role="GastoDetalle" Type="Self.GastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gasto">
+              <PropertyRef Name="GastoId" />
+            </Principal>
+            <Dependent Role="GastoDetalle">
+              <PropertyRef Name="GastoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendicionGastoDetalle_SubConcepto">
+          <End Role="SubConcepto" Type="Self.SubConcepto" Multiplicity="1" />
+          <End Role="GastoDetalle" Type="Self.GastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubConcepto">
+              <PropertyRef Name="SubConceptoId" />
+            </Principal>
+            <Dependent Role="GastoDetalle">
+              <PropertyRef Name="SubConceptoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubConcepto_Concepto">
+          <End Role="Concepto" Type="Self.Concepto" Multiplicity="1" />
+          <End Role="SubConcepto" Type="Self.SubConcepto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Concepto">
+              <PropertyRef Name="ConceptoId" />
+            </Principal>
+            <Dependent Role="SubConcepto">
+              <PropertyRef Name="ConceptoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubMenu_Estatus">
+          <End Role="Estatus" Type="Self.Estatus" Multiplicity="1" />
+          <End Role="SubMenu" Type="Self.SubMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="EstatusId" />
+            </Principal>
+            <Dependent Role="SubMenu">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubMenu_Menu">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
+          <End Role="SubMenu" Type="Self.SubMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="SubMenu">
+              <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_UsuarioRol">
+          <End Role="UsuarioRol" Type="Self.UsuarioRol" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsuarioRol">
+              <PropertyRef Name="UsuarioRolId" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="UsuarioRolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioRolAcceso_SubMenu">
+          <End Role="SubMenu" Type="Self.SubMenu" Multiplicity="1" />
+          <End Role="UsuarioRolAcceso" Type="Self.UsuarioRolAcceso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubMenu">
+              <PropertyRef Name="SubMenuId" />
+            </Principal>
+            <Dependent Role="UsuarioRolAcceso">
+              <PropertyRef Name="SubMenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioRolAcceso_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="UsuarioRolAcceso" Type="Self.UsuarioRolAcceso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="UsuarioRolAcceso">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioRolAcceso_UsuarioRol">
+          <End Role="UsuarioRol" Type="Self.UsuarioRol" Multiplicity="1" />
+          <End Role="UsuarioRolAcceso" Type="Self.UsuarioRolAcceso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsuarioRol">
+              <PropertyRef Name="UsuarioRolId" />
+            </Principal>
+            <Dependent Role="UsuarioRolAcceso">
+              <PropertyRef Name="UsuarioRolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AIVHModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CentroCosto" EntityType="Self.CentroCosto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComprobanteTipo" EntityType="Self.ComprobanteTipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Concepto" EntityType="Self.Concepto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CursoGastoDetalle" EntityType="Self.CursoGastoDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CursoParticipante" EntityType="Self.CursoParticipante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CursoTipo" EntityType="Self.CursoTipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estatus" EntityType="Self.Estatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventoTipo" EntityType="Self.EventoTipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gasto" EntityType="Self.Gasto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GastoDetalle" EntityType="Self.GastoDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PagoForma" EntityType="Self.PagoForma" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sede" EntityType="Self.Sede" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubConcepto" EntityType="Self.SubConcepto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubMenu" EntityType="Self.SubMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioRol" EntityType="Self.UsuarioRol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioRolAcceso" EntityType="Self.UsuarioRolAcceso" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Curso_CentroCosto" Association="Self.FK_Curso_CentroCosto">
+            <End Role="CentroCosto" EntitySet="CentroCosto" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_CursoTipo" Association="Self.FK_Curso_CursoTipo">
+            <End Role="CursoTipo" EntitySet="CursoTipo" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_Estatus" Association="Self.FK_Curso_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_Sede" Association="Self.FK_Curso_Sede">
+            <End Role="Sede" EntitySet="Sede" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_Usuario1" Association="Self.FK_Curso_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_Usuario2" Association="Self.FK_Curso_Usuario2">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CursoGastoDetalle_ComprobanteTipo" Association="Self.FK_CursoGastoDetalle_ComprobanteTipo">
+            <End Role="ComprobanteTipo" EntitySet="ComprobanteTipo" />
+            <End Role="CursoGastoDetalle" EntitySet="CursoGastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CursoGastoDetalle_Curso" Association="Self.FK_CursoGastoDetalle_Curso">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="CursoGastoDetalle" EntitySet="CursoGastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CursoGastoDetalle_SubConcepto" Association="Self.FK_CursoGastoDetalle_SubConcepto">
+            <End Role="SubConcepto" EntitySet="SubConcepto" />
+            <End Role="CursoGastoDetalle" EntitySet="CursoGastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CursoGastoDetalle_Usuario" Association="Self.FK_CursoGastoDetalle_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="CursoGastoDetalle" EntitySet="CursoGastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CursoParticipante_Curso" Association="Self.FK_CursoParticipante_Curso">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="CursoParticipante" EntitySet="CursoParticipante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gasto_Estatus" Association="Self.FK_Gasto_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Gasto" EntitySet="Gasto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendicionGasto_CentroCosto" Association="Self.FK_RendicionGasto_CentroCosto">
+            <End Role="CentroCosto" EntitySet="CentroCosto" />
+            <End Role="Gasto" EntitySet="Gasto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendicionGasto_PagoForma" Association="Self.FK_RendicionGasto_PagoForma">
+            <End Role="PagoForma" EntitySet="PagoForma" />
+            <End Role="Gasto" EntitySet="Gasto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendicionGasto_Usuario" Association="Self.FK_RendicionGasto_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Gasto" EntitySet="Gasto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendicionGasto_Usuario1" Association="Self.FK_RendicionGasto_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Gasto" EntitySet="Gasto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendicionGastoDetalle_ComprobanteTipo" Association="Self.FK_RendicionGastoDetalle_ComprobanteTipo">
+            <End Role="ComprobanteTipo" EntitySet="ComprobanteTipo" />
+            <End Role="GastoDetalle" EntitySet="GastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendicionGastoDetalle_RendicionGasto" Association="Self.FK_RendicionGastoDetalle_RendicionGasto">
+            <End Role="Gasto" EntitySet="Gasto" />
+            <End Role="GastoDetalle" EntitySet="GastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendicionGastoDetalle_SubConcepto" Association="Self.FK_RendicionGastoDetalle_SubConcepto">
+            <End Role="SubConcepto" EntitySet="SubConcepto" />
+            <End Role="GastoDetalle" EntitySet="GastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubConcepto_Concepto" Association="Self.FK_SubConcepto_Concepto">
+            <End Role="Concepto" EntitySet="Concepto" />
+            <End Role="SubConcepto" EntitySet="SubConcepto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubMenu_Estatus" Association="Self.FK_SubMenu_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="SubMenu" EntitySet="SubMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubMenu_Menu" Association="Self.FK_SubMenu_Menu">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="SubMenu" EntitySet="SubMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_UsuarioRol" Association="Self.FK_Usuario_UsuarioRol">
+            <End Role="UsuarioRol" EntitySet="UsuarioRol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioRolAcceso_SubMenu" Association="Self.FK_UsuarioRolAcceso_SubMenu">
+            <End Role="SubMenu" EntitySet="SubMenu" />
+            <End Role="UsuarioRolAcceso" EntitySet="UsuarioRolAcceso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioRolAcceso_Usuario" Association="Self.FK_UsuarioRolAcceso_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioRolAcceso" EntitySet="UsuarioRolAcceso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioRolAcceso_UsuarioRol" Association="Self.FK_UsuarioRolAcceso_UsuarioRol">
+            <End Role="UsuarioRol" EntitySet="UsuarioRol" />
+            <End Role="UsuarioRolAcceso" EntitySet="UsuarioRolAcceso" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AIVHModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AIVHEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="AIVHModel.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="AIVHModel.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="AIVHModel.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="AIVHModel.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="AIVHModel.AspNetUsers" />
+          <EntitySet Name="CentroCosto" EntityType="AIVHModel.CentroCosto" />
+          <EntitySet Name="ComprobanteTipo" EntityType="AIVHModel.ComprobanteTipo" />
+          <EntitySet Name="Concepto" EntityType="AIVHModel.Concepto" />
+          <EntitySet Name="Curso" EntityType="AIVHModel.Curso" />
+          <EntitySet Name="CursoGastoDetalle" EntityType="AIVHModel.CursoGastoDetalle" />
+          <EntitySet Name="CursoParticipante" EntityType="AIVHModel.CursoParticipante" />
+          <EntitySet Name="CursoTipo" EntityType="AIVHModel.CursoTipo" />
+          <EntitySet Name="Estatus" EntityType="AIVHModel.Estatus" />
+          <EntitySet Name="EventoTipo" EntityType="AIVHModel.EventoTipo" />
+          <EntitySet Name="Gasto" EntityType="AIVHModel.Gasto" />
+          <EntitySet Name="GastoDetalle" EntityType="AIVHModel.GastoDetalle" />
+          <EntitySet Name="Menu" EntityType="AIVHModel.Menu" />
+          <EntitySet Name="PagoForma" EntityType="AIVHModel.PagoForma" />
+          <EntitySet Name="Sede" EntityType="AIVHModel.Sede" />
+          <EntitySet Name="SubConcepto" EntityType="AIVHModel.SubConcepto" />
+          <EntitySet Name="SubMenu" EntityType="AIVHModel.SubMenu" />
+          <EntitySet Name="sysdiagrams" EntityType="AIVHModel.sysdiagrams" />
+          <EntitySet Name="Usuario" EntityType="AIVHModel.Usuario" />
+          <EntitySet Name="UsuarioRol" EntityType="AIVHModel.UsuarioRol" />
+          <EntitySet Name="UsuarioRolAcceso" EntityType="AIVHModel.UsuarioRolAcceso" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="AIVHModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="AIVHModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_CentroCosto" Association="AIVHModel.FK_Curso_CentroCosto">
+            <End Role="CentroCosto" EntitySet="CentroCosto" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendicionGasto_CentroCosto" Association="AIVHModel.FK_RendicionGasto_CentroCosto">
+            <End Role="CentroCosto" EntitySet="CentroCosto" />
+            <End Role="Gasto" EntitySet="Gasto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CursoGastoDetalle_ComprobanteTipo" Association="AIVHModel.FK_CursoGastoDetalle_ComprobanteTipo">
+            <End Role="ComprobanteTipo" EntitySet="ComprobanteTipo" />
+            <End Role="CursoGastoDetalle" EntitySet="CursoGastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendicionGastoDetalle_ComprobanteTipo" Association="AIVHModel.FK_RendicionGastoDetalle_ComprobanteTipo">
+            <End Role="ComprobanteTipo" EntitySet="ComprobanteTipo" />
+            <End Role="GastoDetalle" EntitySet="GastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubConcepto_Concepto" Association="AIVHModel.FK_SubConcepto_Concepto">
+            <End Role="Concepto" EntitySet="Concepto" />
+            <End Role="SubConcepto" EntitySet="SubConcepto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_CursoTipo" Association="AIVHModel.FK_Curso_CursoTipo">
+            <End Role="CursoTipo" EntitySet="CursoTipo" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_Estatus" Association="AIVHModel.FK_Curso_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_Sede" Association="AIVHModel.FK_Curso_Sede">
+            <End Role="Sede" EntitySet="Sede" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_Usuario1" Association="AIVHModel.FK_Curso_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_Usuario2" Association="AIVHModel.FK_Curso_Usuario2">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CursoGastoDetalle_Curso" Association="AIVHModel.FK_CursoGastoDetalle_Curso">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="CursoGastoDetalle" EntitySet="CursoGastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CursoParticipante_Curso" Association="AIVHModel.FK_CursoParticipante_Curso">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="CursoParticipante" EntitySet="CursoParticipante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CursoGastoDetalle_SubConcepto" Association="AIVHModel.FK_CursoGastoDetalle_SubConcepto">
+            <End Role="SubConcepto" EntitySet="SubConcepto" />
+            <End Role="CursoGastoDetalle" EntitySet="CursoGastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CursoGastoDetalle_Usuario" Association="AIVHModel.FK_CursoGastoDetalle_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="CursoGastoDetalle" EntitySet="CursoGastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gasto_Estatus" Association="AIVHModel.FK_Gasto_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Gasto" EntitySet="Gasto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubMenu_Estatus" Association="AIVHModel.FK_SubMenu_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="SubMenu" EntitySet="SubMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendicionGasto_PagoForma" Association="AIVHModel.FK_RendicionGasto_PagoForma">
+            <End Role="PagoForma" EntitySet="PagoForma" />
+            <End Role="Gasto" EntitySet="Gasto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendicionGasto_Usuario" Association="AIVHModel.FK_RendicionGasto_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Gasto" EntitySet="Gasto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendicionGasto_Usuario1" Association="AIVHModel.FK_RendicionGasto_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Gasto" EntitySet="Gasto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendicionGastoDetalle_RendicionGasto" Association="AIVHModel.FK_RendicionGastoDetalle_RendicionGasto">
+            <End Role="Gasto" EntitySet="Gasto" />
+            <End Role="GastoDetalle" EntitySet="GastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendicionGastoDetalle_SubConcepto" Association="AIVHModel.FK_RendicionGastoDetalle_SubConcepto">
+            <End Role="SubConcepto" EntitySet="SubConcepto" />
+            <End Role="GastoDetalle" EntitySet="GastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubMenu_Menu" Association="AIVHModel.FK_SubMenu_Menu">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="SubMenu" EntitySet="SubMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioRolAcceso_SubMenu" Association="AIVHModel.FK_UsuarioRolAcceso_SubMenu">
+            <End Role="SubMenu" EntitySet="SubMenu" />
+            <End Role="UsuarioRolAcceso" EntitySet="UsuarioRolAcceso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_UsuarioRol" Association="AIVHModel.FK_Usuario_UsuarioRol">
+            <End Role="UsuarioRol" EntitySet="UsuarioRol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioRolAcceso_Usuario" Association="AIVHModel.FK_UsuarioRolAcceso_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioRolAcceso" EntitySet="UsuarioRolAcceso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioRolAcceso_UsuarioRol" Association="AIVHModel.FK_UsuarioRolAcceso_UsuarioRol">
+            <End Role="UsuarioRol" EntitySet="UsuarioRol" />
+            <End Role="UsuarioRolAcceso" EntitySet="UsuarioRolAcceso" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="AIVHModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AIVHModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AIVHModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AIVHModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="AIVHModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="AIVHModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="AIVHModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="CentroCosto">
+          <Key>
+            <PropertyRef Name="CentroCostoId" />
+          </Key>
+          <Property Name="CentroCostoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Nomenglatura" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Curso" Relationship="AIVHModel.FK_Curso_CentroCosto" FromRole="CentroCosto" ToRole="Curso" />
+          <NavigationProperty Name="Gasto" Relationship="AIVHModel.FK_RendicionGasto_CentroCosto" FromRole="CentroCosto" ToRole="Gasto" />
+        </EntityType>
+        <EntityType Name="ComprobanteTipo">
+          <Key>
+            <PropertyRef Name="ComprobanteTipoId" />
+          </Key>
+          <Property Name="ComprobanteTipoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="EsFiscal" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CursoGastoDetalle" Relationship="AIVHModel.FK_CursoGastoDetalle_ComprobanteTipo" FromRole="ComprobanteTipo" ToRole="CursoGastoDetalle" />
+          <NavigationProperty Name="GastoDetalle" Relationship="AIVHModel.FK_RendicionGastoDetalle_ComprobanteTipo" FromRole="ComprobanteTipo" ToRole="GastoDetalle" />
+        </EntityType>
+        <EntityType Name="Concepto">
+          <Key>
+            <PropertyRef Name="ConceptoId" />
+          </Key>
+          <Property Name="ConceptoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SubConcepto" Relationship="AIVHModel.FK_SubConcepto_Concepto" FromRole="Concepto" ToRole="SubConcepto" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="CursoId" />
+          </Key>
+          <Property Name="CursoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CentroCostoId" Type="Int32" Nullable="false" />
+          <Property Name="SedeId" Type="Int32" Nullable="false" />
+          <Property Name="LugarCurso" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CursoTipoId" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId1" Type="Int32" Nullable="false" />
+          <Property Name="Comision1" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId2" Type="Int32" Nullable="false" />
+          <Property Name="Comision2" Type="Int32" Nullable="false" />
+          <Property Name="FechaCurso" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Efectivo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ChequeTans" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="FechasChequeTans" Type="DateTime" Precision="0" />
+          <Property Name="NumeroChequeTans" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Hora" Type="Time" Nullable="false" Precision="0" />
+          <Property Name="UsuarioIdGenero" Type="Int32" Nullable="false" />
+          <Property Name="EstatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CentroCosto" Relationship="AIVHModel.FK_Curso_CentroCosto" FromRole="Curso" ToRole="CentroCosto" />
+          <NavigationProperty Name="CursoTipo" Relationship="AIVHModel.FK_Curso_CursoTipo" FromRole="Curso" ToRole="CursoTipo" />
+          <NavigationProperty Name="Estatus" Relationship="AIVHModel.FK_Curso_Estatus" FromRole="Curso" ToRole="Estatus" />
+          <NavigationProperty Name="Sede" Relationship="AIVHModel.FK_Curso_Sede" FromRole="Curso" ToRole="Sede" />
+          <NavigationProperty Name="Usuario" Relationship="AIVHModel.FK_Curso_Usuario1" FromRole="Curso" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="AIVHModel.FK_Curso_Usuario2" FromRole="Curso" ToRole="Usuario" />
+          <NavigationProperty Name="CursoGastoDetalle" Relationship="AIVHModel.FK_CursoGastoDetalle_Curso" FromRole="Curso" ToRole="CursoGastoDetalle" />
+          <NavigationProperty Name="CursoParticipante" Relationship="AIVHModel.FK_CursoParticipante_Curso" FromRole="Curso" ToRole="CursoParticipante" />
+        </EntityType>
+        <EntityType Name="CursoGastoDetalle">
+          <Key>
+            <PropertyRef Name="CursoId" />
+            <PropertyRef Name="ConsecutivoId" />
+          </Key>
+          <Property Name="CursoId" Type="Int32" Nullable="false" />
+          <Property Name="ConsecutivoId" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="ComprobanteTipoId" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SubConceptoId" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Proveedor" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SubTotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Iva" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="ComprobanteTipo" Relationship="AIVHModel.FK_CursoGastoDetalle_ComprobanteTipo" FromRole="CursoGastoDetalle" ToRole="ComprobanteTipo" />
+          <NavigationProperty Name="Curso" Relationship="AIVHModel.FK_CursoGastoDetalle_Curso" FromRole="CursoGastoDetalle" ToRole="Curso" />
+          <NavigationProperty Name="SubConcepto" Relationship="AIVHModel.FK_CursoGastoDetalle_SubConcepto" FromRole="CursoGastoDetalle" ToRole="SubConcepto" />
+          <NavigationProperty Name="Usuario" Relationship="AIVHModel.FK_CursoGastoDetalle_Usuario" FromRole="CursoGastoDetalle" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="CursoParticipante">
+          <Key>
+            <PropertyRef Name="CursoId" />
+            <PropertyRef Name="ParticipanteId" />
+          </Key>
+          <Property Name="CursoId" Type="Int32" Nullable="false" />
+          <Property Name="ParticipanteId" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Efectivo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="DepositooTransferencia" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Cheque" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TarjetaCredito" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Curso" Relationship="AIVHModel.FK_CursoParticipante_Curso" FromRole="CursoParticipante" ToRole="Curso" />
+        </EntityType>
+        <EntityType Name="CursoTipo">
+          <Key>
+            <PropertyRef Name="CursoTipoId" />
+          </Key>
+          <Property Name="CursoTipoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Curso" Relationship="AIVHModel.FK_Curso_CursoTipo" FromRole="CursoTipo" ToRole="Curso" />
+        </EntityType>
+        <EntityType Name="Estatus">
+          <Key>
+            <PropertyRef Name="EstatusId" />
+          </Key>
+          <Property Name="EstatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Curso" Relationship="AIVHModel.FK_Curso_Estatus" FromRole="Estatus" ToRole="Curso" />
+          <NavigationProperty Name="Gasto" Relationship="AIVHModel.FK_Gasto_Estatus" FromRole="Estatus" ToRole="Gasto" />
+          <NavigationProperty Name="SubMenu" Relationship="AIVHModel.FK_SubMenu_Estatus" FromRole="Estatus" ToRole="SubMenu" />
+        </EntityType>
+        <EntityType Name="EventoTipo">
+          <Key>
+            <PropertyRef Name="EventoTipoId" />
+          </Key>
+          <Property Name="EventoTipoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Gasto">
+          <Key>
+            <PropertyRef Name="GastoId" />
+          </Key>
+          <Property Name="GastoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CentroCostoId" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="PagoFormaId" Type="Int32" Nullable="false" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Efectivo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ChequeTans" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="FechasChequeTans" Type="DateTime" Precision="0" />
+          <Property Name="NumeroChequeTans" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Hora" Type="Time" Nullable="false" Precision="0" />
+          <Property Name="UsuarioIdGenero" Type="Int32" Nullable="false" />
+          <Property Name="EstatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CentroCosto" Relationship="AIVHModel.FK_RendicionGasto_CentroCosto" FromRole="Gasto" ToRole="CentroCosto" />
+          <NavigationProperty Name="Estatus" Relationship="AIVHModel.FK_Gasto_Estatus" FromRole="Gasto" ToRole="Estatus" />
+          <NavigationProperty Name="PagoForma" Relationship="AIVHModel.FK_RendicionGasto_PagoForma" FromRole="Gasto" ToRole="PagoForma" />
+          <NavigationProperty Name="Usuario" Relationship="AIVHModel.FK_RendicionGasto_Usuario" FromRole="Gasto" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="AIVHModel.FK_RendicionGasto_Usuario1" FromRole="Gasto" ToRole="Usuario" />
+          <NavigationProperty Name="GastoDetalle" Relationship="AIVHModel.FK_RendicionGastoDetalle_RendicionGasto" FromRole="Gasto" ToRole="GastoDetalle" />
+        </EntityType>
+        <EntityType Name="GastoDetalle">
+          <Key>
+            <PropertyRef Name="GastoId" />
+            <PropertyRef Name="ConsecutivoId" />
+          </Key>
+          <Property Name="GastoId" Type="Int32" Nullable="false" />
+          <Property Name="ConsecutivoId" Type="Int32" Nullable="false" />
+          <Property Name="ComprobanteTipoId" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SubConceptoId" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Proveedor" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SubTotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Iva" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="ComprobanteTipo" Relationship="AIVHModel.FK_RendicionGastoDetalle_ComprobanteTipo" FromRole="GastoDetalle" ToRole="ComprobanteTipo" />
+          <NavigationProperty Name="Gasto" Relationship="AIVHModel.FK_RendicionGastoDetalle_RendicionGasto" FromRole="GastoDetalle" ToRole="Gasto" />
+          <NavigationProperty Name="SubConcepto" Relationship="AIVHModel.FK_RendicionGastoDetalle_SubConcepto" FromRole="GastoDetalle" ToRole="SubConcepto" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Icono" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SubMenu" Relationship="AIVHModel.FK_SubMenu_Menu" FromRole="Menu" ToRole="SubMenu" />
+        </EntityType>
+        <EntityType Name="PagoForma">
+          <Key>
+            <PropertyRef Name="PagoFormaId" />
+          </Key>
+          <Property Name="PagoFormaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Gasto" Relationship="AIVHModel.FK_RendicionGasto_PagoForma" FromRole="PagoForma" ToRole="Gasto" />
+        </EntityType>
+        <EntityType Name="Sede">
+          <Key>
+            <PropertyRef Name="SedeId" />
+          </Key>
+          <Property Name="SedeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Curso" Relationship="AIVHModel.FK_Curso_Sede" FromRole="Sede" ToRole="Curso" />
+        </EntityType>
+        <EntityType Name="SubConcepto">
+          <Key>
+            <PropertyRef Name="SubConceptoId" />
+          </Key>
+          <Property Name="ConceptoId" Type="Int32" Nullable="false" />
+          <Property Name="SubConceptoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Concepto" Relationship="AIVHModel.FK_SubConcepto_Concepto" FromRole="SubConcepto" ToRole="Concepto" />
+          <NavigationProperty Name="CursoGastoDetalle" Relationship="AIVHModel.FK_CursoGastoDetalle_SubConcepto" FromRole="SubConcepto" ToRole="CursoGastoDetalle" />
+          <NavigationProperty Name="GastoDetalle" Relationship="AIVHModel.FK_RendicionGastoDetalle_SubConcepto" FromRole="SubConcepto" ToRole="GastoDetalle" />
+        </EntityType>
+        <EntityType Name="SubMenu">
+          <Key>
+            <PropertyRef Name="SubMenuId" />
+          </Key>
+          <Property Name="MenuId" Type="Int32" Nullable="false" />
+          <Property Name="SubMenuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Link" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="EstatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Estatus" Relationship="AIVHModel.FK_SubMenu_Estatus" FromRole="SubMenu" ToRole="Estatus" />
+          <NavigationProperty Name="Menu" Relationship="AIVHModel.FK_SubMenu_Menu" FromRole="SubMenu" ToRole="Menu" />
+          <NavigationProperty Name="UsuarioRolAcceso" Relationship="AIVHModel.FK_UsuarioRolAcceso_SubMenu" FromRole="SubMenu" ToRole="UsuarioRolAcceso" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Paterno" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Materno" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UsuarioRolId" Type="Int32" Nullable="false" />
+          <Property Name="EstatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Curso" Relationship="AIVHModel.FK_Curso_Usuario1" FromRole="Usuario" ToRole="Curso" />
+          <NavigationProperty Name="Curso1" Relationship="AIVHModel.FK_Curso_Usuario2" FromRole="Usuario" ToRole="Curso" />
+          <NavigationProperty Name="CursoGastoDetalle" Relationship="AIVHModel.FK_CursoGastoDetalle_Usuario" FromRole="Usuario" ToRole="CursoGastoDetalle" />
+          <NavigationProperty Name="Gasto" Relationship="AIVHModel.FK_RendicionGasto_Usuario" FromRole="Usuario" ToRole="Gasto" />
+          <NavigationProperty Name="Gasto1" Relationship="AIVHModel.FK_RendicionGasto_Usuario1" FromRole="Usuario" ToRole="Gasto" />
+          <NavigationProperty Name="UsuarioRol" Relationship="AIVHModel.FK_Usuario_UsuarioRol" FromRole="Usuario" ToRole="UsuarioRol" />
+          <NavigationProperty Name="UsuarioRolAcceso" Relationship="AIVHModel.FK_UsuarioRolAcceso_Usuario" FromRole="Usuario" ToRole="UsuarioRolAcceso" />
+        </EntityType>
+        <EntityType Name="UsuarioRol">
+          <Key>
+            <PropertyRef Name="UsuarioRolId" />
+          </Key>
+          <Property Name="UsuarioRolId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Usuario" Relationship="AIVHModel.FK_Usuario_UsuarioRol" FromRole="UsuarioRol" ToRole="Usuario" />
+          <NavigationProperty Name="UsuarioRolAcceso" Relationship="AIVHModel.FK_UsuarioRolAcceso_UsuarioRol" FromRole="UsuarioRol" ToRole="UsuarioRolAcceso" />
+        </EntityType>
+        <EntityType Name="UsuarioRolAcceso">
+          <Key>
+            <PropertyRef Name="UsuarioRolId" />
+            <PropertyRef Name="SubMenuId" />
+          </Key>
+          <Property Name="UsuarioRolId" Type="Int32" Nullable="false" />
+          <Property Name="SubMenuId" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Hora" Type="Time" Nullable="false" Precision="0" />
+          <NavigationProperty Name="SubMenu" Relationship="AIVHModel.FK_UsuarioRolAcceso_SubMenu" FromRole="UsuarioRolAcceso" ToRole="SubMenu" />
+          <NavigationProperty Name="Usuario" Relationship="AIVHModel.FK_UsuarioRolAcceso_Usuario" FromRole="UsuarioRolAcceso" ToRole="Usuario" />
+          <NavigationProperty Name="UsuarioRol" Relationship="AIVHModel.FK_UsuarioRolAcceso_UsuarioRol" FromRole="UsuarioRolAcceso" ToRole="UsuarioRol" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="AIVHModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AIVHModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="AIVHModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AIVHModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_CentroCosto">
+          <End Type="AIVHModel.CentroCosto" Role="CentroCosto" Multiplicity="1" />
+          <End Type="AIVHModel.Curso" Role="Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CentroCosto">
+              <PropertyRef Name="CentroCostoId" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="CentroCostoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendicionGasto_CentroCosto">
+          <End Type="AIVHModel.CentroCosto" Role="CentroCosto" Multiplicity="1" />
+          <End Type="AIVHModel.Gasto" Role="Gasto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CentroCosto">
+              <PropertyRef Name="CentroCostoId" />
+            </Principal>
+            <Dependent Role="Gasto">
+              <PropertyRef Name="CentroCostoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CursoGastoDetalle_ComprobanteTipo">
+          <End Type="AIVHModel.ComprobanteTipo" Role="ComprobanteTipo" Multiplicity="1" />
+          <End Type="AIVHModel.CursoGastoDetalle" Role="CursoGastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ComprobanteTipo">
+              <PropertyRef Name="ComprobanteTipoId" />
+            </Principal>
+            <Dependent Role="CursoGastoDetalle">
+              <PropertyRef Name="ComprobanteTipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendicionGastoDetalle_ComprobanteTipo">
+          <End Type="AIVHModel.ComprobanteTipo" Role="ComprobanteTipo" Multiplicity="1" />
+          <End Type="AIVHModel.GastoDetalle" Role="GastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ComprobanteTipo">
+              <PropertyRef Name="ComprobanteTipoId" />
+            </Principal>
+            <Dependent Role="GastoDetalle">
+              <PropertyRef Name="ComprobanteTipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubConcepto_Concepto">
+          <End Type="AIVHModel.Concepto" Role="Concepto" Multiplicity="1" />
+          <End Type="AIVHModel.SubConcepto" Role="SubConcepto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Concepto">
+              <PropertyRef Name="ConceptoId" />
+            </Principal>
+            <Dependent Role="SubConcepto">
+              <PropertyRef Name="ConceptoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_CursoTipo">
+          <End Type="AIVHModel.CursoTipo" Role="CursoTipo" Multiplicity="1" />
+          <End Type="AIVHModel.Curso" Role="Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CursoTipo">
+              <PropertyRef Name="CursoTipoId" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="CursoTipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_Estatus">
+          <End Type="AIVHModel.Estatus" Role="Estatus" Multiplicity="1" />
+          <End Type="AIVHModel.Curso" Role="Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="EstatusId" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_Sede">
+          <End Type="AIVHModel.Sede" Role="Sede" Multiplicity="1" />
+          <End Type="AIVHModel.Curso" Role="Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sede">
+              <PropertyRef Name="SedeId" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="SedeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_Usuario1">
+          <End Type="AIVHModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="AIVHModel.Curso" Role="Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="UsuarioId1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_Usuario2">
+          <End Type="AIVHModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="AIVHModel.Curso" Role="Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="UsuarioIdGenero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CursoGastoDetalle_Curso">
+          <End Type="AIVHModel.Curso" Role="Curso" Multiplicity="1" />
+          <End Type="AIVHModel.CursoGastoDetalle" Role="CursoGastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="CursoId" />
+            </Principal>
+            <Dependent Role="CursoGastoDetalle">
+              <PropertyRef Name="CursoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CursoParticipante_Curso">
+          <End Type="AIVHModel.Curso" Role="Curso" Multiplicity="1" />
+          <End Type="AIVHModel.CursoParticipante" Role="CursoParticipante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="CursoId" />
+            </Principal>
+            <Dependent Role="CursoParticipante">
+              <PropertyRef Name="CursoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CursoGastoDetalle_SubConcepto">
+          <End Type="AIVHModel.SubConcepto" Role="SubConcepto" Multiplicity="1" />
+          <End Type="AIVHModel.CursoGastoDetalle" Role="CursoGastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubConcepto">
+              <PropertyRef Name="SubConceptoId" />
+            </Principal>
+            <Dependent Role="CursoGastoDetalle">
+              <PropertyRef Name="SubConceptoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CursoGastoDetalle_Usuario">
+          <End Type="AIVHModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="AIVHModel.CursoGastoDetalle" Role="CursoGastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="CursoGastoDetalle">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gasto_Estatus">
+          <End Type="AIVHModel.Estatus" Role="Estatus" Multiplicity="1" />
+          <End Type="AIVHModel.Gasto" Role="Gasto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="EstatusId" />
+            </Principal>
+            <Dependent Role="Gasto">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubMenu_Estatus">
+          <End Type="AIVHModel.Estatus" Role="Estatus" Multiplicity="1" />
+          <End Type="AIVHModel.SubMenu" Role="SubMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="EstatusId" />
+            </Principal>
+            <Dependent Role="SubMenu">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendicionGasto_PagoForma">
+          <End Type="AIVHModel.PagoForma" Role="PagoForma" Multiplicity="1" />
+          <End Type="AIVHModel.Gasto" Role="Gasto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PagoForma">
+              <PropertyRef Name="PagoFormaId" />
+            </Principal>
+            <Dependent Role="Gasto">
+              <PropertyRef Name="PagoFormaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendicionGasto_Usuario">
+          <End Type="AIVHModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="AIVHModel.Gasto" Role="Gasto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Gasto">
+              <PropertyRef Name="UsuarioIdGenero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendicionGasto_Usuario1">
+          <End Type="AIVHModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="AIVHModel.Gasto" Role="Gasto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Gasto">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendicionGastoDetalle_RendicionGasto">
+          <End Type="AIVHModel.Gasto" Role="Gasto" Multiplicity="1" />
+          <End Type="AIVHModel.GastoDetalle" Role="GastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gasto">
+              <PropertyRef Name="GastoId" />
+            </Principal>
+            <Dependent Role="GastoDetalle">
+              <PropertyRef Name="GastoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendicionGastoDetalle_SubConcepto">
+          <End Type="AIVHModel.SubConcepto" Role="SubConcepto" Multiplicity="1" />
+          <End Type="AIVHModel.GastoDetalle" Role="GastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubConcepto">
+              <PropertyRef Name="SubConceptoId" />
+            </Principal>
+            <Dependent Role="GastoDetalle">
+              <PropertyRef Name="SubConceptoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubMenu_Menu">
+          <End Type="AIVHModel.Menu" Role="Menu" Multiplicity="1" />
+          <End Type="AIVHModel.SubMenu" Role="SubMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="SubMenu">
+              <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioRolAcceso_SubMenu">
+          <End Type="AIVHModel.SubMenu" Role="SubMenu" Multiplicity="1" />
+          <End Type="AIVHModel.UsuarioRolAcceso" Role="UsuarioRolAcceso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubMenu">
+              <PropertyRef Name="SubMenuId" />
+            </Principal>
+            <Dependent Role="UsuarioRolAcceso">
+              <PropertyRef Name="SubMenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_UsuarioRol">
+          <End Type="AIVHModel.UsuarioRol" Role="UsuarioRol" Multiplicity="1" />
+          <End Type="AIVHModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsuarioRol">
+              <PropertyRef Name="UsuarioRolId" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="UsuarioRolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioRolAcceso_Usuario">
+          <End Type="AIVHModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="AIVHModel.UsuarioRolAcceso" Role="UsuarioRolAcceso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="UsuarioRolAcceso">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioRolAcceso_UsuarioRol">
+          <End Type="AIVHModel.UsuarioRol" Role="UsuarioRol" Multiplicity="1" />
+          <End Type="AIVHModel.UsuarioRolAcceso" Role="UsuarioRolAcceso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsuarioRol">
+              <PropertyRef Name="UsuarioRolId" />
+            </Principal>
+            <Dependent Role="UsuarioRolAcceso">
+              <PropertyRef Name="UsuarioRolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="AIVHModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+          <End Type="AIVHModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AIVHModelStoreContainer" CdmEntityContainer="AIVHEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="AIVHModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="AIVHModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="AIVHModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="AIVHModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="AIVHModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CentroCosto">
+            <EntityTypeMapping TypeName="AIVHModel.CentroCosto">
+              <MappingFragment StoreEntitySet="CentroCosto">
+                <ScalarProperty Name="Nomenglatura" ColumnName="Nomenglatura" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="CentroCostoId" ColumnName="CentroCostoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComprobanteTipo">
+            <EntityTypeMapping TypeName="AIVHModel.ComprobanteTipo">
+              <MappingFragment StoreEntitySet="ComprobanteTipo">
+                <ScalarProperty Name="EsFiscal" ColumnName="EsFiscal" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="ComprobanteTipoId" ColumnName="ComprobanteTipoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Concepto">
+            <EntityTypeMapping TypeName="AIVHModel.Concepto">
+              <MappingFragment StoreEntitySet="Concepto">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="ConceptoId" ColumnName="ConceptoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Curso">
+            <EntityTypeMapping TypeName="AIVHModel.Curso">
+              <MappingFragment StoreEntitySet="Curso">
+                <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
+                <ScalarProperty Name="UsuarioIdGenero" ColumnName="UsuarioIdGenero" />
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="NumeroChequeTans" ColumnName="NumeroChequeTans" />
+                <ScalarProperty Name="FechasChequeTans" ColumnName="FechasChequeTans" />
+                <ScalarProperty Name="ChequeTans" ColumnName="ChequeTans" />
+                <ScalarProperty Name="Efectivo" ColumnName="Efectivo" />
+                <ScalarProperty Name="FechaCurso" ColumnName="FechaCurso" />
+                <ScalarProperty Name="Comision2" ColumnName="Comision2" />
+                <ScalarProperty Name="UsuarioId2" ColumnName="UsuarioId2" />
+                <ScalarProperty Name="Comision1" ColumnName="Comision1" />
+                <ScalarProperty Name="UsuarioId1" ColumnName="UsuarioId1" />
+                <ScalarProperty Name="CursoTipoId" ColumnName="CursoTipoId" />
+                <ScalarProperty Name="LugarCurso" ColumnName="LugarCurso" />
+                <ScalarProperty Name="SedeId" ColumnName="SedeId" />
+                <ScalarProperty Name="CentroCostoId" ColumnName="CentroCostoId" />
+                <ScalarProperty Name="CursoId" ColumnName="CursoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CursoGastoDetalle">
+            <EntityTypeMapping TypeName="AIVHModel.CursoGastoDetalle">
+              <MappingFragment StoreEntitySet="CursoGastoDetalle">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Iva" ColumnName="Iva" />
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+                <ScalarProperty Name="Proveedor" ColumnName="Proveedor" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="SubConceptoId" ColumnName="SubConceptoId" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="ComprobanteTipoId" ColumnName="ComprobanteTipoId" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="ConsecutivoId" ColumnName="ConsecutivoId" />
+                <ScalarProperty Name="CursoId" ColumnName="CursoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CursoParticipante">
+            <EntityTypeMapping TypeName="AIVHModel.CursoParticipante">
+              <MappingFragment StoreEntitySet="CursoParticipante">
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TarjetaCredito" ColumnName="TarjetaCredito" />
+                <ScalarProperty Name="Cheque" ColumnName="Cheque" />
+                <ScalarProperty Name="DepositooTransferencia" ColumnName="DepositooTransferencia" />
+                <ScalarProperty Name="Efectivo" ColumnName="Efectivo" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ParticipanteId" ColumnName="ParticipanteId" />
+                <ScalarProperty Name="CursoId" ColumnName="CursoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CursoTipo">
+            <EntityTypeMapping TypeName="AIVHModel.CursoTipo">
+              <MappingFragment StoreEntitySet="CursoTipo">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="CursoTipoId" ColumnName="CursoTipoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estatus">
+            <EntityTypeMapping TypeName="AIVHModel.Estatus">
+              <MappingFragment StoreEntitySet="Estatus">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventoTipo">
+            <EntityTypeMapping TypeName="AIVHModel.EventoTipo">
+              <MappingFragment StoreEntitySet="EventoTipo">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="EventoTipoId" ColumnName="EventoTipoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gasto">
+            <EntityTypeMapping TypeName="AIVHModel.Gasto">
+              <MappingFragment StoreEntitySet="Gasto">
+                <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
+                <ScalarProperty Name="UsuarioIdGenero" ColumnName="UsuarioIdGenero" />
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="NumeroChequeTans" ColumnName="NumeroChequeTans" />
+                <ScalarProperty Name="FechasChequeTans" ColumnName="FechasChequeTans" />
+                <ScalarProperty Name="ChequeTans" ColumnName="ChequeTans" />
+                <ScalarProperty Name="Efectivo" ColumnName="Efectivo" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="PagoFormaId" ColumnName="PagoFormaId" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="CentroCostoId" ColumnName="CentroCostoId" />
+                <ScalarProperty Name="GastoId" ColumnName="GastoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GastoDetalle">
+            <EntityTypeMapping TypeName="AIVHModel.GastoDetalle">
+              <MappingFragment StoreEntitySet="GastoDetalle">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Iva" ColumnName="Iva" />
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+                <ScalarProperty Name="Proveedor" ColumnName="Proveedor" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="SubConceptoId" ColumnName="SubConceptoId" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="ComprobanteTipoId" ColumnName="ComprobanteTipoId" />
+                <ScalarProperty Name="ConsecutivoId" ColumnName="ConsecutivoId" />
+                <ScalarProperty Name="GastoId" ColumnName="GastoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menu">
+            <EntityTypeMapping TypeName="AIVHModel.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="Icono" ColumnName="Icono" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PagoForma">
+            <EntityTypeMapping TypeName="AIVHModel.PagoForma">
+              <MappingFragment StoreEntitySet="PagoForma">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="PagoFormaId" ColumnName="PagoFormaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sede">
+            <EntityTypeMapping TypeName="AIVHModel.Sede">
+              <MappingFragment StoreEntitySet="Sede">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="SedeId" ColumnName="SedeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubConcepto">
+            <EntityTypeMapping TypeName="AIVHModel.SubConcepto">
+              <MappingFragment StoreEntitySet="SubConcepto">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="SubConceptoId" ColumnName="SubConceptoId" />
+                <ScalarProperty Name="ConceptoId" ColumnName="ConceptoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubMenu">
+            <EntityTypeMapping TypeName="AIVHModel.SubMenu">
+              <MappingFragment StoreEntitySet="SubMenu">
+                <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="SubMenuId" ColumnName="SubMenuId" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="AIVHModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="AIVHModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
+                <ScalarProperty Name="UsuarioRolId" ColumnName="UsuarioRolId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Materno" ColumnName="Materno" />
+                <ScalarProperty Name="Paterno" ColumnName="Paterno" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioRol">
+            <EntityTypeMapping TypeName="AIVHModel.UsuarioRol">
+              <MappingFragment StoreEntitySet="UsuarioRol">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="UsuarioRolId" ColumnName="UsuarioRolId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioRolAcceso">
+            <EntityTypeMapping TypeName="AIVHModel.UsuarioRolAcceso">
+              <MappingFragment StoreEntitySet="UsuarioRolAcceso">
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="SubMenuId" ColumnName="SubMenuId" />
+                <ScalarProperty Name="UsuarioRolId" ColumnName="UsuarioRolId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="AIVHModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
