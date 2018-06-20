@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <h6 class="card-header">AIVH – CURSOS - RENDICIÓN DE GASTOS </h6>
+                        <h6 class="card-header">AIVH – EVENTOS - RENDICIÓN DE GASTOS </h6>
                         <br />
                         <div class="card-body">
                             <div class="col-md-12">
@@ -19,7 +19,7 @@
                                         <div class="col-md-3"></div>
                                         <div class="col-md-2 float-right">
                                             <label for="slcLength">Mostrar</label>
-                                            <select id="slcLength" name="slcLength" aria-controls="tblCursos" class="form-control form-control-sm">
+                                            <select id="slcLength" name="slcLength" aria-controls="tblEventos" class="form-control form-control-sm">
                                                 <option value="-1">Todos</option>
                                                 <option value="20">20</option>
                                                 <option value="50">50</option>
@@ -28,20 +28,21 @@
                                         </div>
                                     </div>
                                     <br />
-                                    <table id="tblCursos" class="table  table-striped table-hover table-bordered table-response" cellspacing="1">
+                                    <table id="tblEventos" class="table  table-striped table-hover table-bordered table-response" cellspacing="1">
                                         <thead class="table-secondary">
                                             <tr>
                                                 <th>Folio</th>
                                                 <th>Centro de costos </th>
-                                                <th>Sede</th>
-                                                <th>Lugar </th>
-                                                <th>Tipo de curso</th>
-                                                <th>Instructor(es)</th>
-                                                <th>Fecha de curso</th>
+                                                <th>Lugar</th>
+                                                <th>Nombre del evento</th>
+                                                <th>Tipo de evento</th>
+                                                <th>Instructor</th>
+                                                <th>Fecha de evento</th>
                                                 <th>Monto anticipo</th>
                                                 <th>Monto gastos</th>
                                                 <th>Saldo</th>
                                                 <th>Observaciones</th>
+                                                <th>Monto recaudado</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -49,7 +50,7 @@
                                 </div>
 
                                 <div id="divGenerales" style="display:none;">
-                                    <form id="frmCurso">
+                                    <form id="frmEvento">
                                         <div class="col-md-12">
                                             <div class="row">
                                                 <div class="form-group  col-md-6">
@@ -57,8 +58,8 @@
                                                     <input type="text" id="slcCentroCostos" class="form-control" readonly>
                                                 </div>
                                                 <div class="form-group  col-md-6">
-                                                    <label>Sede</label>
-                                                    <input type="text" id="slcSede" class="form-control" readonly>
+                                                    <label>Tipo de evento</label>
+                                                    <input type="text" id="slcEventoTipo" class="form-control" readonly>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -69,48 +70,12 @@
                                             </div>
                                             <div class="row">
                                                 <div class="form-group  col-md-6">
-                                                    <label>Tipo de curso </label>
-                                                    <input type="text" id="slcCursoTipo" class="form-control" readonly>
-                                                </div>
-                                                <div class="form-group  col-md-6">
                                                     <label>Fecha de curso</label>
                                                     <input type="text" class="form-control" id="txtFecha" readonly>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group  col-md-4">
-                                                    <label>Instructor 1 </label>
-                                                    <input type="text" id="slcInstructor1" class="form-control" readonly>
-                                                </div>
-                                                <div class="form-group  col-md-2">
-                                                    <label>Comisión % </label>
-                                                    <input type="text" id="slcComision1" class="form-control" readonly>
-                                                </div>
-                                                <div class="form-group  col-md-4">
-                                                    <label>Instructor 2 </label>
-                                                    <input type="text" id="slcInstructor2" class="form-control" readonly>
-                                                </div>
-                                                <div class="form-group  col-md-2">
-                                                    <label>Comisión % </label>
-                                                    <input type="text" id="slcComision2" class="form-control" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <div class="card border-dark">
-                                            <div class="card-header bg-transparent border-dark font-weight-bold form-inline">Participantes. &nbsp; </div>
-                                            <div class="card-body">
-                                                <div class="col-md-12  table-responsive">
-                                                    <table id="tblParticipantes" class="table  table-striped  table-bordered responsive " style="font-size: 10pt;font-family: 'Segoe UI';">
-                                                        <thead class="table-secondary ">
-                                                            <tr>
-                                                                <th>Nombre </th>
-                                                                <th>Monto</th>
-                                                                <th>Email</th>
-                                                                <th>Celular</th>
-                                                            </tr>
-                                                        </thead>
-                                                    </table>
+                                                <div class="form-group  col-md-6">
+                                                    <label>Instructor </label>
+                                                    <input type="text" id="slcInstructor" class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -148,6 +113,29 @@
                                         </div>
                                         <br />
                                         <div class="card border-dark">
+                                            <div class="card-header bg-transparent border-dark font-weight-bold form-inline">Donantes. &nbsp; </div>
+                                            <div class="card-body">
+                                                <div class="form-group  col-md-12">
+                                                    <button id="btnNewD" type="button" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp; Agregar </button>
+                                                </div>
+                                                <div class="col-md-12  table-responsive">
+                                                    <table id="tblDonantes" class="table  table-striped  table-bordered responsive " style="font-size: 10pt;font-family: 'Segoe UI';">
+                                                        <thead class="table-secondary ">
+                                                            <tr>
+                                                                <th>Nombre </th>
+                                                                <th>Monto</th>
+                                                                <th>Email</th>
+                                                                <th>Celular</th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="card border-dark">
                                             <div class="card-header bg-transparent border-dark font-weight-bold form-inline">Gastos &nbsp; <div id="validGastos" style="display:none;"><p class="text-danger text-right">* Favor de agregar gastos a rendir</p></div></div>
                                             <div class="card-body">
                                                 <div class="form-group  col-md-12">
@@ -157,7 +145,6 @@
                                                     <table id="tblGastos" class="table  table-striped  table-bordered responsive " style="font-size: 10pt;font-family: 'Segoe UI';">
                                                         <thead class="table-secondary ">
                                                             <tr>
-                                                                <th>Instructor</th>
                                                                 <th>Tipo de Comprobante</th>
                                                                 <th>Fecha</th>
                                                                 <th>Concepto</th>
@@ -192,6 +179,77 @@
                     </div>
 
                     <!--modal-->
+                    <div class="modal fade" id="modalDonantes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Donante</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form id="frmDonante">
+                                    <div class="modal-body">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="form-group  col-md-6">
+                                                    <label>Nombre</label>
+                                                    <input type="text" class="form-control" id="txtNombre" required>
+                                                </div>
+                                                <div class="form-group  col-md-6">
+                                                    <label>Apellido</label>
+                                                    <input type="text" class="form-control" id="txtApellido" required>
+                                                </div>
+                                            </div>
+                                            <div class="card border-primary">
+                                                <div class="card-header bg-transparent border-primary font-weight-bold form-inline">Formas de pago. &nbsp; </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="form-group  col-md-6">
+                                                            <label>Efectivo</label>
+                                                            <input type="number" step="0.01" class="form-control" id="txtEfectivoD" value="0" min="0" required>
+                                                        </div>
+                                                        <div class="form-group  col-md-6">
+                                                            <label>Deposito / Transferencia</label>
+                                                            <input type="number" step="0.01" class="form-control" id="txtDeposito" value="0" min="0" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group  col-md-6">
+                                                            <label>Cheque</label>
+                                                            <input type="number" step="0.01" class="form-control" id="txtCheque" value="0" min="0" required>
+                                                        </div>
+                                                        <div class="form-group  col-md-6">
+                                                            <label>Tarjeta de credito</label>
+                                                            <input type="number" step="0.01" class="form-control" id="txtTarjeta" value="0" min="0" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="form-group  col-md-6">
+                                                    <label>Email</label>
+                                                    <input type="text" class="form-control" id="txtEmail" required>
+                                                </div>
+                                                <div class="form-group  col-md-6">
+                                                    <label>Celular</label>
+                                                    <input type="text" class="form-control" id="txtCelular" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="btnAddD" type="submit" class="btn btn-primary"><i class="fas fa-check" aria-hidden="true"></i>  &nbsp;Aceptar</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> &nbsp; Cerrar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--modal-->
                     <div class="modal fade" id="modalGastos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -204,12 +262,6 @@
                                 <form id="frmGasto">
                                     <div class="modal-body">
                                         <div class="col-md-12">
-                                            <div class="row">
-                                                <div class="form-group  col-md-12">
-                                                    <label>Instructor</label>
-                                                    <select id="slcInstructor" class="form-control" required></select>
-                                                </div>
-                                            </div>
                                             <div class="row">
                                                 <div class="form-group  col-md-6">
                                                     <label>Tipo de comprobante </label>
@@ -273,10 +325,11 @@
                         </div>
                     </div>
 
+
                 </div>
             </div>
         </main>
     </div>
 </div>
 <script src="js/global.js"></script>
-<script src="js/reporte/cursos.js"></script>
+<script src="js/reporte/eventos.js"></script>

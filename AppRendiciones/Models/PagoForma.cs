@@ -14,16 +14,7 @@ namespace AppRendiciones.Models
     
     public partial class PagoForma
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PagoForma()
-        {
-            this.Gasto = new HashSet<Gasto>();
-        }
-    
         public int PagoFormaId { get; set; }
         public string Descripcion { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Gasto> Gasto { get; set; }
     }
 }

@@ -12,18 +12,19 @@ namespace AppRendiciones.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EventoTipo
+    public partial class EventoDonante
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public EventoTipo()
-        {
-            this.Evento = new HashSet<Evento>();
-        }
+        public int EventoId { get; set; }
+        public int DonanteId { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public decimal Efectivo { get; set; }
+        public decimal DepositooTransferencia { get; set; }
+        public decimal Cheque { get; set; }
+        public decimal TarjetaCredito { get; set; }
+        public string Email { get; set; }
+        public string Celular { get; set; }
     
-        public int EventoTipoId { get; set; }
-        public string Descripcion { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Evento> Evento { get; set; }
+        public virtual Evento Evento { get; set; }
     }
 }

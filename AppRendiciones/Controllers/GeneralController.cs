@@ -20,7 +20,7 @@ namespace AppRendiciones.Controllers
         [HttpGet]
         public IHttpActionResult GetMenu()
         {
-            return Ok(Business.General.Modulo.Get(db,int.Parse(DbContextAIVH.GetUserName(User))));
+            return Ok(Business.General.Modulo.Get(db, int.Parse(DbContextAIVH.GetUserName(User))));
         }
 
         [Route("GetPerfil")]
@@ -30,7 +30,8 @@ namespace AppRendiciones.Controllers
             int usuarioId = int.Parse(DbContextAIVH.GetUserName(User));
             var data = db.Usuario
                 .Where(x => x.UsuarioId == usuarioId)
-                .Select(x => new {
+                .Select(x => new
+                {
                     nombre = x.Nombre + " " + x.Paterno + " " + x.Materno,
                     rol = x.UsuarioRol.Descripcion
                 }).FirstOrDefault();
@@ -45,21 +46,35 @@ namespace AppRendiciones.Controllers
             }
         }
 
-        [Route("GetCentroCostos")]
+        [Route("GetCentroCostos/{tipo:int}")]
         [HttpGet]
-        public IHttpActionResult GetCentroCostos()
+        public IHttpActionResult GetCentroCostos(int tipo)
         {
             try
             {
+                if (tipo == 1)
+                {
+                    return Ok(db.CentroCosto.Where(a => a.CentroCostoId != 4)
+               .Select(x =>
+                   new
+                   {
+                       value = x.CentroCostoId,
+                       text = x.Descripcion
+                   })
+               .ToList());
+                }
+                else
+                {
+                    return Ok(db.CentroCosto.Where(a => a.CentroCostoId == 4)
+              .Select(x =>
+                  new
+                  {
+                      value = x.CentroCostoId,
+                      text = x.Descripcion
+                  })
+              .ToList());
+                }
 
-                return Ok(db.CentroCosto
-                .Select(x =>
-                    new
-                    {
-                        value = x.CentroCostoId,
-                        text = x.Descripcion
-                    })
-                .ToList());
             }
             catch (Exception Ex)
             {
@@ -79,28 +94,7 @@ namespace AppRendiciones.Controllers
                     new
                     {
                         value = x.UsuarioId,
-                        text = x.Nombre +" "+ x.Paterno +" "+x.Materno 
-                    })
-                .ToList());
-            }
-            catch (Exception Ex)
-            {
-                return BadRequest(Ex.Message);
-            }
-        }
-
-        [Route("GetTipoRendicion")]
-        [HttpGet]
-        public IHttpActionResult GetTipoRendicion()
-        {
-            try
-            {
-                return Ok(db.PagoForma
-                .Select(x =>
-                    new
-                    {
-                        value = x.PagoFormaId,
-                        text = x.Descripcion
+                        text = x.Nombre + " " + x.Paterno + " " + x.Materno
                     })
                 .ToList());
             }
@@ -159,7 +153,7 @@ namespace AppRendiciones.Controllers
             try
             {
                 return Ok(db.SubConcepto
-                .Where(y=> y.ConceptoId == conceptoId)
+                .Where(y => y.ConceptoId == conceptoId)
                 .Select(x =>
                     new
                     {
@@ -206,6 +200,27 @@ namespace AppRendiciones.Controllers
                     new
                     {
                         value = x.CursoTipoId,
+                        text = x.Descripcion
+                    })
+                .ToList());
+            }
+            catch (Exception Ex)
+            {
+                return BadRequest(Ex.Message);
+            }
+        }
+
+        [Route("GetTipoEvento")]
+        [HttpGet]
+        public IHttpActionResult GetTipoEvento()
+        {
+            try
+            {
+                return Ok(db.EventoTipo
+                .Select(x =>
+                    new
+                    {
+                        value = x.EventoTipoId,
                         text = x.Descripcion
                     })
                 .ToList());

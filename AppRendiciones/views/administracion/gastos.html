@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <h6 class="card-header">AIVH – REPORTE DE GASTOS</h6>
+                        <h6 class="card-header">AIVH – GASTOS</h6>
                         <br />
                         <div class="card-body">
                             <div class="col-md-12">
@@ -27,11 +27,6 @@
                                         </div>
                                     </div>
                                     <br />
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <button id="btnNueva" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp;Nueva Rendicion</button>
-                                        </div>
-                                    </div>
                                     <table id="tblReporteGastos" class="table  table-striped table-hover table-bordered table-response" cellspacing="1">
                                         <thead class="table-secondary">
                                             <tr>
@@ -44,6 +39,7 @@
                                                 <th>Observaciones</th>
                                                 <th>Fecha de captura</th>
                                                 <th></th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -55,13 +51,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group  col-md-12">
                                                     <label>Centro de costos</label>
-                                                    <select id="slcCentroCostos" class="form-control" required></select>
+                                                    <input type="text" id="slcCentroCostos" class="form-control" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group  col-md-12">
                                                     <label>Responsable</label>
-                                                    <select id="slcInstructor" class="form-control" required></select>
+                                                    <input type="text" id="slcInstructor" class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -69,17 +65,13 @@
                                             <div class="col-md-4">
                                                 <div class="form-group  col-md-12">
                                                     <label>Fecha Inicio</label>
-                                                    <div class="input-group date">
-                                                        <input type="text" class="form-control" required id="txtFechaInicio"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    </div>
+                                                    <input type="text" class="form-control" id="txtFechaInicio" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group  col-md-12">
                                                     <label>Fecha Fin</label>
-                                                    <div class="input-group date">
-                                                        <input type="text" class="form-control" required id="txtFechaFin"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    </div>
+                                                    <input type="text" class="form-control" id="txtFechaFin" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -88,27 +80,25 @@
                                             <div class="card-body">
                                                 <div class="form-group  col-md-4">
                                                     <label>Efectivo $</label>
-                                                    <input type="number" step="0.01" class="form-control" id="txtEfectivo" value="0" min="0" required>
+                                                    <input type="number" step="0.01" class="form-control" id="txtEfectivo" value="0" min="0" readonly>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group  col-md-12">
                                                             <label>Cheque ó transferencia $</label>
-                                                            <input type="number" step="0.01" class="form-control" id="txtCheque1" value="0" min="0" required>
+                                                            <input type="number" step="0.01" class="form-control" id="txtCheque1" value="0" min="0" readonly>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group  col-md-12">
                                                             <label>Fecha</label>
-                                                            <div class="input-group date">
-                                                                <input type="text" class="form-control" id="txtFecha1" required disabled><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                            </div>
+                                                            <input type="text" class="form-control" id="txtFecha1" readonly>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group  col-md-12">
                                                             <label>No. de Transferencia o cheque</label>
-                                                            <input type="number" class="form-control" id="txtNoCheque1" required disabled>
+                                                            <input type="number" class="form-control" id="txtNoCheque1" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -118,9 +108,6 @@
                                         <div class="card border-dark">
                                             <div class="card-header bg-transparent border-dark font-weight-bold form-inline">Gastos &nbsp; <div id="validGastos" style="display:none;"><p class="text-danger text-right">* Favor de agregar gastos a rendir</p></div></div>
                                             <div class="card-body">
-                                                <div class="form-group  col-md-12">
-                                                    <button id="btnNew" type="button" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp; Agregar </button>
-                                                </div>
                                                 <div class="col-md-12  table-responsive">
                                                     <table id="tblGastos" class="table  table-striped  table-bordered responsive " style="font-size: 10pt;font-family: 'Segoe UI';">
                                                         <thead class="table-secondary ">
@@ -134,8 +121,6 @@
                                                                 <th>Subtotal</th>
                                                                 <th>Iva</th>
                                                                 <th>Total</th>
-                                                                <th></th>
-                                                                <th></th>
                                                             </tr>
                                                         </thead>
                                                     </table>
@@ -146,8 +131,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-12">
                                                 <div class="col-md-12">
-                                                    <button id="btnreturn" type="button" class="btn btn-secondary"><i class="fa fa-reply" aria-hidden="true"></i> &nbsp; Cancelar</button>
-                                                    <button id="btnSave" type="submit" class="btn btn-primary float-right"><i class="fas fa-save" aria-hidden="true"></i>  &nbsp; Guardar</button>
+                                                    <button id="btnreturn" type="button" class="btn btn-secondary"><i class="fa fa-reply" aria-hidden="true"></i> &nbsp; Regresar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -158,86 +142,10 @@
 
                     </div>
 
-                    <!--modal-->
-                    <div class="modal fade" id="modalGastos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Gasto</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form id="frmGasto">
-                                    <div class="modal-body">
-                                        <div class="col-md-12">
-                                            <div class="row">
-                                                <div class="form-group  col-md-6">
-                                                    <label>Tipo de comprobante </label>
-                                                    <select id="slcComprobanteTipo" class="form-control" required></select>
-                                                </div>
-                                                <div class="form-group  col-md-6">
-                                                    <label>Fecha</label>
-                                                    <div class="input-group date">
-                                                        <input type="text" class="form-control" required id="txtFechaComprobante"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group  col-md-12">
-                                                    <label>Concepto</label>
-                                                    <select id="slcConcepto" class="form-control" required></select>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group  col-md-12">
-                                                    <label>Sub concepto </label>
-                                                    <select id="slcSubConcepto" class="form-control" required></select>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group col-md-12">
-                                                    <label>Descripción</label>
-                                                    <input type="text" class="form-control" id="txtDescripcion" placeholder="Descripción del producto o servicio" required>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group col-md-12">
-                                                    <label>Proveedor</label>
-                                                    <input type="text" class="form-control" id="txtProveedor" placeholder="Nombre del proveedor" required>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group  col-md-6">
-                                                    <label>Monto sin iva</label>
-                                                    <input type="number" step="0.01" class="form-control" id="txtSubtotal" value="0" min="1" required>
-                                                </div>
-                                                <div class="form-group  col-md-6">
-                                                    <label>Iva</label>
-                                                    <input type="number" step="0.01" class="form-control" id="txtIva" value="0" min="0" required>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group  col-md-6">
-                                                    <label>Importe total</label>
-                                                    <input type="text" class="form-control" id="txtTotal" value="0" required disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button id="btnAdd" type="submit" class="btn btn-primary"><i class="fas fa-check" aria-hidden="true"></i>  &nbsp;Aceptar</button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> &nbsp; Cerrar</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </main>
     </div>
 </div>
 <script src="js/global.js"></script>
-<script src="js/reporte/gastos.js"></script>
+<script src="js/administracion/gastos.js"></script>

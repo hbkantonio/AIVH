@@ -4,7 +4,6 @@
         init() {
             //Cargar Catolagos
             this.getCursos();
-            fn.GetInstructor("slcInstructor");
             fn.GetConcepto()
                 .done(function () {
                     cursosFn.changeConcepto();
@@ -48,26 +47,73 @@
                             { data: 'sede' },
                             { data: 'lugarCurso' },
                             { data: 'cursoTipo' },
-                            { data: 'instructor1' },
-                            { data: 'instructor2' },
+                            {
+                                data: null,
+                                render: function (data, f, d) {
+                                    return data.instructor2 != null ? data.instructor1 + " / " + data.instructor2 : data.instructor1
+                                }
+                            },
                             { data: 'fechaCurso' },
-                            { data: 'estatus' },
                             {
-                                data: null,
+                                data: 'anticipo',
                                 render: function (data, f, d) {
-                                    return '<a class="btn btn-info btn-sm" href="" onclick="return false;">Rendir gastos</a> ';
+                                    return (parseFloat(data)).toLocaleString('es-mx', {
+                                        style: 'currency',
+                                        currency: 'MXN',
+                                        minimumFractionDigits: 2
+                                    });
+                                },
+                                orderable: false
+                            },
+                            {
+                                data: 'totalGastos',
+                                render: function (data, f, d) {
+                                    return (parseFloat(data)).toLocaleString('es-mx', {
+                                        style: 'currency',
+                                        currency: 'MXN',
+                                        minimumFractionDigits: 2
+                                    });
+                                },
+                                orderable: false
+                            },
+                            {
+                                data: 'saldo',
+                                render: function (data, f, d) {
+                                    return (parseFloat(data)).toLocaleString('es-mx', {
+                                        style: 'currency',
+                                        currency: 'MXN',
+                                        minimumFractionDigits: 2
+                                    });
+                                },
+                                orderable: false
+                            },
+                            {
+                                data: 'observaciones',
+                                render: function (data, f, d) {
+                                    var color = "";
+                                    if (data == "Devolucion") {
+                                        color = "alert-warning";
+                                    } else if (data == "Reembolso") {
+                                        color = "alert-danger";
+                                    } else {
+                                        return "";
+                                    }
+                                    var status = '<div class="' + color + '" role="alert">' + data + '</div><br/>';
+                                    return status;
+                                }
+                            },
+                            {
+                                data: 'estatusId',
+                                render: function (data, f, d) {
+                                    if (data == 1) {
+                                        return '<a class="btn btn-info btn-sm" href="" onclick="return false;">Rendir gastos</a> ';
+                                    } else {
+                                        return '<a class="btn btn-success btn-sm" href="" onclick="return false;">Ver</a> ';
+                                    }
                                 },
                                 orderable: false,
                                 className: 'text-center'
-                            },
-                            {
-                                data: null,
-                                render: function (data, f, d) {
-                                    return '<a class="btn btn-success btn-sm" href="" onclick="return false;">Ver</a> ';
-                                },
-                                orderable: false,
-                                className: 'text-center'
-                            },
+                            }
                         ],
                         processing: true,
                         paging: true,
@@ -95,6 +141,7 @@
 
         },
         loadTableParticipante(lst) {
+            document.getElementById("tblParticipantes").deleteTFoot();
             var tblParticipantes = $('#tblParticipantes').DataTable({
                 data: lst,
                 columns: [
@@ -127,6 +174,17 @@
                 destroy: true,
                 responsive: true
             });
+
+            var Total = 0;
+            $(lst).each(function () {
+                Total += parseFloat(this.efectivo) + parseFloat(this.deposito) + parseFloat(this.cheque) + parseFloat(this.tarjeta);
+            });
+            var tfoot = "<tfoot><tr> <td colspan='2' class='text-right font-weight-bold'>Total: " + (Total).toLocaleString('es-mx', {
+                style: 'currency',
+                currency: 'MXN',
+                minimumFractionDigits: 2
+            }) + "</td></tr></tfoot > ";
+            $("#tblParticipantes").append(tfoot);
         },
         returnRendicion() {
             $("#divGenerales").hide();
@@ -201,7 +259,7 @@
             $("#slcComision2").val(curso.comision2);
             $("#txtEfectivo").val(curso.efectivo);
             $("#txtCheque1").val(curso.chequeTans);
-            fn.SetDate("#txtFecha1", curso.fechachequeTans);
+            $("#txtFecha1").val(curso.fechachequeTans);
             $("#txtNoCheque1").val(curso.numeroChequeTans);
             if (curso.chequeTans == 0) {
                 $("#txtFecha1").prop("disabled", true);
@@ -213,12 +271,29 @@
 
             $("#divGenerales").show();
             $("#divTabla").hide();
-            
+            cursosFn.instructores(curso);
             cursosFn.loadTableParticipante(curso.participantes);
-            lstGastos = curso.gastos;
+            lstGastos = curso.gastos.slice();
             consecutivo = lstGastos.length;
             cursosFn.loadTableGastos(lstGastos);
             fn.BlockScreen(false);
+        },
+        instructores(curso) {
+            $('#slcInstructor').empty();
+            var option = $(document.createElement('option'));
+            option.text(curso.instructor1);
+            option.val(curso.instructorId1);
+            $('#slcInstructor').append(option);
+
+            if (curso.instructorId2 != 0)
+            {
+                var option1 = $(document.createElement('option'));
+                option1.text(curso.instructor2);
+                option1.val(curso.instructorId2);
+                $('#slcInstructor').append(option1);
+            }
+
+            $('#slcInstructor').val($('#slcInstructor option:first').val());
         },
         focusout() {
             if (this.value == "") { this.value = 0; }
@@ -294,6 +369,7 @@
             $("#modalGastos").modal("hide");
         },
         loadTableGastos(lst) {
+            document.getElementById("tblGastos").deleteTFoot();
             tblGastos = $('#tblGastos').DataTable({
                 data: lst,
                 columns: [
@@ -363,6 +439,17 @@
                 destroy: true,
                 responsive: true
             });
+
+            var Total = 0;
+            $(lst).each(function () {
+                Total += parseFloat(this.total);
+            });
+            var tfoot = "<tfoot><tr> <td colspan='10' class='text-right font-weight-bold'>Total: " + (Total).toLocaleString('es-mx', {
+                style: 'currency',
+                currency: 'MXN',
+                minimumFractionDigits: 2
+            }) + "</td></tr></tfoot > ";
+            $("#tblGastos").append(tfoot);
         },
         editGasto() {
             var row = this.parentNode.parentNode;
@@ -403,7 +490,6 @@
                     alertify.alert("Cursos", data);
                 });
         }
-
     };
 
 

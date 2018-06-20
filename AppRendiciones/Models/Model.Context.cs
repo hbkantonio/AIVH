@@ -38,6 +38,9 @@ namespace AppRendiciones.Models
         public virtual DbSet<CursoParticipante> CursoParticipante { get; set; }
         public virtual DbSet<CursoTipo> CursoTipo { get; set; }
         public virtual DbSet<Estatus> Estatus { get; set; }
+        public virtual DbSet<Evento> Evento { get; set; }
+        public virtual DbSet<EventoDonante> EventoDonante { get; set; }
+        public virtual DbSet<EventoGastoDetalle> EventoGastoDetalle { get; set; }
         public virtual DbSet<EventoTipo> EventoTipo { get; set; }
         public virtual DbSet<Gasto> Gasto { get; set; }
         public virtual DbSet<GastoDetalle> GastoDetalle { get; set; }

@@ -13,7 +13,6 @@ namespace AppRendiciones.Models.DTO
         public int gastoId { get; set; }
         public string centroCostos { get; set; }
         public string resposable { get; set; }
-        public string tipoRendicion { get; set; }
         public string periodo { get; set; }
         public DateTime fechaInicial { get; set; }
         private DateTime fechaFinal { get; set; }
@@ -44,8 +43,6 @@ namespace AppRendiciones.Models.DTO
         public string centroCostos { get; set; }
         public int usuarioId { get; set; }
         public string usuario { get; set; }
-        public int pagoFormaId { get; set; }
-        public string pagoForma { get; set; }
         public string fechaInicio { get; set; }
         public string fechaFin { get; set; }
         public decimal efectivo { get; set; }

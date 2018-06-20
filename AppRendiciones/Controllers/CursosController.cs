@@ -65,13 +65,14 @@ namespace AppRendiciones.Controllers
                     chequeTans = b.ChequeTans,
                     fechachequeTans = b.FechasChequeTans != null ? b.FechasChequeTans?.ToString("dd/MM/yyyy", Cultura) : "",
                     numeroChequeTans = b.NumeroChequeTans,
-                    gastos = b.CursoGastoDetalle.Select(d=> new Models.DTO.CursoGastoDetalle
+                    anticipo = b.Efectivo + b.ChequeTans,
+                    gastos = b.CursoGastoDetalle.Select(d => new Models.DTO.CursoGastoDetalle
                     {
                         cursoId = d.CursoId,
                         consecutivoId = d.ConsecutivoId,
                         instructorId = d.UsuarioId,
-                        instructor = d.Usuario.Nombre +" "+ d.Usuario.Paterno + " " + d.Usuario.Materno,
-                        comprobanteTipoId =d.ComprobanteTipoId,
+                        instructor = d.Usuario.Nombre + " " + d.Usuario.Paterno + " " + d.Usuario.Materno,
+                        comprobanteTipoId = d.ComprobanteTipoId,
                         comprobanteTipo = d.ComprobanteTipo.Descripcion,
                         fecha2 = d.Fecha,
                         conceptoId = d.SubConcepto.Concepto.ConceptoId,
@@ -83,7 +84,10 @@ namespace AppRendiciones.Controllers
                         subTotal = d.SubTotal,
                         iva = d.Iva,
                         total = d.Total
-                    }).ToList()
+                    }).ToList(),
+                    totalGastos = b.CursoGastoDetalle.Sum(c => c.Total).ToString(),
+                    saldo = Math.Abs((b.Efectivo + b.ChequeTans) - b.CursoGastoDetalle.Sum(c => c.Total)).ToString(),
+                    observaciones = (b.Efectivo + b.ChequeTans) > b.CursoGastoDetalle.Sum(c => c.Total) ? "Devolucion" : (b.Efectivo + b.ChequeTans) == b.CursoGastoDetalle.Sum(c => c.Total) ? "" : "Reembolso"
                 }).ToList();
 
                 return Ok(cursos);
@@ -103,6 +107,7 @@ namespace AppRendiciones.Controllers
             {
                 int usuarioId = int.Parse(DbContextAIVH.GetUserName(User));
 
+                //insertar participantes
                 List<CursoParticipante> cursoParticipante = new List<CursoParticipante>();
                 int consecutivoId = 1;
                 curso.participantes.ForEach(n =>
@@ -141,6 +146,106 @@ namespace AppRendiciones.Controllers
                     consecutivoId += 1;
                 });
 
+                //insertar gastos de comision de instructores
+                var pagoParticipantes = curso.participantes.Sum(a => a.efectivo + a.cheque + a.deposito + a.tarjeta);
+
+                List<Models.CursoGastoDetalle> cursoGastoDetalle = new List<Models.CursoGastoDetalle>();
+
+                if (curso.cursoId == 0)
+                {
+                    cursoGastoDetalle.Add(new Models.CursoGastoDetalle
+                    {
+                        ConsecutivoId = 1,
+                        UsuarioId = curso.instructorId1,
+                        ComprobanteTipoId = 3,
+                        Fecha = DateTime.Now,
+                        SubConceptoId = 3,
+                        Descripcion = "Comisión por impartición de curso " + curso.comision1 + " %.",
+                        Proveedor = db.Usuario.Where(a => a.UsuarioId == curso.instructorId1).Select(b => b.Nombre + " " + b.Paterno + " " + b.Materno).FirstOrDefault(),
+                        SubTotal = (curso.comision1 * pagoParticipantes) / 100,
+                        Iva = 0,
+                        Total = (curso.comision1 * pagoParticipantes) / 100
+                    });
+
+                    if (curso.instructorId2 != 0)
+                    {
+                        cursoGastoDetalle.Add(new Models.CursoGastoDetalle
+                        {
+                            ConsecutivoId = 2,
+                            UsuarioId = curso.instructorId2,
+                            ComprobanteTipoId = 3,
+                            Fecha = DateTime.Now,
+                            SubConceptoId = 3,
+                            Descripcion = "Comisión por impartición de curso " + curso.comision2 + " %.",
+                            Proveedor = db.Usuario.Where(a => a.UsuarioId == curso.instructorId2).Select(b => b.Nombre + " " + b.Paterno + " " + b.Materno).FirstOrDefault(),
+                            SubTotal = (curso.comision2 * pagoParticipantes) / 100,
+                            Iva = 0,
+                            Total = (curso.comision2 * pagoParticipantes) / 100
+                        });
+                    }
+                }
+                else
+                {
+                    int consecutivoGastos = 1;
+
+                    cursoGastoDetalle.Add(new Models.CursoGastoDetalle
+                    {
+                        CursoId = curso.cursoId,
+                        ConsecutivoId = consecutivoGastos,
+                        UsuarioId = curso.instructorId1,
+                        ComprobanteTipoId = 3,
+                        Fecha = DateTime.Now,
+                        SubConceptoId = 3,
+                        Descripcion = "Comisión por impartición de curso " + curso.comision1 + "%.",
+                        Proveedor = db.Usuario.Where(a => a.UsuarioId == curso.instructorId1).Select(b => b.Nombre + " " + b.Paterno + " " + b.Materno).FirstOrDefault(),
+                        SubTotal = (curso.comision1 * pagoParticipantes) / 100,
+                        Iva = 0,
+                        Total = (curso.comision1 * pagoParticipantes) / 100
+                    });
+                    if (curso.instructorId2 != 0)
+                    {
+                        consecutivoGastos += 1;
+                        cursoGastoDetalle.Add(new Models.CursoGastoDetalle
+                        {
+                            CursoId = curso.cursoId,
+                            ConsecutivoId = consecutivoGastos,
+                            UsuarioId = curso.instructorId2,
+                            ComprobanteTipoId = 3,
+                            Fecha = DateTime.Now,
+                            SubConceptoId = 3,
+                            Descripcion = "Comisión por impartición de curso " + curso.comision2 + " %.",
+                            Proveedor = db.Usuario.Where(a => a.UsuarioId == curso.instructorId2).Select(b => b.Nombre + " " + b.Paterno + " " + b.Materno).FirstOrDefault(),
+                            SubTotal = (curso.comision2 * pagoParticipantes) / 100,
+                            Iva = 0,
+                            Total = (curso.comision2 * pagoParticipantes) / 100
+                        });
+                    }
+
+                    var gastos = db.CursoGastoDetalle.Where(a => a.CursoId == curso.cursoId && a.SubConceptoId != 3).ToList();
+
+                    gastos.ForEach(n =>
+                    {
+                        consecutivoGastos += 1;
+                        cursoGastoDetalle.Add(new Models.CursoGastoDetalle
+                        {
+                            CursoId = n.CursoId,
+                            ConsecutivoId = consecutivoGastos,
+                            UsuarioId = n.UsuarioId,
+                            ComprobanteTipoId = n.ComprobanteTipoId,
+                            Fecha = n.Fecha,
+                            SubConceptoId = n.SubConceptoId,
+                            Descripcion = n.Descripcion,
+                            Proveedor = n.Proveedor,
+                            SubTotal = n.SubTotal,
+                            Iva = n.Iva,
+                            Total = n.Total
+                        });
+                    });
+
+                }
+
+
+                // insertar curso
                 if (curso.cursoId == 0)
                 {
                     db.Curso.Add(new Models.Curso
@@ -161,13 +266,15 @@ namespace AppRendiciones.Controllers
                         Hora = DateTime.Now.TimeOfDay,
                         UsuarioIdGenero = usuarioId,
                         EstatusId = 1,
-                        CursoParticipante = cursoParticipante
+                        CursoParticipante = cursoParticipante,
+                        CursoGastoDetalle = cursoGastoDetalle
                     });
                 }
                 else
                 {
                     var cursoDb = db.Curso.Where(a => a.CursoId == curso.cursoId).FirstOrDefault();
                     db.CursoParticipante.RemoveRange(cursoDb.CursoParticipante);
+                    db.CursoGastoDetalle.RemoveRange(cursoDb.CursoGastoDetalle);
 
                     cursoDb.CentroCostoId = curso.centroCostosId;
                     cursoDb.SedeId = curso.sedeId;
@@ -183,6 +290,7 @@ namespace AppRendiciones.Controllers
                     cursoDb.UsuarioIdGenero = usuarioId;
                     cursoDb.EstatusId = 1;
                     db.CursoParticipante.AddRange(cursoParticipante);
+                    db.CursoGastoDetalle.AddRange(cursoGastoDetalle);
                 }
 
                 db.SaveChanges();
@@ -261,7 +369,6 @@ namespace AppRendiciones.Controllers
             {
                 return BadRequest("Error al guardar curso");
             }
-
         }
 
         [HttpGet]
@@ -280,7 +387,7 @@ namespace AppRendiciones.Controllers
                     cursoTipo = a.CursoTipo.Descripcion,
                     instructor1 = a.Usuario.Nombre + " " + a.Usuario.Paterno + " " + a.Usuario.Materno,
                     comision1 = a.Comision1,
-                    instructor2 = db.Usuario.Where(b=> b.UsuarioId == a.UsuarioId2).Select(c => c.Nombre + " " + c.Paterno + " " + c.Materno).FirstOrDefault(),
+                    instructor2 = db.Usuario.Where(b => b.UsuarioId == a.UsuarioId2).Select(c => c.Nombre + " " + c.Paterno + " " + c.Materno).FirstOrDefault(),
                     comision2 = a.Comision2,
                     fechaCurso = a.FechaCurso.ToString("dd/MM/yyyy", Cultura),
                     efectivo = a.Efectivo,
@@ -305,7 +412,7 @@ namespace AppRendiciones.Controllers
 
                 var gastos = cursoDb.FirstOrDefault().CursoGastoDetalle.Select(b => new Models.DTO.CursoGastoDetalle
                 {
-                    instructor = b.Usuario.Nombre +" "+ b.Usuario.Paterno + " " + b.Usuario.Materno,
+                    instructor = b.Usuario.Nombre + " " + b.Usuario.Paterno + " " + b.Usuario.Materno,
                     comprobanteTipo = b.ComprobanteTipo.Descripcion,
                     fecha = b.Fecha.ToString("dd/MM/yyyy", Cultura),
                     concepto = b.SubConcepto.Concepto.Descripcion,
@@ -321,7 +428,6 @@ namespace AppRendiciones.Controllers
 
                 rptCurso.Database.Tables["Curso"].SetDataSource(curso);
                 rptCurso.Database.Tables["CursoParticipante"].SetDataSource(participantes);
-                //reports.CursoGastos rptCursoGastos = new reports.CursoGastos();
                 rptCurso.Database.Tables["CursoGastoDetalle"].SetDataSource(gastos);
 
                 Stream PDFContrato;
@@ -335,6 +441,31 @@ namespace AppRendiciones.Controllers
                 var res = Convert.ToBase64String(result);
 
                 return Ok(res);
+            }
+            catch (Exception Ex)
+            {
+                return BadRequest("Error");
+            }
+
+        }
+
+        [HttpGet]
+        [Route("Aprobar/{cursoId:int}")]
+        public IHttpActionResult Aprobar(int cursoId)
+        {
+            try
+            {
+                int usuarioId = int.Parse(DbContextAIVH.GetUserName(User));
+
+                var curso = db.Curso.Where(a => a.CursoId == cursoId).FirstOrDefault();
+                curso.EstatusId = 3;
+                curso.Fecha = DateTime.Now;
+                curso.Hora = DateTime.Now.TimeOfDay;
+                curso.UsuarioIdGenero = usuarioId;
+
+                db.SaveChanges();
+
+                return Ok("La rendicion se aprobo correctamente.");
             }
             catch (Exception Ex)
             {

@@ -32,15 +32,14 @@ namespace AppRendiciones.Controllers
                     gastoId = b.GastoId,
                     centroCostos = b.CentroCosto.Descripcion,
                     resposable = b.Usuario.Nombre + " " + b.Usuario.Paterno + " " + b.Usuario.Materno,
-                    tipoRendicion = b.PagoForma.Descripcion,
                     fechaInicial = b.FechaInicio,
                     fechaFinal2 = b.FechaFin,
                     anticipo = (b.Efectivo + b.ChequeTans ).ToString(),
                     gastos = b.GastoDetalle.Sum(c => c.Total).ToString(),
                     saldo = Math.Abs((b.Efectivo + b.ChequeTans) - b.GastoDetalle.Sum(c => c.Total)).ToString(),
-                    observaciones = (b.Efectivo + b.ChequeTans) > b.GastoDetalle.Sum(c => c.Total) ? "Devolucion" : "Reembolso",
+                    observaciones = (b.Efectivo + b.ChequeTans) > b.GastoDetalle.Sum(c => c.Total) ? "Devolucion" : (b.Efectivo + b.ChequeTans) == b.GastoDetalle.Sum(c => c.Total) ? "" : "Reembolso",
                     fecha2 = b.Fecha,
-                    estatus = b.EstatusId == 1 ? "En revisión" : b.Estatus.Descripcion,
+                    estatus = b.Estatus.Descripcion,
                     estatusId = b.EstatusId
                 }).ToList();
 
@@ -64,8 +63,9 @@ namespace AppRendiciones.Controllers
                 {
                     gastoId = a.GastoId,
                     centroCostosId = a.CentroCostoId,
+                    centroCostos = a.CentroCosto.Descripcion,
                     usuarioId = a.UsuarioId,
-                    pagoFormaId = a.PagoFormaId,
+                    usuario= a.Usuario.Nombre +" " + a.Usuario.Paterno + " " + a.Usuario.Materno,
                     fechaInicio = a.FechaFin.ToString("dd/MM/yyyy", Cultura),
                     fechaFin = a.FechaFin.ToString("dd/MM/yyyy", Cultura),
                     efectivo = a.Efectivo,
@@ -154,7 +154,6 @@ namespace AppRendiciones.Controllers
                     {
                         CentroCostoId = gastos.centroCostosId,
                         UsuarioId = gastos.usuarioId,
-                        PagoFormaId = gastos.pagoFormaId,
                         FechaInicio = DateTime.ParseExact((gastos.fechaInicio.Replace('-', '/')), "dd/MM/yyyy", CultureInfo.InvariantCulture),
                         FechaFin = DateTime.ParseExact((gastos.fechaFin.Replace('-', '/')), "dd/MM/yyyy", CultureInfo.InvariantCulture),
                         Efectivo = gastos.efectivo,
@@ -175,7 +174,6 @@ namespace AppRendiciones.Controllers
 
                     gastoDb.CentroCostoId = gastos.centroCostosId;
                     gastoDb.UsuarioId = gastos.usuarioId;
-                    gastoDb.PagoFormaId = gastos.pagoFormaId;
                     gastoDb.FechaInicio = DateTime.ParseExact((gastos.fechaInicio.Replace('-', '/')), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     gastoDb.FechaFin = DateTime.ParseExact((gastos.fechaFin.Replace('-', '/')), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     gastoDb.Efectivo = gastos.efectivo;
@@ -216,7 +214,6 @@ namespace AppRendiciones.Controllers
                 {
                     centroCostos = a.CentroCosto.Descripcion,
                     usuario = a.Usuario.Nombre + " " + a.Usuario.Paterno + " " + a.Usuario.Materno,
-                    pagoForma = a.PagoForma.Descripcion,
                     fechaInicio = a.FechaFin.ToString("dd/MM/yyyy", Cultura),
                     fechaFin = a.FechaFin.ToString("dd/MM/yyyy", Cultura),
                     efectivo = a.Efectivo,
@@ -255,6 +252,31 @@ namespace AppRendiciones.Controllers
                 var res = Convert.ToBase64String(result);
 
                 return Ok(res);
+            }
+            catch (Exception Ex)
+            {
+                return BadRequest("Error");
+            }
+
+        }
+
+        [HttpGet]
+        [Route("Aprobar/{gastoId:int}")]
+        public IHttpActionResult Aprobar(int gastoId)
+        {
+            try
+            {
+                int usuarioId = int.Parse(DbContextAIVH.GetUserName(User));
+
+                var gasto = db.Gasto.Where(a => a.GastoId == gastoId).FirstOrDefault();
+                gasto.EstatusId = 3;
+                gasto.Fecha = DateTime.Now;
+                gasto.Hora = DateTime.Now.TimeOfDay;
+                gasto.UsuarioIdGenero = usuarioId;
+
+                db.SaveChanges();
+
+                return Ok("La rendicion se aprobo correctamente.");
             }
             catch (Exception Ex)
             {

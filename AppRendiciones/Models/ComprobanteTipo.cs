@@ -18,6 +18,7 @@ namespace AppRendiciones.Models
         public ComprobanteTipo()
         {
             this.CursoGastoDetalle = new HashSet<CursoGastoDetalle>();
+            this.EventoGastoDetalle = new HashSet<EventoGastoDetalle>();
             this.GastoDetalle = new HashSet<GastoDetalle>();
         }
     
@@ -27,6 +28,8 @@ namespace AppRendiciones.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CursoGastoDetalle> CursoGastoDetalle { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventoGastoDetalle> EventoGastoDetalle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GastoDetalle> GastoDetalle { get; set; }
     }

@@ -20,6 +20,8 @@ namespace AppRendiciones.Models
             this.Curso = new HashSet<Curso>();
             this.Curso1 = new HashSet<Curso>();
             this.CursoGastoDetalle = new HashSet<CursoGastoDetalle>();
+            this.Evento = new HashSet<Evento>();
+            this.Evento1 = new HashSet<Evento>();
             this.Gasto = new HashSet<Gasto>();
             this.Gasto1 = new HashSet<Gasto>();
             this.UsuarioRolAcceso = new HashSet<UsuarioRolAcceso>();
@@ -39,6 +41,11 @@ namespace AppRendiciones.Models
         public virtual ICollection<Curso> Curso1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CursoGastoDetalle> CursoGastoDetalle { get; set; }
+        public virtual Estatus Estatus { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Evento> Evento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Evento> Evento1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Gasto> Gasto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

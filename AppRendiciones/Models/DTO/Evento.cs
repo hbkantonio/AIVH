@@ -6,30 +6,25 @@ using System.Web;
 
 namespace AppRendiciones.Models.DTO
 {
-    public class Curso
+    public class Evento
     {
         static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
         public string folio { get; set; }
-        public int cursoId { get; set; }
+        public int eventoId { get; set; }
         public int centroCostosId { get; set; }
         public string centroCostos { get; set; }
-        public int sedeId { get; set; }
-        public string sede { get; set; }
-        public string lugarCurso { get; set; }
-        public int cursoTipoId { get; set; }
-        public string cursoTipo { get; set; }
-        public int instructorId1 { get; set; }
-        public string instructor1 { get; set; }
-        public int comision1 { get; set; }
-        public int instructorId2 { get; set; }
-        public string instructor2 { get; set; }
-        public int comision2 { get; set; }
-        public string fechaCurso { get; set; }
-        private DateTime fechaCurso1 { get; set; }
-        public DateTime fechaCurso2
+        public string lugarEvento { get; set; }
+        public string nombreEvento { get; set; }
+        public int eventoTipoId { get; set; }
+        public string eventoTipo { get; set; }
+        public int instructorId { get; set; }
+        public string instructor { get; set; }
+        public string fechaEvento { get; set; }
+        private DateTime fechaEvento1 { get; set; }
+        public DateTime fechaEvento2
         {
-            get { return fechaCurso1; }
-            set { fechaCurso = value.ToString("dd/MM/yyyy", Cultura); }
+            get { return fechaEvento1; }
+            set { fechaEvento = value.ToString("dd/MM/yyyy", Cultura); }
         }
         public decimal anticipo { get; set; }
         public decimal efectivo { get; set; }
@@ -39,18 +34,19 @@ namespace AppRendiciones.Models.DTO
         public string estatus { get; set; }
         public int estatusId { get; set; }
         public string usuarioGenero { get; set; }
-        public List<Participante> participantes { get; set; }
-        public List<CursoGastoDetalle> gastos { get; set; }
+        public List<Donantes> donantes { get; set; }
+        public List<EventoGastoDetalle> gastos { get; set; }
+        public string totalRecaudado { get; set; }
         public string totalGastos { get; set; }
         public string saldo { get; set; }
         public string observaciones { get; set; }
     }
 
 
-    public class Participante
+    public class Donantes
     {
-        public int cursoId { get; set; }
-        public int participanteId { get; set; }
+        public int eventoId { get; set; }
+        public int donanteId { get; set; }
         public string nombre { get; set; }
         public string apellido { get; set; }
         public decimal efectivo { get; set; }
@@ -62,14 +58,12 @@ namespace AppRendiciones.Models.DTO
     }
 
 
-    public class CursoGastoDetalle
+    public class EventoGastoDetalle
     {
 
         static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
-        public int cursoId { get; set; }
+        public int eventoId { get; set; }
         public int consecutivoId { get; set; }
-        public int instructorId { get; set; }
-        public string instructor { get; set; }
         public int comprobanteTipoId { get; set; }
         public string comprobanteTipo { get; set; }
         public string fecha { get; set; }

@@ -1,56 +1,65 @@
 ﻿$(function () {
-    var tblReporteGastos, tblGastos, lstGastos = [], consecutivo = 0;
-    var gastosFn = {
+    var tblEventos, tblDonantes, lstDonantes = [], tblGastos, lstGastos = [], consecutivo = 0,consecutivo1 = 0;
+    var eventosFn = {
         init() {
             //Cargar Catolagos
-            this.getAllGastos();
-            fn.GetCentroCostos(1);
-            fn.GetInstructor("slcInstructor");
+            this.getEventos();
             fn.GetConcepto()
                 .done(function () {
-                    gastosFn.changeConcepto();
+                    eventosFn.changeConcepto();
                 });
             fn.GetComprobanteTipo();
             //inicializar eventos
-
-            $("#btnNew").click(this.clickAgregar);
-            fn.SetDate("#txtFechaInicio", "");
-            fn.SetDate("#txtFechaFin", "");
-            fn.SetDate("#txtFecha1", "");
             fn.SetDate("#txtFechaComprobante", "");
-            $("#slcConcepto").change(this.changeConcepto);
+            fn.SetDate("#txtFecha1", "");
+            $("#btnreturn").click(this.returnRendicion);
+            $("#frmEvento").submit(this.saveRendicion);
+            $("#tblEventos").on("click", "a", this.clickCursos);
             $("#txtEfectivo").focusout(this.focusout);
             $("#txtCheque1").focusout(this.focusout);
-            $("#txtSubtotal").focusout(this.focusout);
-            $("#txtIva").focusout(this.focusout);
             $("#txtCheque1").on("input", this.inputAnticipo);
+            $("#slcConcepto").change(this.changeConcepto);
+            //modal donantes
+            $("#txtEfectivoD").focusout(this.focusout);
+            $("#txtDeposito").focusout(this.focusout);
+            $("#txtCheque").focusout(this.focusout);
+            $("#txtTarjeta").focusout(this.focusout);
+            $("#btnNewD").click(this.clickAgregarD);
+            $("#frmDonante").submit(this.addDonante);
+            $('#tblDonantes').on('click', 'button', this.deleteDonante);
+            $('#tblDonantes').on('click', 'a', this.editDonante);
+
+            //modal gastos
+            $("#btnNew").click(this.clickAgregar);
             $("#txtSubtotal").on("input", this.inputGasto);
             $("#txtIva").on("input", this.inputGasto);
             $("#frmGasto").submit(this.addGasto);
             $('#tblGastos').on('click', 'button', this.deleteGasto);
             $('#tblGastos').on('click', 'a', this.editGasto);
-            $("#frmGenerales").submit(this.saveRendicion);
+
             $('#txtBusqueda').keyup(function () {
-                tblReporteGastos.search($(this).val()).draw();
+                tblEventos.search($(this).val()).draw();
             });
             $('#slcLength').change(function () {
-                var info = tblReporteGastos.page.info();
-                tblReporteGastos.page.len($(this).val()).draw();
+                var info = tblEventos.page.info();
+                tblEventos.page.len($(this).val()).draw();
             });
-            $("#tblReporteGastos").on("click", "a", this.clickReporteGastos);
-            $("#btnNueva").click(this.newRendicion);
-            $("#btnreturn").click(this.returnRendicion);
+
         },
-        getAllGastos() {
+        getEventos() {
             fn.BlockScreen(true);
-            fn.Api("Gastos/Get", "GET", "")
+            fn.Api("Eventos/Get", "GET", "")
                 .done(function (data) {
-                    tblReporteGastos = $('#tblReporteGastos').DataTable({
+                    tblEventos = $('#tblEventos').DataTable({
                         data: data,
                         columns: [
+                            { data: 'folio' },
                             { data: 'centroCostos' },
-                            { data: 'resposable' },
-                            { data: 'periodo' },
+                            { data: 'lugarEvento' },
+                            { data: 'nombreEvento' },
+                            { data: 'eventoTipo' },
+                            { data: 'instructor' },
+                            { data: 'fechaEvento' },
                             {
                                 data: 'anticipo',
                                 render: function (data, f, d) {
@@ -63,7 +72,7 @@
                                 orderable: false
                             },
                             {
-                                data: 'gastos',
+                                data: 'totalGastos',
                                 render: function (data, f, d) {
                                     return (parseFloat(data)).toLocaleString('es-mx', {
                                         style: 'currency',
@@ -99,14 +108,23 @@
                                     return status;
                                 }
                             },
-                            { data: 'fecha' },
                             {
-                                data: "estatusId",
+                                data: 'totalRecaudado',
+                                render: function (data, f, d) {
+                                    return (parseFloat(data)).toLocaleString('es-mx', {
+                                        style: 'currency',
+                                        currency: 'MXN',
+                                        minimumFractionDigits: 2
+                                    });
+                                },
+                                orderable: false
+                            },
+                            {
+                                data: 'estatusId',
                                 render: function (data, f, d) {
                                     if (data == 1) {
-                                        return '<a class="btn btn-info btn-sm" href="" onclick="return false;">Editar</a> ';
-                                    } else
-                                    {
+                                        return '<a class="btn btn-info btn-sm" href="" onclick="return false;">Rendir gastos</a> ';
+                                    } else {
                                         return '<a class="btn btn-success btn-sm" href="" onclick="return false;">Ver</a> ';
                                     }
                                 },
@@ -135,97 +153,199 @@
                 .fail(function (data) {
                     fn.BlockScreen(false);
                     console.log(data);
-                    alertify.alert("Gastos", data);
+                    alertify.alert("Cursos", data);
                 });
 
-
         },
-        newRendicion()
-        {
-            gastosFn.resetForm();
-            $("#divGenerales").show();
-            $("#divTabla").hide();
-        },
-        returnRendicion()
-        {
+        returnRendicion() {
             $("#divGenerales").hide();
             $("#divTabla").show();
         },
-        clickReporteGastos() {
+        clickCursos() {
             var row = this.parentNode.parentNode;
-            var gasto = tblReporteGastos.row(row).data();
-            if (this.innerHTML == "Ver") {
+            var evento = tblEventos.row(row).data();
+            if (this.innerHTML == "Rendir gastos") {
                 fn.BlockScreen(true);
-                gastosFn.generatePdf(gasto.gastoId);
+                eventosFn.editarEvento(evento);
             } else {
+                eventosFn.generatePdf(evento.eventoId);
                 fn.BlockScreen(true);
-                gastosFn.editarReporteGastos(gasto.gastoId);
             }
         },
-        editarReporteGastos(gastoId) {
-            fn.Api("Gastos/GetDetails/" + gastoId, "GET", "")
-                .done(function (data) {
-                    $('#btnSave').removeData('gastoId');
-                    $("#btnSave").data("gastoId", data.gastoId);
-                    $("#slcCentroCostos").val(data.centroCostosId);
-                    $("#slcInstructor").val(data.usuarioId);
-                    fn.SetDate("#txtFechaInicio", data.fechaInicio);
-                    fn.SetDate("#txtFechaFin", data.fechaFin);
-                    $("#txtEfectivo").val(data.efectivo);
-                    $("#txtCheque1").val(data.chequeTransNuevo);
-                    fn.SetDate("#txtFecha1", data.fechaNuevo);
-                    $("#txtNoCheque1").val(data.numeroNuevo);
-                    if (data.chequeTransNuevo == 0) {
-                        $("#txtFecha1").prop("disabled", true);
-                        $("#txtNoCheque1").prop("disabled", true);
-                    } else {
-                        $("#txtFecha1").prop("disabled", false);
-                        $("#txtNoCheque1").prop("disabled", false);
-                    }
-                    $("#divGenerales").show();
-                    $("#divTabla").hide();
-                    lstGastos = data.gastoDetalle;
-                    consecutivo = lstGastos.length;
-                    gastosFn.loadTableGastos(lstGastos);
-                    fn.BlockScreen(false);
-                })
-                .fail(function (data) {
-                    fn.BlockScreen(false);
-                    console.log(data);
-                    alertify.alert("Gastos", data);
-                });
-        },
-        clickAgregar() {
-            $('#slcComprobanteTipo').val($('#slcComprobanteTipo option:first').val());
-            $("#txtFechaComprobante").val("");
-            $('#slcConcepto').val($('#slcConcepto option:first').val());
-            fn.GetSubConcepto($("#slcConcepto").val());
-            $("#txtDescripcion").val("");
-            $("#txtProveedor").val("");
-            $("#txtSubtotal").val(0);
-            $("#txtIva").val(0);
-            $("#txtTotal").val(0);
-            $('#btnAdd').removeData('consecutivoId');
-            $("#modalGastos").modal("show");
-        },
-        changeConcepto() {
-            fn.GetSubConcepto($("#slcConcepto").val());
+        editarEvento(evento) {
+            $('#btnSave').removeData('eventoId');
+            $("#btnSave").data("eventoId", evento.eventoId);
+            $("#slcCentroCostos").val(evento.centroCostos);
+            $("#txtLugar").val(evento.lugarEvento);
+            $("#txtNombreEvento").val(evento.nombreEvento);
+            $("#slcEventoTipo").val(evento.eventoTipo);
+            $("#txtFecha").val(evento.fechaEvento);
+            $("#slcInstructor").val(evento.instructor);
+            $("#txtEfectivo").val(evento.efectivo);
+            $("#txtCheque1").val(evento.chequeTans);
+            $("#txtFecha1").val(evento.fechachequeTans);
+            $("#txtNoCheque1").val(evento.numeroChequeTans);
+            if (evento.chequeTans == 0) {
+                $("#txtFecha1").prop("disabled", true);
+                $("#txtNoCheque1").prop("disabled", true);
+            } else {
+                $("#txtFecha1").prop("disabled", false);
+                $("#txtNoCheque1").prop("disabled", false);
+            }
+
+            $("#divGenerales").show();
+            $("#divTabla").hide();
+            lstDonantes = evento.donantes.slice();
+            consecutivo = lstDonantes.length;
+            eventosFn.loadTableDonantes(lstDonantes);
+            lstGastos = evento.gastos.slice();
+            consecutivo1 = lstGastos.length;
+            eventosFn.loadTableGastos(lstGastos);
+            fn.BlockScreen(false);
         },
         focusout() {
             if (this.value == "") { this.value = 0; }
+        },
+        clickAgregarD() {
+            $("#frmDonante")[0].reset();
+            $('#btnAddD').removeData('donanteId');
+            $("#modalDonantes").modal("show");
+        },
+        addDonante(e) {
+            e.preventDefault();
+            var cons = $("#btnAddD").data("donanteId");
+            if (cons === undefined) {
+                consecutivo += 1;
+                lstDonantes.push(
+                    {
+                        donanteId: consecutivo,
+                        nombre: $("#txtNombre").val(),
+                        apellido: $("#txtApellido").val(),
+                        efectivo: $("#txtEfectivoD").val(), 
+                        deposito: $("#txtDeposito").val(),
+                        cheque: $("#txtCheque").val(),
+                        tarjeta: $("#txtTarjeta").val(),
+                        email: $("#txtEmail").val(),
+                        celular: $("#txtCelular").val()
+                    });
+            } else {
+                var donante = lstDonantes.filter(function (e) { return e.donanteId === cons; });
+                donante[0].nombre = $("#txtNombre").val();
+                donante[0].apellido = $("#txtApellido").val();
+                donante[0].efectivo = $("#txtEfectivoD").val();
+                donante[0].deposito = $("#txtDeposito").val();
+                donante[0].cheque = $("#txtCheque").val();
+                donante[0].tarjeta = $("#txtTarjeta").val();
+                donante[0].email = $("#txtEmail").val();
+                donante[0].celular = $("#txtCelular").val();
+            }
+            eventosFn.loadTableDonantes(lstDonantes);
+            $("#modalDonantes").modal("hide");
+        },
+        loadTableDonantes(lst) {
+            document.getElementById("tblDonantes").deleteTFoot();
+            tblDonantes = $('#tblDonantes').DataTable({
+                data: lst,
+                columns: [
+                    {
+                        data: null,
+                        render: function (data, f, d) {
+                            return data.nombre + " " + data.apellido;
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, f, d) {
+                            return (parseFloat(data.efectivo) + parseFloat(data.deposito) + parseFloat(data.cheque) + parseFloat(data.tarjeta)).toLocaleString('es-mx', {
+                                style: 'currency',
+                                currency: 'MXN',
+                                minimumFractionDigits: 2
+                            });
+                        },
+                        orderable: false
+                    },
+                    { data: 'email' },
+                    { data: 'celular' },
+                    {
+                        data: null,
+                        render: function (data, f, d) {
+                            return '<a class="btn btn-info btn-sm" href="" onclick="return false;">Edición</a> ';
+                        },
+                        orderable: false,
+                        className: 'text-center'
+                    },
+                    {
+                        data: null,
+                        render: function (data, f, d) {
+                            return '<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                        },
+                        orderable: false,
+                        className: 'text-center'
+                    }
+
+                ],
+                processing: true,
+                paging: false,
+                searching: false,
+                ordering: false,
+                info: false,
+                stateSave: true,
+                destroy: true,
+                responsive: true
+            });
+
+            var Total = 0;
+            $(lst).each(function () {
+                Total += parseFloat(this.efectivo) + parseFloat(this.deposito) + parseFloat(this.cheque) + parseFloat(this.tarjeta);
+            });
+            var tfoot = "<tfoot><tr> <td colspan='2' class='text-right font-weight-bold'>Total: " + (Total).toLocaleString('es-mx', {
+                style: 'currency',
+                currency: 'MXN',
+                minimumFractionDigits: 2
+            }) + "</td></tr></tfoot > ";
+            $("#tblDonantes").append(tfoot);
+        },
+        editDonante() {
+            var row = this.parentNode.parentNode;
+            var donante = tblDonantes.row(row).data();
+            $("#txtNombre").val(donante.nombre);
+            $("#txtApellido").val(donante.apellido);
+            $("#txtEfectivo").val(donante.efectivo);
+            $("#txtDeposito").val(donante.deposito);
+            $("#txtCheque").val(donante.cheque);
+            $("#txtTarjeta").val(donante.tarjeta);
+            $("#txtEmail").val(donante.email);
+            $("#txtCelular").val(donante.celular);
+            $('#btnAddD').removeData('donanteId');
+            $("#btnAddD").data("donanteId", donante.donanteId);
+            $("#modalDonantes").modal("show");
+        },
+        deleteDonante() {
+            var row = this.parentNode.parentNode;
+            var donante = tblDonantes.row(row).data();
+            lstDonantes = lstDonantes.filter(function (e) { return e.donanteId !== donante.donanteId; });
+            eventosFn.loadTableDonantes(lstDonantes);
         },
         inputAnticipo() {
             if (this.value > 0) {
                 if (this.id == "txtCheque1") {
                     $("#txtFecha1").prop("disabled", false);
                     $("#txtNoCheque1").prop("disabled", false);
-                } 
+                }
             } else {
                 if (this.id == "txtCheque1") {
                     $("#txtFecha1").prop("disabled", true);
                     $("#txtNoCheque1").prop("disabled", true);
                 }
             }
+        },
+        changeConcepto() {
+            fn.GetSubConcepto($("#slcConcepto").val());
+        },
+        clickAgregar() {
+            $("#frmGasto")[0].reset();
+            $('#btnAdd').removeData('consecutivoId');
+            $("#modalGastos").modal("show");
         },
         inputGasto() {
             var subtotal = (parseFloat($("#txtSubtotal").val()) || 0);
@@ -236,10 +356,12 @@
             e.preventDefault();
             var cons = $("#btnAdd").data("consecutivoId");
             if (cons === undefined) {
-                consecutivo += 1;
+                consecutivo1 += 1;
                 lstGastos.push(
                     {
-                        consecutivoId: consecutivo,
+                        consecutivoId: consecutivo1,
+                        instructorId: $("#slcInstructor").val(),
+                        instructor: $("#slcInstructor  :selected").text(),
                         comprobanteTipoId: $("#slcComprobanteTipo").val(),
                         comprobanteTipo: $("#slcComprobanteTipo :selected").text(),
                         fecha: $("#txtFechaComprobante").val(),
@@ -255,6 +377,8 @@
                     });
             } else {
                 var gasto = lstGastos.filter(function (e) { return e.consecutivoId === cons; });
+                gasto[0].instructorId = $("#slcInstructor").val();
+                gasto[0].instructor = $("#slcInstructor  :selected").text();
                 gasto[0].comprobanteTipoId = $("#slcComprobanteTipo").val();
                 gasto[0].comprobanteTipo = $("#slcComprobanteTipo :selected").text();
                 gasto[0].fecha = $("#txtFechaComprobante").val();
@@ -269,7 +393,7 @@
                 gasto[0].total = $("#txtTotal").val();
             }
 
-            gastosFn.loadTableGastos(lstGastos);
+            eventosFn.loadTableGastos(lstGastos);
             $("#modalGastos").modal("hide");
         },
         loadTableGastos(lst) {
@@ -357,6 +481,7 @@
         editGasto() {
             var row = this.parentNode.parentNode;
             var gasto = tblGastos.row(row).data();
+            $("#slcInstructor").val(gasto.instructorId);
             $("#slcComprobanteTipo").val(gasto.comprobanteTipoId);
             fn.SetDate("#txtFechaComprobante", gasto.fecha);
             $("#slcConcepto").val(gasto.conceptoId);
@@ -377,7 +502,17 @@
             var row = this.parentNode.parentNode;
             var gasto = tblGastos.row(row).data();
             lstGastos = lstGastos.filter(function (e) { return e.consecutivoId !== gasto.consecutivoId; });
-            gastosFn.loadTableGastos(lstGastos);
+            eventosFn.loadTableGastos(lstGastos);
+        },
+        validGastos() {
+            if (lstGastos.length > 0) {
+                $("#validGastos").hide();
+                return true;
+            }
+            else {
+                $("#validGastos").show();
+                return false;
+            }
         },
         validGastos() {
             if (lstGastos.length > 0) {
@@ -391,57 +526,41 @@
         },
         saveRendicion(e) {
             e.preventDefault();
-            var $frm = $('#frmGenerales');
-            if ($frm[0].checkValidity() && gastosFn.validGastos()) {
+            var $frm = $('#frmEvento');
+            if ($frm[0].checkValidity() && eventosFn.validGastos()) {
                 fn.BlockScreen(true);
-                var gastoId = $("#btnSave").data("gastoId");
+                var eventoId = $("#btnSave").data("eventoId");
 
-                if (gastoId === undefined) {
-                    var gastos =
-                        {
-                            centroCostosId: $("#slcCentroCostos").val(),
-                            usuarioId: $("#slcInstructor").val(),
-                            fechaInicio: $("#txtFechaInicio").val(),
-                            fechaFin: $("#txtFechaFin").val(),
-                            efectivo: $("#txtEfectivo").val(),
-                            chequeTransNuevo: $("#txtCheque1").val(),
-                            fechaNuevo: $("#txtFecha1").val(),
-                            numeroNuevo: $("#txtNoCheque1").val(),
-                            gastoDetalle: lstGastos
-                        };
-                } else
-                {
-                    var gastos =
-                        {
-                            gastoId,
-                            centroCostosId: $("#slcCentroCostos").val(),
-                            usuarioId: $("#slcInstructor").val(),
-                            fechaInicio: $("#txtFechaInicio").val(),
-                            fechaFin: $("#txtFechaFin").val(),
-                            efectivo: $("#txtEfectivo").val(),
-                            chequeTransNuevo: $("#txtCheque1").val(),
-                            fechaNuevo: $("#txtFecha1").val(),
-                            gastoDetalle: lstGastos
-                        };
-                }
-               
-                fn.Api("Gastos/Save", "Post", JSON.stringify(gastos))
+                var evento =
+                    {
+                        eventoId,
+                        efectivo: $("#txtEfectivo").val(),
+                        chequeTans: $("#txtCheque1").val(),
+                        fechachequeTans: $("#txtFecha1").val(),
+                        numeroChequeTans: $("#txtNoCheque1").val(),
+                        donantes: lstDonantes,
+                        gastos: lstGastos
+                    };
+
+
+                fn.Api("Eventos/SaveRendicion", "Post", JSON.stringify(evento))
                     .done(function (data) {
-                        gastosFn.resetForm();
+                        $('#btnSave').removeData('eventoId');
+                        $("#frmEvento")[0].reset();
                         $("#divGenerales").hide();
                         $("#divTabla").show();
-                        gastosFn.getAllGastos();
-                        alertify.alert("Gastos", data.message);
+                        eventosFn.getEventos();
+                        alertify.alert("Eventos", data.message);
                     })
                     .fail(function (data) {
                         fn.BlockScreen(false);
                         console.log(data);
-                        alertify.alert("Gastos", data);
+                        alertify.alert("Eventos", data);
                     });
             }
         },
-        generatePdf(gastoId) {
-            fn.Api("Gastos/ReporteGastos/" + gastoId, "GET", "")
+        generatePdf(eventoId) {
+            fn.Api("Eventos/ReporteEvento/" + eventoId, "GET", "")
                 .done(function (data) {
                     let pdfWindow = window.open("");
                     pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64," + data + "'></iframe>");
@@ -450,22 +569,11 @@
                 .fail(function (data) {
                     fn.BlockScreen(false);
                     console.log(data);
-                    alertify.alert("Gastos", data);
+                    alertify.alert("Eventos", data);
                 });
-        },
-        resetForm()
-        {
-            $('#btnSave').removeData('gastoId');
-            $("#frmGenerales")[0].reset();
-            $("#txtFecha1").prop("disabled", true);
-            $("#txtNoCheque1").prop("disabled", true);
-            $('#tblGastos').DataTable().clear().draw();
-            lstGastos = [];
-            consecutivo = 0;
         }
-
     };
 
 
-    gastosFn.init();
+    eventosFn.init();
 });

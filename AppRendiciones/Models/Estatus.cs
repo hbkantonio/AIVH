@@ -18,8 +18,10 @@ namespace AppRendiciones.Models
         public Estatus()
         {
             this.Curso = new HashSet<Curso>();
+            this.Evento = new HashSet<Evento>();
             this.Gasto = new HashSet<Gasto>();
             this.SubMenu = new HashSet<SubMenu>();
+            this.Usuario = new HashSet<Usuario>();
         }
     
         public int EstatusId { get; set; }
@@ -28,8 +30,12 @@ namespace AppRendiciones.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Curso> Curso { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Evento> Evento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Gasto> Gasto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubMenu> SubMenu { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Usuario> Usuario { get; set; }
     }
 }

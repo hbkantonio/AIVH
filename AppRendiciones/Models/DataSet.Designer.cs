@@ -423,8 +423,6 @@ namespace AppRendiciones.Models {
             
             private global::System.Data.DataColumn columnusuario;
             
-            private global::System.Data.DataColumn columnpagoForma;
-            
             private global::System.Data.DataColumn columnfechaInicio;
             
             private global::System.Data.DataColumn columnfechaFin;
@@ -485,14 +483,6 @@ namespace AppRendiciones.Models {
             public global::System.Data.DataColumn usuarioColumn {
                 get {
                     return this.columnusuario;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn pagoFormaColumn {
-                get {
-                    return this.columnpagoForma;
                 }
             }
             
@@ -589,12 +579,11 @@ namespace AppRendiciones.Models {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public GastoRow AddGastoRow(string centroCostos, string usuario, string pagoForma, string fechaInicio, string fechaFin, decimal efectivo, decimal chequeTransNuevo, string fechaNuevo, string numeroNuevo, string usuarioGenero) {
+            public GastoRow AddGastoRow(string centroCostos, string usuario, string fechaInicio, string fechaFin, decimal efectivo, decimal chequeTransNuevo, string fechaNuevo, string numeroNuevo, string usuarioGenero) {
                 GastoRow rowGastoRow = ((GastoRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         centroCostos,
                         usuario,
-                        pagoForma,
                         fechaInicio,
                         fechaFin,
                         efectivo,
@@ -626,7 +615,6 @@ namespace AppRendiciones.Models {
             internal void InitVars() {
                 this.columncentroCostos = base.Columns["centroCostos"];
                 this.columnusuario = base.Columns["usuario"];
-                this.columnpagoForma = base.Columns["pagoForma"];
                 this.columnfechaInicio = base.Columns["fechaInicio"];
                 this.columnfechaFin = base.Columns["fechaFin"];
                 this.columnefectivo = base.Columns["efectivo"];
@@ -643,8 +631,6 @@ namespace AppRendiciones.Models {
                 base.Columns.Add(this.columncentroCostos);
                 this.columnusuario = new global::System.Data.DataColumn("usuario", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnusuario);
-                this.columnpagoForma = new global::System.Data.DataColumn("pagoForma", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnpagoForma);
                 this.columnfechaInicio = new global::System.Data.DataColumn("fechaInicio", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnfechaInicio);
                 this.columnfechaFin = new global::System.Data.DataColumn("fechaFin", typeof(string), null, global::System.Data.MappingType.Element);
@@ -2353,22 +2339,6 @@ namespace AppRendiciones.Models {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string pagoForma {
-                get {
-                    try {
-                        return ((string)(this[this.tableGasto.pagoFormaColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'pagoForma\' de la tabla \'Gasto\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableGasto.pagoFormaColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string fechaInicio {
                 get {
                     try {
@@ -2501,18 +2471,6 @@ namespace AppRendiciones.Models {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetusuarioNull() {
                 this[this.tableGasto.usuarioColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IspagoFormaNull() {
-                return this.IsNull(this.tableGasto.pagoFormaColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetpagoFormaNull() {
-                this[this.tableGasto.pagoFormaColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

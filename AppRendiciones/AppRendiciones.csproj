@@ -148,7 +148,9 @@
     <Content Include="img\logo.jpg" />
     <Content Include="img\logo.png" />
     <Content Include="index.html" />
+    <Content Include="js\administracion\eventos.js" />
     <Content Include="js\administracion\cursos.js" />
+    <Content Include="js\administracion\gastos.js" />
     <Content Include="js\global.js" />
     <Content Include="js\index\menu.js" />
     <Content Include="js\index\nav.js" />
@@ -158,6 +160,7 @@
     <Content Include="js\plugin\bootstrap-datepicker.min.js" />
     <Content Include="js\plugin\jquery.blockUI.js" />
     <Content Include="js\plugin\moment.min.js" />
+    <Content Include="js\reporte\eventos.js" />
     <Content Include="js\reporte\cursos.js" />
     <Content Include="js\reporte\gastos.js" />
     <Content Include="login.html" />
@@ -171,7 +174,10 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Content Include="views\administracion\eventos.html" />
     <Content Include="views\administracion\cursos.html" />
+    <Content Include="views\administracion\gastos.html" />
+    <Content Include="views\reporte\eventos.html" />
     <Content Include="views\reporte\cursos.html" />
     <Content Include="views\reporte\gastos.html" />
     <Content Include="Web.config" />
@@ -181,6 +187,7 @@
     <Compile Include="Auth\Autentificacion.cs" />
     <Compile Include="Business\General\Modulo.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EventosController.cs" />
     <Compile Include="Controllers\CursosController.cs" />
     <Compile Include="Controllers\GastosController.cs" />
     <Compile Include="Controllers\GeneralController.cs" />
@@ -227,11 +234,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTO\Evento.cs" />
     <Compile Include="Models\DTO\Curso.cs" />
     <Compile Include="Models\DTO\Modulo.cs" />
     <Compile Include="Models\DTO\Gasto.cs" />
     <Compile Include="Models\DTO\Usuario.cs" />
     <Compile Include="Models\Estatus.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Evento.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventoDonante.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventoGastoDetalle.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EventoTipo.cs">

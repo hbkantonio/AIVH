@@ -139,8 +139,8 @@
         if (date != "")
             $(id).datepicker("setDate", date);
     },
-    GetCentroCostos() {
-        fn.Api("General/GetCentroCostos", "GET", "")
+    GetCentroCostos(tipo) {
+        fn.Api("General/GetCentroCostos/" + tipo, "GET", "")
             .done(function (data) {
                 $(data).each(function () {
                     var option = $(document.createElement('option'));
@@ -169,24 +169,6 @@
 
                 if ($('#' + id).length > 0) {
                     $('#' + id).val($('#' + id + ' option:first').val());
-                }
-            })
-            .fail(function (data) {
-                console.log(data);
-            });
-    },
-    GetTipoRendicion() {
-        fn.Api("General/GetTipoRendicion", "GET", "")
-            .done(function (data) {
-                $(data).each(function () {
-                    var option = $(document.createElement('option'));
-                    option.text(this.text);
-                    option.val(this.value);
-                    $('#slcRendicionTipo').append(option);
-                });
-
-                if ($('#slcRendicionTipo').length > 0) {
-                    $('#slcRendicionTipo').val($('#slcRendicionTipo option:first').val());
                 }
             })
             .fail(function (data) {
@@ -283,6 +265,23 @@
                 });
                 if ($('#slcCursoTipo').length > 0) {
                     $('#slcCursoTipo').val($('#slcCursoTipo option:first').val());
+                }
+            })
+            .fail(function (data) {
+                console.log(data);
+            });
+    },
+    GetEventoTipo() {
+        fn.Api("General/GetTipoEvento", "GET", "")
+            .done(function (data) {
+                $(data).each(function () {
+                    var option = $(document.createElement('option'));
+                    option.text(this.text);
+                    option.val(this.value);
+                    $('#slcEventoTipo').append(option);
+                });
+                if ($('#slcEventoTipo').length > 0) {
+                    $('#slcEventoTipo').val($('#slcEventoTipo option:first').val());
                 }
             })
             .fail(function (data) {

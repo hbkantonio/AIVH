@@ -159,25 +159,58 @@
           <Property Name="EstatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
         <EntityType Name="Evento">
-          <Property Name="EventoId" Type="nchar" MaxLength="10" />
-          <Property Name="CentroCostoId" Type="int" />
-          <Property Name="Lugar" Type="varchar" MaxLength="200" />
-          <Property Name="Nombre" Type="varchar" MaxLength="200" />
-          <Property Name="TipoEventoId" Type="int" />
-          <Property Name="UsuarioId" Type="int" />
-          <Property Name="FechaEvento" Type="date" />
-          <Property Name="Efectivo" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="ChequeTans" Type="decimal" Precision="18" Scale="2" />
+          <Key>
+            <PropertyRef Name="EventoId" />
+          </Key>
+          <Property Name="EventoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CentroCostoId" Type="int" Nullable="false" />
+          <Property Name="LugarEvento" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="NombreEvento" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="EventoTipoId" Type="int" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="FechaEvento" Type="date" Nullable="false" />
+          <Property Name="Efectivo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ChequeTans" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="FechasChequeTans" Type="date" />
-          <Property Name="NumeroChequeTans" Type="varchar" MaxLength="50" />
-          <Property Name="Fecha" Type="date" />
-          <Property Name="Hora" Type="time" Precision="0" />
-          <Property Name="UsuarioIdGenero" Type="int" />
-          <Property Name="EstatusId" Type="int" />
-        </EntityType>-->
+          <Property Name="NumeroChequeTans" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Hora" Type="time" Precision="0" Nullable="false" />
+          <Property Name="UsuarioIdGenero" Type="int" Nullable="false" />
+          <Property Name="EstatusId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventoDonante">
+          <Key>
+            <PropertyRef Name="EventoId" />
+            <PropertyRef Name="DonanteId" />
+          </Key>
+          <Property Name="EventoId" Type="int" Nullable="false" />
+          <Property Name="DonanteId" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Apellido" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Efectivo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DepositooTransferencia" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Cheque" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TarjetaCredito" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Celular" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventoGastoDetalle">
+          <Key>
+            <PropertyRef Name="EventoId" />
+            <PropertyRef Name="ConsecutivoId" />
+          </Key>
+          <Property Name="EventoId" Type="int" Nullable="false" />
+          <Property Name="ConsecutivoId" Type="int" Nullable="false" />
+          <Property Name="ComprobanteTipoId" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="SubConceptoId" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="Proveedor" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="SubTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Iva" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="EventoTipo">
           <Key>
             <PropertyRef Name="EventoTipoId" />
@@ -192,7 +225,6 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
           <Property Name="GastoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CentroCostoId" Type="int" Nullable="false" />
           <Property Name="UsuarioId" Type="int" Nullable="false" />
-          <Property Name="PagoFormaId" Type="int" Nullable="false" />
           <Property Name="FechaInicio" Type="date" Nullable="false" />
           <Property Name="FechaFin" Type="date" Nullable="false" />
           <Property Name="Efectivo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -488,6 +520,114 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Evento_CentroCosto">
+          <End Role="CentroCosto" Type="Self.CentroCosto" Multiplicity="1" />
+          <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CentroCosto">
+              <PropertyRef Name="CentroCostoId" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="CentroCostoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evento_Estatus">
+          <End Role="Estatus" Type="Self.Estatus" Multiplicity="1" />
+          <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="EstatusId" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evento_EventoTipo">
+          <End Role="EventoTipo" Type="Self.EventoTipo" Multiplicity="1" />
+          <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventoTipo">
+              <PropertyRef Name="EventoTipoId" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="EventoTipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evento_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="EventoTipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evento_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventoDonante_Evento">
+          <End Role="Evento" Type="Self.Evento" Multiplicity="1" />
+          <End Role="EventoDonante" Type="Self.EventoDonante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evento">
+              <PropertyRef Name="EventoId" />
+            </Principal>
+            <Dependent Role="EventoDonante">
+              <PropertyRef Name="EventoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventoGastoDetalle_ComprobanteTipo">
+          <End Role="ComprobanteTipo" Type="Self.ComprobanteTipo" Multiplicity="1" />
+          <End Role="EventoGastoDetalle" Type="Self.EventoGastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ComprobanteTipo">
+              <PropertyRef Name="ComprobanteTipoId" />
+            </Principal>
+            <Dependent Role="EventoGastoDetalle">
+              <PropertyRef Name="ComprobanteTipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventoGastoDetalle_Evento">
+          <End Role="Evento" Type="Self.Evento" Multiplicity="1" />
+          <End Role="EventoGastoDetalle" Type="Self.EventoGastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evento">
+              <PropertyRef Name="EventoId" />
+            </Principal>
+            <Dependent Role="EventoGastoDetalle">
+              <PropertyRef Name="EventoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventoGastoDetalle_SubConcepto">
+          <End Role="SubConcepto" Type="Self.SubConcepto" Multiplicity="1" />
+          <End Role="EventoGastoDetalle" Type="Self.EventoGastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubConcepto">
+              <PropertyRef Name="SubConceptoId" />
+            </Principal>
+            <Dependent Role="EventoGastoDetalle">
+              <PropertyRef Name="SubConceptoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Gasto_Estatus">
           <End Role="Estatus" Type="Self.Estatus" Multiplicity="1" />
           <End Role="Gasto" Type="Self.Gasto" Multiplicity="*" />
@@ -509,18 +649,6 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
             </Principal>
             <Dependent Role="Gasto">
               <PropertyRef Name="CentroCostoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RendicionGasto_PagoForma">
-          <End Role="PagoForma" Type="Self.PagoForma" Multiplicity="1" />
-          <End Role="Gasto" Type="Self.Gasto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PagoForma">
-              <PropertyRef Name="PagoFormaId" />
-            </Principal>
-            <Dependent Role="Gasto">
-              <PropertyRef Name="PagoFormaId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -620,6 +748,18 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Usuario_Estatus">
+          <End Role="Estatus" Type="Self.Estatus" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="EstatusId" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Usuario_UsuarioRol">
           <End Role="UsuarioRol" Type="Self.UsuarioRol" Multiplicity="1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -683,6 +823,9 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
           <EntitySet Name="CursoParticipante" EntityType="Self.CursoParticipante" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CursoTipo" EntityType="Self.CursoTipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estatus" EntityType="Self.Estatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evento" EntityType="Self.Evento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventoDonante" EntityType="Self.EventoDonante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventoGastoDetalle" EntityType="Self.EventoGastoDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventoTipo" EntityType="Self.EventoTipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gasto" EntityType="Self.Gasto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GastoDetalle" EntityType="Self.GastoDetalle" Schema="dbo" store:Type="Tables" />
@@ -755,16 +898,48 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_Evento_CentroCosto" Association="Self.FK_Evento_CentroCosto">
+            <End Role="CentroCosto" EntitySet="CentroCosto" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evento_Estatus" Association="Self.FK_Evento_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evento_EventoTipo" Association="Self.FK_Evento_EventoTipo">
+            <End Role="EventoTipo" EntitySet="EventoTipo" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evento_Usuario" Association="Self.FK_Evento_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evento_Usuario1" Association="Self.FK_Evento_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventoDonante_Evento" Association="Self.FK_EventoDonante_Evento">
+            <End Role="Evento" EntitySet="Evento" />
+            <End Role="EventoDonante" EntitySet="EventoDonante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventoGastoDetalle_ComprobanteTipo" Association="Self.FK_EventoGastoDetalle_ComprobanteTipo">
+            <End Role="ComprobanteTipo" EntitySet="ComprobanteTipo" />
+            <End Role="EventoGastoDetalle" EntitySet="EventoGastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventoGastoDetalle_Evento" Association="Self.FK_EventoGastoDetalle_Evento">
+            <End Role="Evento" EntitySet="Evento" />
+            <End Role="EventoGastoDetalle" EntitySet="EventoGastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventoGastoDetalle_SubConcepto" Association="Self.FK_EventoGastoDetalle_SubConcepto">
+            <End Role="SubConcepto" EntitySet="SubConcepto" />
+            <End Role="EventoGastoDetalle" EntitySet="EventoGastoDetalle" />
+          </AssociationSet>
           <AssociationSet Name="FK_Gasto_Estatus" Association="Self.FK_Gasto_Estatus">
             <End Role="Estatus" EntitySet="Estatus" />
             <End Role="Gasto" EntitySet="Gasto" />
           </AssociationSet>
           <AssociationSet Name="FK_RendicionGasto_CentroCosto" Association="Self.FK_RendicionGasto_CentroCosto">
             <End Role="CentroCosto" EntitySet="CentroCosto" />
-            <End Role="Gasto" EntitySet="Gasto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RendicionGasto_PagoForma" Association="Self.FK_RendicionGasto_PagoForma">
-            <End Role="PagoForma" EntitySet="PagoForma" />
             <End Role="Gasto" EntitySet="Gasto" />
           </AssociationSet>
           <AssociationSet Name="FK_RendicionGasto_Usuario" Association="Self.FK_RendicionGasto_Usuario">
@@ -798,6 +973,10 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
           <AssociationSet Name="FK_SubMenu_Menu" Association="Self.FK_SubMenu_Menu">
             <End Role="Menu" EntitySet="Menu" />
             <End Role="SubMenu" EntitySet="SubMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Estatus" Association="Self.FK_Usuario_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
           <AssociationSet Name="FK_Usuario_UsuarioRol" Association="Self.FK_Usuario_UsuarioRol">
             <End Role="UsuarioRol" EntitySet="UsuarioRol" />
@@ -834,6 +1013,9 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
           <EntitySet Name="CursoParticipante" EntityType="AIVHModel.CursoParticipante" />
           <EntitySet Name="CursoTipo" EntityType="AIVHModel.CursoTipo" />
           <EntitySet Name="Estatus" EntityType="AIVHModel.Estatus" />
+          <EntitySet Name="Evento" EntityType="AIVHModel.Evento" />
+          <EntitySet Name="EventoDonante" EntityType="AIVHModel.EventoDonante" />
+          <EntitySet Name="EventoGastoDetalle" EntityType="AIVHModel.EventoGastoDetalle" />
           <EntitySet Name="EventoTipo" EntityType="AIVHModel.EventoTipo" />
           <EntitySet Name="Gasto" EntityType="AIVHModel.Gasto" />
           <EntitySet Name="GastoDetalle" EntityType="AIVHModel.GastoDetalle" />
@@ -858,6 +1040,10 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
             <End Role="CentroCosto" EntitySet="CentroCosto" />
             <End Role="Curso" EntitySet="Curso" />
           </AssociationSet>
+          <AssociationSet Name="FK_Evento_CentroCosto" Association="AIVHModel.FK_Evento_CentroCosto">
+            <End Role="CentroCosto" EntitySet="CentroCosto" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
           <AssociationSet Name="FK_RendicionGasto_CentroCosto" Association="AIVHModel.FK_RendicionGasto_CentroCosto">
             <End Role="CentroCosto" EntitySet="CentroCosto" />
             <End Role="Gasto" EntitySet="Gasto" />
@@ -865,6 +1051,10 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
           <AssociationSet Name="FK_CursoGastoDetalle_ComprobanteTipo" Association="AIVHModel.FK_CursoGastoDetalle_ComprobanteTipo">
             <End Role="ComprobanteTipo" EntitySet="ComprobanteTipo" />
             <End Role="CursoGastoDetalle" EntitySet="CursoGastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventoGastoDetalle_ComprobanteTipo" Association="AIVHModel.FK_EventoGastoDetalle_ComprobanteTipo">
+            <End Role="ComprobanteTipo" EntitySet="ComprobanteTipo" />
+            <End Role="EventoGastoDetalle" EntitySet="EventoGastoDetalle" />
           </AssociationSet>
           <AssociationSet Name="FK_RendicionGastoDetalle_ComprobanteTipo" Association="AIVHModel.FK_RendicionGastoDetalle_ComprobanteTipo">
             <End Role="ComprobanteTipo" EntitySet="ComprobanteTipo" />
@@ -910,6 +1100,10 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="CursoGastoDetalle" EntitySet="CursoGastoDetalle" />
           </AssociationSet>
+          <AssociationSet Name="FK_Evento_Estatus" Association="AIVHModel.FK_Evento_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
           <AssociationSet Name="FK_Gasto_Estatus" Association="AIVHModel.FK_Gasto_Estatus">
             <End Role="Estatus" EntitySet="Estatus" />
             <End Role="Gasto" EntitySet="Gasto" />
@@ -918,9 +1112,33 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
             <End Role="Estatus" EntitySet="Estatus" />
             <End Role="SubMenu" EntitySet="SubMenu" />
           </AssociationSet>
-          <AssociationSet Name="FK_RendicionGasto_PagoForma" Association="AIVHModel.FK_RendicionGasto_PagoForma">
-            <End Role="PagoForma" EntitySet="PagoForma" />
-            <End Role="Gasto" EntitySet="Gasto" />
+          <AssociationSet Name="FK_Usuario_Estatus" Association="AIVHModel.FK_Usuario_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evento_EventoTipo" Association="AIVHModel.FK_Evento_EventoTipo">
+            <End Role="EventoTipo" EntitySet="EventoTipo" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evento_Usuario" Association="AIVHModel.FK_Evento_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evento_Usuario1" Association="AIVHModel.FK_Evento_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventoDonante_Evento" Association="AIVHModel.FK_EventoDonante_Evento">
+            <End Role="Evento" EntitySet="Evento" />
+            <End Role="EventoDonante" EntitySet="EventoDonante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventoGastoDetalle_Evento" Association="AIVHModel.FK_EventoGastoDetalle_Evento">
+            <End Role="Evento" EntitySet="Evento" />
+            <End Role="EventoGastoDetalle" EntitySet="EventoGastoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventoGastoDetalle_SubConcepto" Association="AIVHModel.FK_EventoGastoDetalle_SubConcepto">
+            <End Role="SubConcepto" EntitySet="SubConcepto" />
+            <End Role="EventoGastoDetalle" EntitySet="EventoGastoDetalle" />
           </AssociationSet>
           <AssociationSet Name="FK_RendicionGasto_Usuario" Association="AIVHModel.FK_RendicionGasto_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
@@ -1030,6 +1248,7 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Nomenglatura" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Curso" Relationship="AIVHModel.FK_Curso_CentroCosto" FromRole="CentroCosto" ToRole="Curso" />
+          <NavigationProperty Name="Evento" Relationship="AIVHModel.FK_Evento_CentroCosto" FromRole="CentroCosto" ToRole="Evento" />
           <NavigationProperty Name="Gasto" Relationship="AIVHModel.FK_RendicionGasto_CentroCosto" FromRole="CentroCosto" ToRole="Gasto" />
         </EntityType>
         <EntityType Name="ComprobanteTipo">
@@ -1040,6 +1259,7 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="EsFiscal" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CursoGastoDetalle" Relationship="AIVHModel.FK_CursoGastoDetalle_ComprobanteTipo" FromRole="ComprobanteTipo" ToRole="CursoGastoDetalle" />
+          <NavigationProperty Name="EventoGastoDetalle" Relationship="AIVHModel.FK_EventoGastoDetalle_ComprobanteTipo" FromRole="ComprobanteTipo" ToRole="EventoGastoDetalle" />
           <NavigationProperty Name="GastoDetalle" Relationship="AIVHModel.FK_RendicionGastoDetalle_ComprobanteTipo" FromRole="ComprobanteTipo" ToRole="GastoDetalle" />
         </EntityType>
         <EntityType Name="Concepto">
@@ -1134,8 +1354,73 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
           <Property Name="EstatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Curso" Relationship="AIVHModel.FK_Curso_Estatus" FromRole="Estatus" ToRole="Curso" />
+          <NavigationProperty Name="Evento" Relationship="AIVHModel.FK_Evento_Estatus" FromRole="Estatus" ToRole="Evento" />
           <NavigationProperty Name="Gasto" Relationship="AIVHModel.FK_Gasto_Estatus" FromRole="Estatus" ToRole="Gasto" />
           <NavigationProperty Name="SubMenu" Relationship="AIVHModel.FK_SubMenu_Estatus" FromRole="Estatus" ToRole="SubMenu" />
+          <NavigationProperty Name="Usuario" Relationship="AIVHModel.FK_Usuario_Estatus" FromRole="Estatus" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Evento">
+          <Key>
+            <PropertyRef Name="EventoId" />
+          </Key>
+          <Property Name="EventoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CentroCostoId" Type="Int32" Nullable="false" />
+          <Property Name="LugarEvento" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="NombreEvento" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="EventoTipoId" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="FechaEvento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Efectivo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ChequeTans" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="FechasChequeTans" Type="DateTime" Precision="0" />
+          <Property Name="NumeroChequeTans" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Hora" Type="Time" Nullable="false" Precision="0" />
+          <Property Name="UsuarioIdGenero" Type="Int32" Nullable="false" />
+          <Property Name="EstatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CentroCosto" Relationship="AIVHModel.FK_Evento_CentroCosto" FromRole="Evento" ToRole="CentroCosto" />
+          <NavigationProperty Name="Estatus" Relationship="AIVHModel.FK_Evento_Estatus" FromRole="Evento" ToRole="Estatus" />
+          <NavigationProperty Name="EventoTipo" Relationship="AIVHModel.FK_Evento_EventoTipo" FromRole="Evento" ToRole="EventoTipo" />
+          <NavigationProperty Name="Usuario" Relationship="AIVHModel.FK_Evento_Usuario" FromRole="Evento" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="AIVHModel.FK_Evento_Usuario1" FromRole="Evento" ToRole="Usuario" />
+          <NavigationProperty Name="EventoDonante" Relationship="AIVHModel.FK_EventoDonante_Evento" FromRole="Evento" ToRole="EventoDonante" />
+          <NavigationProperty Name="EventoGastoDetalle" Relationship="AIVHModel.FK_EventoGastoDetalle_Evento" FromRole="Evento" ToRole="EventoGastoDetalle" />
+        </EntityType>
+        <EntityType Name="EventoDonante">
+          <Key>
+            <PropertyRef Name="EventoId" />
+            <PropertyRef Name="DonanteId" />
+          </Key>
+          <Property Name="EventoId" Type="Int32" Nullable="false" />
+          <Property Name="DonanteId" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Efectivo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="DepositooTransferencia" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Cheque" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TarjetaCredito" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Evento" Relationship="AIVHModel.FK_EventoDonante_Evento" FromRole="EventoDonante" ToRole="Evento" />
+        </EntityType>
+        <EntityType Name="EventoGastoDetalle">
+          <Key>
+            <PropertyRef Name="EventoId" />
+            <PropertyRef Name="ConsecutivoId" />
+          </Key>
+          <Property Name="EventoId" Type="Int32" Nullable="false" />
+          <Property Name="ConsecutivoId" Type="Int32" Nullable="false" />
+          <Property Name="ComprobanteTipoId" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SubConceptoId" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Proveedor" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SubTotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Iva" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="ComprobanteTipo" Relationship="AIVHModel.FK_EventoGastoDetalle_ComprobanteTipo" FromRole="EventoGastoDetalle" ToRole="ComprobanteTipo" />
+          <NavigationProperty Name="Evento" Relationship="AIVHModel.FK_EventoGastoDetalle_Evento" FromRole="EventoGastoDetalle" ToRole="Evento" />
+          <NavigationProperty Name="SubConcepto" Relationship="AIVHModel.FK_EventoGastoDetalle_SubConcepto" FromRole="EventoGastoDetalle" ToRole="SubConcepto" />
         </EntityType>
         <EntityType Name="EventoTipo">
           <Key>
@@ -1143,6 +1428,7 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
           </Key>
           <Property Name="EventoTipoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Evento" Relationship="AIVHModel.FK_Evento_EventoTipo" FromRole="EventoTipo" ToRole="Evento" />
         </EntityType>
         <EntityType Name="Gasto">
           <Key>
@@ -1151,7 +1437,6 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
           <Property Name="GastoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CentroCostoId" Type="Int32" Nullable="false" />
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
-          <Property Name="PagoFormaId" Type="Int32" Nullable="false" />
           <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Efectivo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
@@ -1164,7 +1449,6 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
           <Property Name="EstatusId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CentroCosto" Relationship="AIVHModel.FK_RendicionGasto_CentroCosto" FromRole="Gasto" ToRole="CentroCosto" />
           <NavigationProperty Name="Estatus" Relationship="AIVHModel.FK_Gasto_Estatus" FromRole="Gasto" ToRole="Estatus" />
-          <NavigationProperty Name="PagoForma" Relationship="AIVHModel.FK_RendicionGasto_PagoForma" FromRole="Gasto" ToRole="PagoForma" />
           <NavigationProperty Name="Usuario" Relationship="AIVHModel.FK_RendicionGasto_Usuario" FromRole="Gasto" ToRole="Usuario" />
           <NavigationProperty Name="Usuario1" Relationship="AIVHModel.FK_RendicionGasto_Usuario1" FromRole="Gasto" ToRole="Usuario" />
           <NavigationProperty Name="GastoDetalle" Relationship="AIVHModel.FK_RendicionGastoDetalle_RendicionGasto" FromRole="Gasto" ToRole="GastoDetalle" />
@@ -1203,7 +1487,6 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
           </Key>
           <Property Name="PagoFormaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Gasto" Relationship="AIVHModel.FK_RendicionGasto_PagoForma" FromRole="PagoForma" ToRole="Gasto" />
         </EntityType>
         <EntityType Name="Sede">
           <Key>
@@ -1222,6 +1505,7 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Concepto" Relationship="AIVHModel.FK_SubConcepto_Concepto" FromRole="SubConcepto" ToRole="Concepto" />
           <NavigationProperty Name="CursoGastoDetalle" Relationship="AIVHModel.FK_CursoGastoDetalle_SubConcepto" FromRole="SubConcepto" ToRole="CursoGastoDetalle" />
+          <NavigationProperty Name="EventoGastoDetalle" Relationship="AIVHModel.FK_EventoGastoDetalle_SubConcepto" FromRole="SubConcepto" ToRole="EventoGastoDetalle" />
           <NavigationProperty Name="GastoDetalle" Relationship="AIVHModel.FK_RendicionGastoDetalle_SubConcepto" FromRole="SubConcepto" ToRole="GastoDetalle" />
         </EntityType>
         <EntityType Name="SubMenu">
@@ -1261,6 +1545,9 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
           <NavigationProperty Name="Curso" Relationship="AIVHModel.FK_Curso_Usuario1" FromRole="Usuario" ToRole="Curso" />
           <NavigationProperty Name="Curso1" Relationship="AIVHModel.FK_Curso_Usuario2" FromRole="Usuario" ToRole="Curso" />
           <NavigationProperty Name="CursoGastoDetalle" Relationship="AIVHModel.FK_CursoGastoDetalle_Usuario" FromRole="Usuario" ToRole="CursoGastoDetalle" />
+          <NavigationProperty Name="Estatus" Relationship="AIVHModel.FK_Usuario_Estatus" FromRole="Usuario" ToRole="Estatus" />
+          <NavigationProperty Name="Evento" Relationship="AIVHModel.FK_Evento_Usuario" FromRole="Usuario" ToRole="Evento" />
+          <NavigationProperty Name="Evento1" Relationship="AIVHModel.FK_Evento_Usuario1" FromRole="Usuario" ToRole="Evento" />
           <NavigationProperty Name="Gasto" Relationship="AIVHModel.FK_RendicionGasto_Usuario" FromRole="Usuario" ToRole="Gasto" />
           <NavigationProperty Name="Gasto1" Relationship="AIVHModel.FK_RendicionGasto_Usuario1" FromRole="Usuario" ToRole="Gasto" />
           <NavigationProperty Name="UsuarioRol" Relationship="AIVHModel.FK_Usuario_UsuarioRol" FromRole="Usuario" ToRole="UsuarioRol" />
@@ -1329,6 +1616,18 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Evento_CentroCosto">
+          <End Type="AIVHModel.CentroCosto" Role="CentroCosto" Multiplicity="1" />
+          <End Type="AIVHModel.Evento" Role="Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CentroCosto">
+              <PropertyRef Name="CentroCostoId" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="CentroCostoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RendicionGasto_CentroCosto">
           <End Type="AIVHModel.CentroCosto" Role="CentroCosto" Multiplicity="1" />
           <End Type="AIVHModel.Gasto" Role="Gasto" Multiplicity="*" />
@@ -1349,6 +1648,18 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
               <PropertyRef Name="ComprobanteTipoId" />
             </Principal>
             <Dependent Role="CursoGastoDetalle">
+              <PropertyRef Name="ComprobanteTipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventoGastoDetalle_ComprobanteTipo">
+          <End Type="AIVHModel.ComprobanteTipo" Role="ComprobanteTipo" Multiplicity="1" />
+          <End Type="AIVHModel.EventoGastoDetalle" Role="EventoGastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ComprobanteTipo">
+              <PropertyRef Name="ComprobanteTipoId" />
+            </Principal>
+            <Dependent Role="EventoGastoDetalle">
               <PropertyRef Name="ComprobanteTipoId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1485,6 +1796,18 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Evento_Estatus">
+          <End Type="AIVHModel.Estatus" Role="Estatus" Multiplicity="1" />
+          <End Type="AIVHModel.Evento" Role="Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="EstatusId" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Gasto_Estatus">
           <End Type="AIVHModel.Estatus" Role="Estatus" Multiplicity="1" />
           <End Type="AIVHModel.Gasto" Role="Gasto" Multiplicity="*" />
@@ -1509,15 +1832,87 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RendicionGasto_PagoForma">
-          <End Type="AIVHModel.PagoForma" Role="PagoForma" Multiplicity="1" />
-          <End Type="AIVHModel.Gasto" Role="Gasto" Multiplicity="*" />
+        <Association Name="FK_Usuario_Estatus">
+          <End Type="AIVHModel.Estatus" Role="Estatus" Multiplicity="1" />
+          <End Type="AIVHModel.Usuario" Role="Usuario" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PagoForma">
-              <PropertyRef Name="PagoFormaId" />
+            <Principal Role="Estatus">
+              <PropertyRef Name="EstatusId" />
             </Principal>
-            <Dependent Role="Gasto">
-              <PropertyRef Name="PagoFormaId" />
+            <Dependent Role="Usuario">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evento_EventoTipo">
+          <End Type="AIVHModel.EventoTipo" Role="EventoTipo" Multiplicity="1" />
+          <End Type="AIVHModel.Evento" Role="Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventoTipo">
+              <PropertyRef Name="EventoTipoId" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="EventoTipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evento_Usuario">
+          <End Type="AIVHModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="AIVHModel.Evento" Role="Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="EventoTipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evento_Usuario1">
+          <End Type="AIVHModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="AIVHModel.Evento" Role="Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="EstatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventoDonante_Evento">
+          <End Type="AIVHModel.Evento" Role="Evento" Multiplicity="1" />
+          <End Type="AIVHModel.EventoDonante" Role="EventoDonante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evento">
+              <PropertyRef Name="EventoId" />
+            </Principal>
+            <Dependent Role="EventoDonante">
+              <PropertyRef Name="EventoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventoGastoDetalle_Evento">
+          <End Type="AIVHModel.Evento" Role="Evento" Multiplicity="1" />
+          <End Type="AIVHModel.EventoGastoDetalle" Role="EventoGastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evento">
+              <PropertyRef Name="EventoId" />
+            </Principal>
+            <Dependent Role="EventoGastoDetalle">
+              <PropertyRef Name="EventoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventoGastoDetalle_SubConcepto">
+          <End Type="AIVHModel.SubConcepto" Role="SubConcepto" Multiplicity="1" />
+          <End Type="AIVHModel.EventoGastoDetalle" Role="EventoGastoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubConcepto">
+              <PropertyRef Name="SubConceptoId" />
+            </Principal>
+            <Dependent Role="EventoGastoDetalle">
+              <PropertyRef Name="SubConceptoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1793,6 +2188,59 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Evento">
+            <EntityTypeMapping TypeName="AIVHModel.Evento">
+              <MappingFragment StoreEntitySet="Evento">
+                <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
+                <ScalarProperty Name="UsuarioIdGenero" ColumnName="UsuarioIdGenero" />
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="NumeroChequeTans" ColumnName="NumeroChequeTans" />
+                <ScalarProperty Name="FechasChequeTans" ColumnName="FechasChequeTans" />
+                <ScalarProperty Name="ChequeTans" ColumnName="ChequeTans" />
+                <ScalarProperty Name="Efectivo" ColumnName="Efectivo" />
+                <ScalarProperty Name="FechaEvento" ColumnName="FechaEvento" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="EventoTipoId" ColumnName="EventoTipoId" />
+                <ScalarProperty Name="NombreEvento" ColumnName="NombreEvento" />
+                <ScalarProperty Name="LugarEvento" ColumnName="LugarEvento" />
+                <ScalarProperty Name="CentroCostoId" ColumnName="CentroCostoId" />
+                <ScalarProperty Name="EventoId" ColumnName="EventoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventoDonante">
+            <EntityTypeMapping TypeName="AIVHModel.EventoDonante">
+              <MappingFragment StoreEntitySet="EventoDonante">
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TarjetaCredito" ColumnName="TarjetaCredito" />
+                <ScalarProperty Name="Cheque" ColumnName="Cheque" />
+                <ScalarProperty Name="DepositooTransferencia" ColumnName="DepositooTransferencia" />
+                <ScalarProperty Name="Efectivo" ColumnName="Efectivo" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="DonanteId" ColumnName="DonanteId" />
+                <ScalarProperty Name="EventoId" ColumnName="EventoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventoGastoDetalle">
+            <EntityTypeMapping TypeName="AIVHModel.EventoGastoDetalle">
+              <MappingFragment StoreEntitySet="EventoGastoDetalle">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Iva" ColumnName="Iva" />
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+                <ScalarProperty Name="Proveedor" ColumnName="Proveedor" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="SubConceptoId" ColumnName="SubConceptoId" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="ComprobanteTipoId" ColumnName="ComprobanteTipoId" />
+                <ScalarProperty Name="ConsecutivoId" ColumnName="ConsecutivoId" />
+                <ScalarProperty Name="EventoId" ColumnName="EventoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="EventoTipo">
             <EntityTypeMapping TypeName="AIVHModel.EventoTipo">
               <MappingFragment StoreEntitySet="EventoTipo">
@@ -1814,7 +2262,6 @@ advertencia 6013: La tabla o vista 'AIVH.dbo.Evento' no tiene definida una clave
                 <ScalarProperty Name="Efectivo" ColumnName="Efectivo" />
                 <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
-                <ScalarProperty Name="PagoFormaId" ColumnName="PagoFormaId" />
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
                 <ScalarProperty Name="CentroCostoId" ColumnName="CentroCostoId" />
                 <ScalarProperty Name="GastoId" ColumnName="GastoId" />
