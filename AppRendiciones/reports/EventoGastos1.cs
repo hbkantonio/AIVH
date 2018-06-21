@@ -16,14 +16,14 @@ namespace AppRendiciones.reports {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class Cursos : ReportClass {
+    public class EventoGastos : ReportClass {
         
-        public Cursos() {
+        public EventoGastos() {
         }
         
         public override string ResourceName {
             get {
-                return "Cursos.rpt";
+                return "EventoGastos.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace AppRendiciones.reports {
         
         public override string FullResourceName {
             get {
-                return "AppRendiciones.reports.Cursos.rpt";
+                return "AppRendiciones.reports.EventoGastos.rpt";
             }
             set {
                 // Do nothing
@@ -87,92 +87,12 @@ namespace AppRendiciones.reports {
                 return this.ReportDefinition.Sections[4];
             }
         }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_CursoGastosrpt_Pm_CursoGastoDetallecomprobanteTipo {
-            get {
-                return this.DataDefinition.ParameterFields[0];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_CursoGastosrpt_Pm_CursoGastoDetallefecha {
-            get {
-                return this.DataDefinition.ParameterFields[1];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_CursoGastosrpt_Pm_CursoGastoDetallesubConcepto {
-            get {
-                return this.DataDefinition.ParameterFields[2];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_CursoGastosrpt_Pm_CursoGastoDetalledescripcion {
-            get {
-                return this.DataDefinition.ParameterFields[3];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_CursoGastosrpt_Pm_CursoGastoDetalleproveedor {
-            get {
-                return this.DataDefinition.ParameterFields[4];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_CursoGastosrpt_Pm_CursoGastoDetallesubTotal {
-            get {
-                return this.DataDefinition.ParameterFields[5];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_CursoGastosrpt_Pm_CursoGastoDetalleiva {
-            get {
-                return this.DataDefinition.ParameterFields[6];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_CursoGastosrpt_Pm_CursoGastoDetalletotal {
-            get {
-                return this.DataDefinition.ParameterFields[7];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_CursoGastosrpt_Pm_CursoGastoDetalleconcepto {
-            get {
-                return this.DataDefinition.ParameterFields[8];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_CursoGastosrpt_Pm_CursoGastoDetalleinstructor {
-            get {
-                return this.DataDefinition.ParameterFields[9];
-            }
-        }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedCursos : Component, ICachedReport {
+    public class CachedEventoGastos : Component, ICachedReport {
         
-        public CachedCursos() {
+        public CachedEventoGastos() {
         }
         
         [Browsable(false)]
@@ -209,7 +129,7 @@ namespace AppRendiciones.reports {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            Cursos rpt = new Cursos();
+            EventoGastos rpt = new EventoGastos();
             rpt.Site = this.Site;
             return rpt;
         }

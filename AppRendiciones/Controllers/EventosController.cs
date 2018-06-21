@@ -244,19 +244,16 @@ namespace AppRendiciones.Controllers
         {
             try
             {
-                var cursoDb = db.Curso.Where(a => a.CursoId == eventoId).ToList();
-                var curso = cursoDb.Select(a => new Models.DTO.Curso
+                var eventoDb = db.Evento.Where(a => a.EventoId == eventoId).ToList();
+                var evento = eventoDb.Select(a => new Models.DTO.Evento
                 {
-                    folio = a.CentroCosto.Nomenglatura + a.CursoId,
+                    folio = a.CentroCosto.Nomenglatura + a.EventoId,
                     centroCostos = a.CentroCosto.Descripcion,
-                    sede = a.Sede.Descripcion,
-                    lugarCurso = a.LugarCurso,
-                    cursoTipo = a.CursoTipo.Descripcion,
-                    instructor1 = a.Usuario.Nombre + " " + a.Usuario.Paterno + " " + a.Usuario.Materno,
-                    comision1 = a.Comision1,
-                    instructor2 = db.Usuario.Where(b => b.UsuarioId == a.UsuarioId2).Select(c => c.Nombre + " " + c.Paterno + " " + c.Materno).FirstOrDefault(),
-                    comision2 = a.Comision2,
-                    fechaCurso = a.FechaCurso.ToString("dd/MM/yyyy", Cultura),
+                    lugarEvento = a.LugarEvento,
+                    nombreEvento = a.NombreEvento,
+                    eventoTipo = a.EventoTipo.Descripcion,
+                    instructor = a.Usuario.Nombre + " " + a.Usuario.Paterno + " " + a.Usuario.Materno,
+                    fechaEvento = a.FechaEvento.ToString("dd/MM/yyyy", Cultura),
                     efectivo = a.Efectivo,
                     chequeTans = a.ChequeTans,
                     fechachequeTans = a.FechasChequeTans != null ? a.FechasChequeTans?.ToString("dd/MM/yyyy", Cultura) : "SF",
@@ -265,9 +262,9 @@ namespace AppRendiciones.Controllers
                 }).ToList();
 
 
-                var participantes = cursoDb.FirstOrDefault().CursoParticipante.Select(b => new Participante
+                var donantes = eventoDb.FirstOrDefault().EventoDonante.Select(b => new Donantes
                 {
-                    participanteId = b.ParticipanteId,
+                    donanteId = b.DonanteId,
                     nombre = b.Nombre + " " + b.Apellido,
                     efectivo = b.Efectivo,
                     deposito = b.DepositooTransferencia,
@@ -277,9 +274,8 @@ namespace AppRendiciones.Controllers
                     celular = b.Celular
                 }).ToList();
 
-                var gastos = cursoDb.FirstOrDefault().CursoGastoDetalle.Select(b => new Models.DTO.CursoGastoDetalle
+                var gastos = eventoDb.FirstOrDefault().EventoGastoDetalle.Select(b => new Models.DTO.EventoGastoDetalle
                 {
-                    instructor = b.Usuario.Nombre + " " + b.Usuario.Paterno + " " + b.Usuario.Materno,
                     comprobanteTipo = b.ComprobanteTipo.Descripcion,
                     fecha = b.Fecha.ToString("dd/MM/yyyy", Cultura),
                     concepto = b.SubConcepto.Concepto.Descripcion,
@@ -291,14 +287,14 @@ namespace AppRendiciones.Controllers
                     total = b.Total
                 }).ToList();
 
-                reports.Cursos rptCurso = new reports.Cursos();
+                reports.Eventos rptEvento = new reports.Eventos();
 
-                rptCurso.Database.Tables["Curso"].SetDataSource(curso);
-                rptCurso.Database.Tables["CursoParticipante"].SetDataSource(participantes);
-                rptCurso.Database.Tables["CursoGastoDetalle"].SetDataSource(gastos);
+                rptEvento.Database.Tables["Evento"].SetDataSource(evento);
+                rptEvento.Database.Tables["EventoDonante"].SetDataSource(donantes);
+                rptEvento.Database.Tables["EventoGastoDetalle"].SetDataSource(gastos);
 
                 Stream PDFContrato;
-                PDFContrato = rptCurso.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                PDFContrato = rptEvento.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
 
                 var MemoryStream = new MemoryStream();
                 PDFContrato.CopyTo(MemoryStream);

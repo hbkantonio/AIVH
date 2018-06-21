@@ -215,10 +215,10 @@
                 eventosFn.editarEvento(evento);
             } else if (this.innerHTML == "Ver") {
                 fn.BlockScreen(true);
-                eventosFn.generatePdf(curso.eventoId);
+                eventosFn.generatePdf(evento.eventoId);
             } else if (this.innerHTML == "Aprobar")
             {
-                eventosFn.aprobar(curso.eventoId);
+                eventosFn.aprobar(evento.eventoId);
             }
         },
         editarEvento(evento) {
