@@ -60,6 +60,7 @@
               <xs:element name="fechachequeTans" msprop:Generator_ColumnVarNameInTable="columnfechachequeTans" msprop:Generator_ColumnPropNameInRow="fechachequeTans" msprop:Generator_ColumnPropNameInTable="fechachequeTansColumn" msprop:Generator_UserColumnName="fechachequeTans" type="xs:string" minOccurs="0" />
               <xs:element name="numeroChequeTans" msprop:Generator_ColumnVarNameInTable="columnnumeroChequeTans" msprop:Generator_ColumnPropNameInRow="numeroChequeTans" msprop:Generator_ColumnPropNameInTable="numeroChequeTansColumn" msprop:Generator_UserColumnName="numeroChequeTans" type="xs:string" minOccurs="0" />
               <xs:element name="usuarioGenero" msprop:Generator_ColumnVarNameInTable="columnusuarioGenero" msprop:Generator_ColumnPropNameInRow="usuarioGenero" msprop:Generator_ColumnPropNameInTable="usuarioGeneroColumn" msprop:Generator_UserColumnName="usuarioGenero" type="xs:string" minOccurs="0" />
+              <xs:element name="totalGastosD" msprop:Generator_ColumnVarNameInTable="columntotalGastosD" msprop:Generator_ColumnPropNameInRow="totalGastosD" msprop:Generator_ColumnPropNameInTable="totalGastosDColumn" msprop:Generator_UserColumnName="totalGastosD" type="xs:decimal" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

@@ -263,7 +263,7 @@
             $("#slcComision1").val(curso.comision1);
             $("#slcInstructor2").val(curso.instructorId2);
             $("#slcComision2").val(curso.comision2 == 0 ? 5 : curso.comision2 );
-            $("#txtEfectivo").val(curso.efectivo);
+            $("#txtEfectivoA").val(curso.efectivo);
             $("#txtCheque1").val(curso.chequeTans);
             $("#txtFecha1").val(curso.fechachequeTans);
             $("#txtNoCheque1").val(curso.numeroChequeTans);

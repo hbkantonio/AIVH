@@ -31,7 +31,7 @@ namespace AppRendiciones.Controllers
                 {
                     gastoId = b.GastoId,
                     centroCostos = b.CentroCosto.Descripcion,
-                    resposable = b.Usuario.Nombre + " " + b.Usuario.Paterno + " " + b.Usuario.Materno,
+                    resposable = b.Usuario1.Nombre + " " + b.Usuario1.Paterno + " " + b.Usuario1.Materno,
                     fechaInicial = b.FechaInicio,
                     fechaFinal2 = b.FechaFin,
                     anticipo = (b.Efectivo + b.ChequeTans ).ToString(),
@@ -65,7 +65,7 @@ namespace AppRendiciones.Controllers
                     centroCostosId = a.CentroCostoId,
                     centroCostos = a.CentroCosto.Descripcion,
                     usuarioId = a.UsuarioId,
-                    usuario= a.Usuario.Nombre +" " + a.Usuario.Paterno + " " + a.Usuario.Materno,
+                    usuario= a.Usuario1.Nombre +" " + a.Usuario1.Paterno + " " + a.Usuario1.Materno,
                     fechaInicio = a.FechaFin.ToString("dd/MM/yyyy", Cultura),
                     fechaFin = a.FechaFin.ToString("dd/MM/yyyy", Cultura),
                     efectivo = a.Efectivo,
@@ -213,14 +213,14 @@ namespace AppRendiciones.Controllers
                 var gastos = gastosDb.Select(a => new Models.DTO.Gasto
                 {
                     centroCostos = a.CentroCosto.Descripcion,
-                    usuario = a.Usuario.Nombre + " " + a.Usuario.Paterno + " " + a.Usuario.Materno,
+                    usuario = a.Usuario1.Nombre + " " + a.Usuario1.Paterno + " " + a.Usuario1.Materno,
                     fechaInicio = a.FechaFin.ToString("dd/MM/yyyy", Cultura),
                     fechaFin = a.FechaFin.ToString("dd/MM/yyyy", Cultura),
                     efectivo = a.Efectivo,
                     chequeTransNuevo = a.ChequeTans,
                     fechaNuevo = a.FechasChequeTans != null ? a.FechasChequeTans?.ToString("dd/MM/yyyy", Cultura) : "SF",
                     numeroNuevo = a.NumeroChequeTans != "" ? a.NumeroChequeTans : "SN",
-                    usuarioGenero = a.Usuario1.Nombre + " " + a.Usuario1.Paterno + " " + a.Usuario1.Materno
+                    usuarioGenero = a.Usuario.Nombre + " " + a.Usuario.Paterno + " " + a.Usuario.Materno
                 }).ToList();
 
                 var gastoDetalle = gastosDb.FirstOrDefault().GastoDetalle.Select(b => new Models.DTO.GastoDetalle

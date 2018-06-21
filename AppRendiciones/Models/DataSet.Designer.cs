@@ -1272,6 +1272,8 @@ namespace AppRendiciones.Models {
             
             private global::System.Data.DataColumn columnusuarioGenero;
             
+            private global::System.Data.DataColumn columntotalGastosD;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public CursoDataTable() {
@@ -1427,6 +1429,14 @@ namespace AppRendiciones.Models {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn totalGastosDColumn {
+                get {
+                    return this.columntotalGastosD;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1462,7 +1472,23 @@ namespace AppRendiciones.Models {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public CursoRow AddCursoRow(string folio, string centroCostos, string sede, string lugarCurso, string cursoTipo, string instructor1, int comision1, string instructor2, uint comision2, string fechaCurso, decimal efectivo, decimal chequeTans, string fechachequeTans, string numeroChequeTans, string usuarioGenero) {
+            public CursoRow AddCursoRow(
+                        string folio, 
+                        string centroCostos, 
+                        string sede, 
+                        string lugarCurso, 
+                        string cursoTipo, 
+                        string instructor1, 
+                        int comision1, 
+                        string instructor2, 
+                        uint comision2, 
+                        string fechaCurso, 
+                        decimal efectivo, 
+                        decimal chequeTans, 
+                        string fechachequeTans, 
+                        string numeroChequeTans, 
+                        string usuarioGenero, 
+                        decimal totalGastosD) {
                 CursoRow rowCursoRow = ((CursoRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         folio,
@@ -1479,7 +1505,8 @@ namespace AppRendiciones.Models {
                         chequeTans,
                         fechachequeTans,
                         numeroChequeTans,
-                        usuarioGenero};
+                        usuarioGenero,
+                        totalGastosD};
                 rowCursoRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCursoRow);
                 return rowCursoRow;
@@ -1517,6 +1544,7 @@ namespace AppRendiciones.Models {
                 this.columnfechachequeTans = base.Columns["fechachequeTans"];
                 this.columnnumeroChequeTans = base.Columns["numeroChequeTans"];
                 this.columnusuarioGenero = base.Columns["usuarioGenero"];
+                this.columntotalGastosD = base.Columns["totalGastosD"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1552,6 +1580,8 @@ namespace AppRendiciones.Models {
                 base.Columns.Add(this.columnnumeroChequeTans);
                 this.columnusuarioGenero = new global::System.Data.DataColumn("usuarioGenero", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnusuarioGenero);
+                this.columntotalGastosD = new global::System.Data.DataColumn("totalGastosD", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntotalGastosD);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4297,6 +4327,22 @@ namespace AppRendiciones.Models {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public decimal totalGastosD {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableCurso.totalGastosDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'totalGastosD\' de la tabla \'Curso\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCurso.totalGastosDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsfolioNull() {
                 return this.IsNull(this.tableCurso.folioColumn);
             }
@@ -4473,6 +4519,18 @@ namespace AppRendiciones.Models {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetusuarioGeneroNull() {
                 this[this.tableCurso.usuarioGeneroColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IstotalGastosDNull() {
+                return this.IsNull(this.tableCurso.totalGastosDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SettotalGastosDNull() {
+                this[this.tableCurso.totalGastosDColumn] = global::System.Convert.DBNull;
             }
         }
         

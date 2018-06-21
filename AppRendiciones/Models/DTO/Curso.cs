@@ -42,6 +42,7 @@ namespace AppRendiciones.Models.DTO
         public List<Participante> participantes { get; set; }
         public List<CursoGastoDetalle> gastos { get; set; }
         public string totalGastos { get; set; }
+        public decimal totalGastosD { get; set; }
         public string saldo { get; set; }
         public string observaciones { get; set; }
     }

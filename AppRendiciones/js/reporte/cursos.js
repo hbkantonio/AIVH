@@ -285,8 +285,7 @@
             option.val(curso.instructorId1);
             $('#slcInstructor').append(option);
 
-            if (curso.instructorId2 != 0)
-            {
+            if (curso.instructorId2 != 0) {
                 var option1 = $(document.createElement('option'));
                 option1.text(curso.instructor2);
                 option1.val(curso.instructorId2);
@@ -416,7 +415,10 @@
                     {
                         data: null,
                         render: function (data, f, d) {
-                            return '<a class="btn btn-info btn-sm" href="" onclick="return false;">Edición</a> ';
+                            if (data.subConceptoId != 3) {
+                                return '<a class="btn btn-info btn-sm" href="" onclick="return false;">Edición</a> ';
+                            } else { return '' }
+
                         },
                         orderable: false,
                         className: 'text-center'
@@ -424,7 +426,10 @@
                     {
                         data: null,
                         render: function (data, f, d) {
-                            return '<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                            if (data.subConceptoId != 3) {
+                                return '<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                            } else { return '' }
+                          
                         },
                         orderable: false,
                         className: 'text-center'
