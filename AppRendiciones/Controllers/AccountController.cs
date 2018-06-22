@@ -24,6 +24,7 @@ namespace AppRendiciones.Controllers
         {
             try
             {
+                
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
@@ -42,7 +43,7 @@ namespace AppRendiciones.Controllers
                     }
                 }
 
-                return Ok(usuario.Id);
+                return Ok(true);
             }
             catch (Exception err)
             {

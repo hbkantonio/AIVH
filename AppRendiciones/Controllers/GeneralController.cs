@@ -231,5 +231,25 @@ namespace AppRendiciones.Controllers
             }
         }
 
+        [Route("GetRol")]
+        [HttpGet]
+        public IHttpActionResult GetRol()
+        {
+            try
+            {
+                return Ok(db.UsuarioRol
+                .Select(x =>
+                    new
+                    {
+                        value = x.UsuarioRolId,
+                        text = x.Descripcion
+                    })
+                .ToList());
+            }
+            catch (Exception Ex)
+            {
+                return BadRequest(Ex.Message);
+            }
+        }
     }
 }

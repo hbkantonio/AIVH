@@ -16,6 +16,10 @@ namespace DTO
         public string Email { get; set; }
         public string Telefono { get; set; }
         public string UId { get; set; }
+        public int RolId { get; set; }
+        public string Rol { get; set; }
+        public int EstatusId { get; set; }
+        public string Estatus { get; set; }
     }
 
 }

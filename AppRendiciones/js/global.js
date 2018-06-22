@@ -287,5 +287,23 @@
             .fail(function (data) {
                 console.log(data);
             });
+    },
+    GetRol()
+    {
+        fn.Api("General/GetRol", "GET", "")
+            .done(function (data) {
+                $(data).each(function () {
+                    var option = $(document.createElement('option'));
+                    option.text(this.text);
+                    option.val(this.value);
+                    $('#slcRol').append(option);
+                });
+                if ($('#slcRol').length > 0) {
+                    $('#slcRol').val($('#slcRol option:first').val());
+                }
+            })
+            .fail(function (data) {
+                console.log(data);
+            });
     }
 };

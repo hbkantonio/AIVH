@@ -310,8 +310,10 @@
           <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Paterno" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Materno" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="UsuarioRolId" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Hora" Type="time" Precision="0" Nullable="false" />
+          <Property Name="UsuarioIdGenero" Type="int" Nullable="false" />
           <Property Name="EstatusId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UsuarioRol">
@@ -1539,8 +1541,10 @@
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Paterno" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Materno" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="UsuarioRolId" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Hora" Type="Time" Nullable="false" Precision="0" />
+          <Property Name="UsuarioIdGenero" Type="Int32" Nullable="false" />
           <Property Name="EstatusId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Curso" Relationship="AIVHModel.FK_Curso_Usuario1" FromRole="Usuario" ToRole="Curso" />
           <NavigationProperty Name="Curso1" Relationship="AIVHModel.FK_Curso_Usuario2" FromRole="Usuario" ToRole="Curso" />
@@ -2344,8 +2348,10 @@
             <EntityTypeMapping TypeName="AIVHModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
                 <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
+                <ScalarProperty Name="UsuarioIdGenero" ColumnName="UsuarioIdGenero" />
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="UsuarioRolId" ColumnName="UsuarioRolId" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Materno" ColumnName="Materno" />
                 <ScalarProperty Name="Paterno" ColumnName="Paterno" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />

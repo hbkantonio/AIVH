@@ -1,0 +1,116 @@
+﻿<link href="css/global.css" rel="stylesheet" />
+<div class="container-fluid">
+    <div class="row flex-wrap">
+        <main class="col-md-12" role="main">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <h6 class="card-header">AIVH – USUARIOS</h6>
+                        <br />
+                        <div class="card-body">
+                            <div class="col-md-12">
+
+                                <div id="divTabla">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="txtBusqueda">Buscar:</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtBusqueda" />
+                                        </div><div class="col-md-1"></div>
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-2 float-right">
+                                            <label for="slcLength">Mostrar</label>
+                                            <select id="slcLength" name="slcLength" aria-controls="tblCursos" class="form-control form-control-sm">
+                                                <option value="-1">Todos</option>
+                                                <option value="20">20</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <button id="btnNuevo" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp;Nuevo usuario</button>
+                                        </div>
+                                    </div>
+                                    <table id="tblUsuarios" class="table  table-striped table-hover table-bordered table-response" cellspacing="1">
+                                        <thead class="table-secondary">
+                                            <tr>
+                                                <th>Usuario Id</th>
+                                                <th>Nombre</th>
+                                                <th>Rol</th>
+                                                <th>Estatus</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--modal-->
+                    <div class="modal fade" id="modalUsuarios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Usuario</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form id="frmUsuario">
+                                    <div class="modal-body">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="form-group  col-md-12">
+                                                    <label>Nombre</label>
+                                                    <input type="text" class="form-control" id="txtNombre" required>
+                                                </div>
+                                                <div class="form-group  col-md-12">
+                                                    <label>Apellido Paterno</label>
+                                                    <input type="text" class="form-control" id="txtPaterno" required>
+                                                </div>
+                                                <div class="form-group  col-md-12">
+                                                    <label>Apellido Materno</label>
+                                                    <input type="text" class="form-control" id="txtMaterno">
+                                                </div>
+                                                <div class="form-group  col-md-12">
+                                                    <label>Password</label>
+                                                    <input type="password" id="slcPassword" class="form-control" placeholder="******" minlength=6 required>
+                                                </div>
+                                                <div class="form-group  col-md-12">
+                                                    <label> repetir password</label>
+                                                    <input type="password" id="slcPassword2" class="form-control" placeholder="******" minlength=6 required>
+                                                </div>
+                                                <div class="form-group  col-md-12">
+                                                    <label>Rol de usuario</label>
+                                                    <select id="slcRol" class="form-control" required></select>
+                                                </div>
+                                                <div class="form-group  col-md-12">
+                                                    <label>Estatus de usuario</label>
+                                                    <select id="slcEstatus" class="form-control" required>
+                                                        <option value="1">Activo</option>
+                                                        <option value="2">Inactivo</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="btnAdd" type="submit" class="btn btn-primary"><i class="fas fa-check" aria-hidden="true"></i>  &nbsp;Aceptar</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> &nbsp; Cerrar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script src="js/global.js"></script>
+<script src="js/administracion/usuarios.js"></script>

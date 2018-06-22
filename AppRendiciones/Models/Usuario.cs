@@ -31,8 +31,10 @@ namespace AppRendiciones.Models
         public string Nombre { get; set; }
         public string Paterno { get; set; }
         public string Materno { get; set; }
-        public string Password { get; set; }
         public int UsuarioRolId { get; set; }
+        public System.DateTime Fecha { get; set; }
+        public System.TimeSpan Hora { get; set; }
+        public int UsuarioIdGenero { get; set; }
         public int EstatusId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
