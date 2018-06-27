@@ -258,7 +258,8 @@ namespace AppRendiciones.Controllers
                     chequeTans = a.ChequeTans,
                     fechachequeTans = a.FechasChequeTans != null ? a.FechasChequeTans?.ToString("dd/MM/yyyy", Cultura) : "SF",
                     numeroChequeTans = a.NumeroChequeTans != "" ? a.NumeroChequeTans : "SN",
-                    usuarioGenero = a.Usuario1.Nombre + " " + a.Usuario1.Paterno + " " + a.Usuario1.Materno
+                    usuarioGenero = a.Usuario1.Nombre + " " + a.Usuario1.Paterno + " " + a.Usuario1.Materno,
+                    totalGastosD = a.EventoGastoDetalle.Sum(s => s.Total)
                 }).ToList();
 
 

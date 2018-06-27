@@ -2457,6 +2457,8 @@ namespace AppRendiciones.Models {
             
             private global::System.Data.DataColumn columnusuarioGenero;
             
+            private global::System.Data.DataColumn columntotalGastosD;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public EventoDataTable() {
@@ -2588,6 +2590,14 @@ namespace AppRendiciones.Models {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn totalGastosDColumn {
+                get {
+                    return this.columntotalGastosD;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2623,7 +2633,7 @@ namespace AppRendiciones.Models {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public EventoRow AddEventoRow(string folio, string centroCostos, string lugarEvento, string nombreEvento, string eventoTipo, string instructor, string fechaEvento, decimal efectivo, decimal chequeTans, string fechachequeTans, string numeroChequeTans, string usuarioGenero) {
+            public EventoRow AddEventoRow(string folio, string centroCostos, string lugarEvento, string nombreEvento, string eventoTipo, string instructor, string fechaEvento, decimal efectivo, decimal chequeTans, string fechachequeTans, string numeroChequeTans, string usuarioGenero, decimal totalGastosD) {
                 EventoRow rowEventoRow = ((EventoRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         folio,
@@ -2637,7 +2647,8 @@ namespace AppRendiciones.Models {
                         chequeTans,
                         fechachequeTans,
                         numeroChequeTans,
-                        usuarioGenero};
+                        usuarioGenero,
+                        totalGastosD};
                 rowEventoRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowEventoRow);
                 return rowEventoRow;
@@ -2672,6 +2683,7 @@ namespace AppRendiciones.Models {
                 this.columnfechachequeTans = base.Columns["fechachequeTans"];
                 this.columnnumeroChequeTans = base.Columns["numeroChequeTans"];
                 this.columnusuarioGenero = base.Columns["usuarioGenero"];
+                this.columntotalGastosD = base.Columns["totalGastosD"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2701,6 +2713,8 @@ namespace AppRendiciones.Models {
                 base.Columns.Add(this.columnnumeroChequeTans);
                 this.columnusuarioGenero = new global::System.Data.DataColumn("usuarioGenero", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnusuarioGenero);
+                this.columntotalGastosD = new global::System.Data.DataColumn("totalGastosD", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntotalGastosD);
                 this.columnlugarEvento.Caption = "sede";
                 this.columnnombreEvento.Caption = "lugarCurso";
                 this.columneventoTipo.Caption = "cursoTipo";
@@ -5278,6 +5292,22 @@ namespace AppRendiciones.Models {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public decimal totalGastosD {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableEvento.totalGastosDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'totalGastosD\' de la tabla \'Evento\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEvento.totalGastosDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsfolioNull() {
                 return this.IsNull(this.tableEvento.folioColumn);
             }
@@ -5418,6 +5448,18 @@ namespace AppRendiciones.Models {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetusuarioGeneroNull() {
                 this[this.tableEvento.usuarioGeneroColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IstotalGastosDNull() {
+                return this.IsNull(this.tableEvento.totalGastosDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SettotalGastosDNull() {
+                this[this.tableEvento.totalGastosDColumn] = global::System.Convert.DBNull;
             }
         }
         

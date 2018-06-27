@@ -34,7 +34,7 @@
             }
         },
         changePass () {
-            $("#dynamic").load('views/index/password.html');
+            $("#dynamic").load('views/index/changePassword.html');
         },
         exitApp () {
             localStorage.removeItem("token_id");

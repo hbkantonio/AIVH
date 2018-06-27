@@ -134,6 +134,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="img\logo.png" />
+    <Content Include="views\index\changePassword.html" />
     <Content Include="css\global.css" />
     <Content Include="css\index\index.css" />
     <Content Include="css\index\load.css" />
@@ -145,8 +147,7 @@
     <Content Include="img\carousel\3.jpg" />
     <Content Include="img\carousel\4.jpg" />
     <Content Include="img\carousel\5.jpg" />
-    <Content Include="img\logo.jpg" />
-    <Content Include="img\logo.png" />
+    <Content Include="img\logo2.png" />
     <Content Include="index.html" />
     <Content Include="js\administracion\usuarios.js" />
     <Content Include="js\administracion\eventos.js" />
@@ -155,7 +156,7 @@
     <Content Include="js\global.js" />
     <Content Include="js\index\menu.js" />
     <Content Include="js\index\nav.js" />
-    <Content Include="js\index\password.js" />
+    <Content Include="js\index\changePassword.js" />
     <Content Include="js\login\login.js" />
     <Content Include="js\plugin\bootstrap-datepicker.es.min.js" />
     <Content Include="js\plugin\bootstrap-datepicker.min.js" />

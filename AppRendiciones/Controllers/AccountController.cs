@@ -24,7 +24,7 @@ namespace AppRendiciones.Controllers
         {
             try
             {
-                
+
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
@@ -100,7 +100,7 @@ namespace AppRendiciones.Controllers
             var result = await _repo.UpdateUser(usuario);
 
             if (result != null)
-                return Ok("Correcto");
+                return Ok(true);
             else
                 return BadRequest();
         }
@@ -113,6 +113,17 @@ namespace AppRendiciones.Controllers
         public async Task<IHttpActionResult> GetBasicAdmin(string UserId)
         {
             return Ok(await _repo.FindUserAdminitradorAsync(UserId));
+        }
+
+        public async Task<IHttpActionResult> FindUser(string userId, string password)
+        {
+            var user = await _repo.FindUser(userId, password);
+            if (user != null)
+            {
+                return Ok(true);
+            }
+            else { return BadRequest(); }
+           
         }
     }
 }

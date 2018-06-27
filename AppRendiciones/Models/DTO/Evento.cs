@@ -38,6 +38,7 @@ namespace AppRendiciones.Models.DTO
         public List<EventoGastoDetalle> gastos { get; set; }
         public string totalRecaudado { get; set; }
         public string totalGastos { get; set; }
+        public decimal totalGastosD { get; set; }
         public string saldo { get; set; }
         public string observaciones { get; set; }
     }
