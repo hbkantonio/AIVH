@@ -11,10 +11,11 @@
             window.location.href = 'index.html';
         }).fail(function (error) {
             console.log(error);
+            alertify.alert("Login", "¡El usuario o el password son incorrectos!");
         }
         ).always(function () {
             fn.BlockScreen(false);
-            alertify.alert("Login", "¡El usuario o el password son incorrectos!");
+           
             });
     },
     GetToken() {
