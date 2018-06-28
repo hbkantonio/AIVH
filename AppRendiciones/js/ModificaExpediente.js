@@ -14,6 +14,7 @@ $(function () {
                 $("#aCerrar").on("mouseout", this.MM_swapImgRestore);
                 $("#aCerrar").on("mouseover", function () { expedienteFn.MM_swapImage('btnCerrar', '', 'images/Concluir_2.png', 1); });
 
+
                 $("#txtFechaIni").datepicker({
                     minDate: null,
                     maxDate: null
@@ -348,7 +349,7 @@ $(function () {
                         obj.value = obj.value.substring(0, vlAncho - 1)
 
                 }
-                
+
                 function BuscaUsuario() {
                     idUnidad = $("#idUnidad").val();
                     idUsuario = $("#txtUsuario").val();
@@ -419,13 +420,13 @@ $(function () {
                     document.frmMain.submit();
 
                 }
-                
+
                 function EliminarPdf(documentoId) {
                     var DocumentoId = documentoId.substring(0, documentoId.length - 4);
 
                     $.msgBox({
-                        title: "Expedientes Comisi�n de Usuarios y Conducta",
-                        content: "� Seguro que desea  eliminar este documento ?",
+                        title: "Expedientes Comisión de Usuarios y Conducta",
+                        content: "¿ Seguro que desea  eliminar este documento ?",
                         type: "confirm",
                         buttons: [{ value: "Yes" }, { value: "No" }],
                         success: function (result) {
@@ -458,13 +459,8 @@ $(function () {
                         } //function (result)
                     }); // end msgbox
 
-
-
-
-
-
                 }
-                
+
             },
             MM_swapImgRestore: function () { //v3.0
                 var i, x, a = document.MM_sr; for (i = 0; a && i < a.length && (x = a[i]) && x.oSrc; i++) x.src = x.oSrc;
@@ -496,19 +492,19 @@ $(function () {
             },
             Concluir() {
                 if ($("#txtDescripcion").val().length < 1) {
-                    Alerta('Capture una descripci�n corta y clara de la sanci�n');
+                    Alerta('Capture una descripción corta y clara de la sanción');
                     $("#txtDescripcion").focus();
                     return false;
                 }
 
                 if ($("#slInfraccion").val() == 0) {
-                    Alerta('Seleccione un tipo de Infracci�n');
+                    Alerta('Seleccione un tipo de Infracción');
                     $("#slInfraccion").focus();
                     return false;
                 }
 
                 if ($("#slResolucion").val() == 0) {
-                    Alerta('Seleccione un tipo de Resoluci�n');
+                    Alerta('Seleccione un tipo de Resolución');
                     $("#slResolucion").focus();
                     return false;
                 }
@@ -531,8 +527,8 @@ $(function () {
                 }
 
                 $.msgBox({
-                    title: "Expedientes Comisi�n de Usuarios y Conducta",
-                    content: "� Desea Concluir y Cerrar Definitivamente el Expediente ?",
+                    title: "Expedientes Comisión de Usuarios y Conducta",
+                    content: "¿ Desea Concluir y Cerrar Definitivamente el Expediente ?",
                     type: "confirm",
                     buttons: [{ value: "Yes" }, { value: "No" }],
                     success: function (result) {
@@ -585,7 +581,7 @@ $(function () {
                     if ($("#txtDescPDF").val().length == 0) {
 
                         $("#message-alerta").html("");
-                        $("#message-alerta").prepend('<div id="mensaje_error" class="ui-state-error ui-corner-all" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><strong>Alerta:</strong> Debe indicar una descripci�n para el documento PDF que est� anexando.</p></div>');
+                        $("#message-alerta").prepend('<div id="mensaje_error" class="ui-state-error ui-corner-all" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><strong>Alerta:</strong> Debe indicar una descripción para el documento PDF que está anexando.</p></div>');
                         $("#message-alerta").slideDown('slow');
                         setTimeout(function () {
                             $("#mensaje_error").slideUp(750);
@@ -597,8 +593,8 @@ $(function () {
                 }
 
                 $.msgBox({
-                    title: "Expedientes Comisi�n de Usuarios y Conducta",
-                    content: "� Desea actualizar el expediente ?",
+                    title: "Expedientes Comisión de Usuarios y Conducta",
+                    content: "¿ Desea actualizar el expediente ?",
                     type: "confirm",
                     buttons: [{ value: "Yes" }, { value: "No" }],
                     success: function (result) {

@@ -147,7 +147,6 @@
     <Content Include="img\carousel\3.jpg" />
     <Content Include="img\carousel\4.jpg" />
     <Content Include="img\carousel\5.jpg" />
-    <Content Include="img\logo2.png" />
     <Content Include="index.html" />
     <Content Include="js\administracion\usuarios.js" />
     <Content Include="js\administracion\eventos.js" />

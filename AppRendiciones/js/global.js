@@ -12,8 +12,9 @@
         }).fail(function (error) {
             console.log(error);
         }
-            ).always(function () {
-                fn.BlockScreen(false);
+        ).always(function () {
+            fn.BlockScreen(false);
+            alertify.alert("Login", "¡El usuario o el password son incorrectos!");
             });
     },
     GetToken() {
@@ -58,7 +59,7 @@
                 var Items = [];
 
 
-                Menu += '<div><div class="sidenav-header">Docentes</div >';
+                Menu += '<div><div class="sidenav-header"><img src="img/logo.png" width="70" height="80" /> </div >';
 
                 if ($(data)) {
                     Menu += '<ul class="sidenav-menu">';

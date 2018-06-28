@@ -13,6 +13,7 @@
     .form-signin .form-signin-heading,
     .form-signin .checkbox {
         margin-bottom: 10px;
+        color: #87161d;
     }
 
     .form-signin .checkbox {
@@ -30,3 +31,14 @@
         .form-signin .form-control:focus {
             z-index: 2;
         }
+
+.btn-aivh {
+background-color: #f19f35;
+color: white;
+border-color:black;
+}
+
+    .btn-aivh:hover {
+        background-color: #fe8e00;
+        cursor: pointer;
+    }

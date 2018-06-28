@@ -1,15 +1,17 @@
-<%@ Language=VBScript %>
+<%@LANGUAGE="VBSCRIPT" CODEPAGE="65001"%>
+<%Response.CharSet = "utf-8"%>
+
 <!--#include file="inc/Database.asp"-->
 <!--#include file="inc/freeaspupload.asp" -->
-<!doctype html>
+<!DOCTYPE html>
+<html lang="es">
 <!--[if IE 7 ]>		 <html class="no-js ie ie7 lte7 lte8 lte9" lang="en-US"> <![endif]-->
 <!--[if IE 8 ]>		 <html class="no-js ie ie8 lte8 lte9" lang="en-US"> <![endif]-->
 <!--[if IE 9 ]>		 <html class="no-js ie ie9 lte9>" lang="en-US"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="en-US"> <!--<![endif]-->
 
 <head>
 
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <style type="text/css">
     <!--
@@ -19,7 +21,7 @@
     }
     -->
 </style>
-  
+
 <title>Expedientes</title>
 
     <link href="inc/sare.css" rel="stylesheet" type="text/css">
@@ -215,7 +217,7 @@ end if
               <td class="menu_activo"><div align="right">Categor&iacute;a de infracci&oacute;n:</div></td>
               <td colspan="2"><div align="left">
                   <select name="slInfraccion" id="slInfraccion" <%if idEstatus = 3 then response.write "disabled"  end if %>>
-                    <option value="0">Seleccione el Nivel de Infracci�n . . .</option>
+                    <option value="0">Seleccione el Nivel de Infracción . . .</option>
                     <%
 
             StrSql = "EXEC COMISIONUC..SPS_INFRACCION "
@@ -237,7 +239,7 @@ end if
             <td class="menu_activo"><div align="right">Resoluci&oacute;n:</div></td>
             <td><div align="left">
                 <select name="slResolucion" id="slResolucion" <%if idEstatus = 3 then response.write "disabled"  end if %>>
-                  <option value="0" >Seleccione el tipo de resoluci�n . . .</option>
+                  <option value="0" >Seleccione el tipo de resolución . . .</option>
                   <%
 
             StrSql = "EXEC COMISIONUC..SPS_TIPO_RESOLUCION "

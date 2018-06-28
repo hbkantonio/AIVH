@@ -12,7 +12,7 @@
     transition: transform .3s;
     width: 256px;
     z-index: 100;
-    top:80px;
+    top: 80px;
 }
 
     .sidenav.show {
@@ -21,8 +21,8 @@
 
 .sidenav-brand {
     background: #f5f5f5;
-    border-bottom: 1px solid #ff6a00;
-    color: #ff6a00;
+    border-bottom: 1px solid #87161d;
+    color: #87161d;
     font-size: 24px;
     font-weight: bold;
     line-height: 32px;
@@ -41,6 +41,7 @@
     line-height: 32px;
     margin: 0;
     padding: 16px 24px 15px;
+    text-align: center;
 }
 
     .sidenav-header small {
@@ -105,7 +106,7 @@
 }
 
 .sidenav-link-icon {
-    color: #dd0030;
+    color: #87161d;
     display: block;
     height: 24px;
     left: 24px;
@@ -174,20 +175,20 @@
 }
 
 .user-male {
-    color: #237afa;
+    color: #f19f35;
 }
 
     .user-male:hover {
-        color: #0056b3 !important;
+        color: #fe8e00 !important;
         cursor: pointer;
     }
 
 .user-famale {
-    color: #ff00dc;
+    color: #f19f35;
 }
 
     .user-famale:hover {
-        color: #b200ff !important;
+        color: #fe8e00 !important;
         cursor: pointer;
     }
 
@@ -201,8 +202,13 @@
     width: 30px;
     height: 30px;
     font-size: 30px;
+    color: #f19f35;
 }
 
+    .menu:hover {
+        color: #fe8e00 !important;
+        cursor: pointer;
+    }
 
 .user-panel {
     background: #dcdcdc;
@@ -228,11 +234,11 @@
 
 .user-item {
     background: #dcdcdc;
-    color: #dd0030;
+    color: #87161d;
 }
 
     .user-item:hover {
-        background: #dd0030;
+        background: #dd4c55;
         color: white;
         cursor: pointer;
     }

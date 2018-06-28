@@ -20,12 +20,12 @@ h1 {
 .home {
     width: 35px;
     height: 35px;
-    color: #dd0032;
+    color: #87161d;
     font-size: 35px;
 }
 
     .home:hover {
-        color: #ff0000;
+        color: #dd4c55;
     }
 
 .contenido {
