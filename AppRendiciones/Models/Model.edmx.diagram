@@ -5,34 +5,33 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="af9af9d2d5314ef3bfc940d3f6eab1b3" Name="Diagram1">
-        <EntityTypeShape EntityType="AIVHModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="AIVHModel.AspNetRoles" Width="1.5" PointX="11.75" PointY="2.5" />
-        <EntityTypeShape EntityType="AIVHModel.AspNetUserClaims" Width="1.5" PointX="16.25" PointY="3.625" />
-        <EntityTypeShape EntityType="AIVHModel.AspNetUserLogins" Width="1.5" PointX="16.25" PointY="1" />
-        <EntityTypeShape EntityType="AIVHModel.AspNetUsers" Width="1.5" PointX="14" PointY="1.375" />
-        <EntityTypeShape EntityType="AIVHModel.CentroCosto" Width="1.5" PointX="0.75" PointY="6.625" />
-        <EntityTypeShape EntityType="AIVHModel.ComprobanteTipo" Width="1.5" PointX="9" PointY="7.375" />
-        <EntityTypeShape EntityType="AIVHModel.Concepto" Width="1.5" PointX="6.75" PointY="3.625" />
-        <EntityTypeShape EntityType="AIVHModel.Curso" Width="1.5" PointX="3" PointY="8.25" />
-        <EntityTypeShape EntityType="AIVHModel.CursoGastoDetalle" Width="1.5" PointX="11.25" PointY="12" />
-        <EntityTypeShape EntityType="AIVHModel.CursoParticipante" Width="1.5" PointX="5.25" PointY="10.375" />
-        <EntityTypeShape EntityType="AIVHModel.CursoTipo" Width="1.5" PointX="0.75" PointY="11.875" />
+        <EntityTypeShape EntityType="AIVHModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="AIVHModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="2.5" />
+        <EntityTypeShape EntityType="AIVHModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="AIVHModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="3.75" />
+        <EntityTypeShape EntityType="AIVHModel.AspNetUsers" Width="1.5" PointX="3" PointY="1.375" />
+        <EntityTypeShape EntityType="AIVHModel.CentroCosto" Width="1.5" PointX="9" PointY="4.75" />
+        <EntityTypeShape EntityType="AIVHModel.ComprobanteTipo" Width="1.5" PointX="14.25" PointY="17" />
+        <EntityTypeShape EntityType="AIVHModel.Concepto" Width="1.5" PointX="12" PointY="4.25" />
+        <EntityTypeShape EntityType="AIVHModel.Curso" Width="1.5" PointX="11.25" PointY="11.125" />
+        <EntityTypeShape EntityType="AIVHModel.CursoGastoDetalle" Width="1.5" PointX="16.5" PointY="11.625" />
+        <EntityTypeShape EntityType="AIVHModel.CursoParticipante" Width="1.5" PointX="13.5" PointY="12.625" />
+        <EntityTypeShape EntityType="AIVHModel.CursoTipo" Width="1.5" PointX="9" PointY="26" />
         <EntityTypeShape EntityType="AIVHModel.Estatus" Width="1.5" PointX="0.75" PointY="16.125" />
-        <EntityTypeShape EntityType="AIVHModel.Evento" Width="1.5" PointX="6" PointY="14.625" />
-        <EntityTypeShape EntityType="AIVHModel.EventoDonante" Width="1.5" PointX="8.25" PointY="21" />
-        <EntityTypeShape EntityType="AIVHModel.EventoGastoDetalle" Width="1.5" PointX="11.25" PointY="17.5" />
-        <EntityTypeShape EntityType="AIVHModel.EventoTipo" Width="1.5" PointX="3.75" PointY="24.5" />
+        <EntityTypeShape EntityType="AIVHModel.Evento" Width="1.5" PointX="8.25" PointY="11.625" />
+        <EntityTypeShape EntityType="AIVHModel.EventoDonante" Width="1.5" PointX="10.5" PointY="18.875" />
+        <EntityTypeShape EntityType="AIVHModel.EventoGastoDetalle" Width="1.5" PointX="13.5" PointY="7.375" />
+        <EntityTypeShape EntityType="AIVHModel.EventoTipo" Width="1.5" PointX="6" PointY="7.375" />
         <EntityTypeShape EntityType="AIVHModel.Gasto" Width="1.5" PointX="3" PointY="15" />
-        <EntityTypeShape EntityType="AIVHModel.GastoDetalle" Width="1.5" PointX="8.25" PointY="10.5" />
-        <EntityTypeShape EntityType="AIVHModel.Menu" Width="1.5" PointX="0.75" PointY="21.375" />
-        <EntityTypeShape EntityType="AIVHModel.PagoForma" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="AIVHModel.Sede" Width="1.5" PointX="0.75" PointY="9.5" />
-        <EntityTypeShape EntityType="AIVHModel.SubConcepto" Width="1.5" PointX="9" PointY="3.25" />
-        <EntityTypeShape EntityType="AIVHModel.SubMenu" Width="1.5" PointX="3" PointY="21" />
-        <EntityTypeShape EntityType="AIVHModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="AIVHModel.Usuario" Width="1.5" PointX="9" PointY="14.875" />
-        <EntityTypeShape EntityType="AIVHModel.UsuarioRol" Width="1.5" PointX="6.75" PointY="7.375" />
-        <EntityTypeShape EntityType="AIVHModel.UsuarioRolAcceso" Width="1.5" PointX="14.25" PointY="18" />
+        <EntityTypeShape EntityType="AIVHModel.GastoDetalle" Width="1.5" PointX="8.25" PointY="18.5" />
+        <EntityTypeShape EntityType="AIVHModel.Menu" Width="1.5" PointX="3.75" PointY="20.375" />
+        <EntityTypeShape EntityType="AIVHModel.Sede" Width="1.5" PointX="9" PointY="23.625" />
+        <EntityTypeShape EntityType="AIVHModel.SubConcepto" Width="1.5" PointX="14.25" PointY="3.875" />
+        <EntityTypeShape EntityType="AIVHModel.SubMenu" Width="1.5" PointX="6" PointY="16" />
+        <EntityTypeShape EntityType="AIVHModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="AIVHModel.Usuario" Width="1.5" PointX="6" PointY="9.875" />
+        <EntityTypeShape EntityType="AIVHModel.UsuarioRol" Width="1.5" PointX="3.75" PointY="11.375" />
+        <EntityTypeShape EntityType="AIVHModel.UsuarioRolAcceso" Width="1.5" PointX="8.25" PointY="8" />
         <AssociationConnector Association="AIVHModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="AIVHModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="AIVHModel.FK_Curso_CentroCosto" />

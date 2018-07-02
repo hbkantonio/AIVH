@@ -7,11 +7,14 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security.OAuth;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AppRendiciones.Models;
 
 namespace AppRendiciones.Auth
 {
     public class Autentificacion : OAuthAuthorizationServerProvider
     {
+        private AIVHEntities db = new AIVHEntities();
+
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             context.Validated();
@@ -26,10 +29,15 @@ namespace AppRendiciones.Auth
             using (AuthRepository _repo = new AuthRepository())
             {
                 IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
-
+                var UsuarioId = int.Parse(context.UserName);
                 if (user == null)
                 {
                     context.SetError("invalid_grant", "El nombre de usuario o contraseña son incorrectos.");
+                    return;
+                }
+                else if (db.Usuario.Where(a => a.UsuarioId == UsuarioId).FirstOrDefault().EstatusId != 1)
+                {
+                    context.SetError("invalid_grant", "La cuenta está inactivo.");
                     return;
                 }
                 personId = user.Id;

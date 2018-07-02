@@ -5,7 +5,6 @@
             //Cargar Catolagos
             this.getAllGastos();
             fn.GetCentroCostos(1);
-            fn.GetInstructor("slcInstructor");
             fn.GetConcepto()
                 .done(function () {
                     gastosFn.changeConcepto();
@@ -43,13 +42,12 @@
         },
         getAllGastos() {
             fn.BlockScreen(true);
-            fn.Api("Gastos/Get", "GET", "")
+            fn.Api("Gastos/Get/1", "GET", "")
                 .done(function (data) {
                     tblReporteGastos = $('#tblReporteGastos').DataTable({
                         data: data,
                         columns: [
                             { data: 'centroCostos' },
-                            { data: 'resposable' },
                             { data: 'periodo' },
                             {
                                 data: 'anticipo',
@@ -74,17 +72,6 @@
                                 orderable: false
                             },
                             {
-                                data: 'saldo',
-                                render: function (data, f, d) {
-                                    return (parseFloat(data)).toLocaleString('es-mx', {
-                                        style: 'currency',
-                                        currency: 'MXN',
-                                        minimumFractionDigits: 2
-                                    });
-                                },
-                                orderable: false
-                            },
-                            {
                                 data: 'observaciones',
                                 render: function (data, f, d) {
                                     var color = "";
@@ -98,6 +85,17 @@
                                     var status = '<div class="' + color + '" role="alert">' + data + '</div><br/>';
                                     return status;
                                 }
+                            },
+                            {
+                                data: 'saldo',
+                                render: function (data, f, d) {
+                                    return (parseFloat(data)).toLocaleString('es-mx', {
+                                        style: 'currency',
+                                        currency: 'MXN',
+                                        minimumFractionDigits: 2
+                                    });
+                                },
+                                orderable: false
                             },
                             { data: 'fecha' },
                             {
@@ -400,7 +398,6 @@
                     var gastos =
                         {
                             centroCostosId: $("#slcCentroCostos").val(),
-                            usuarioId: $("#slcInstructor").val(),
                             fechaInicio: $("#txtFechaInicio").val(),
                             fechaFin: $("#txtFechaFin").val(),
                             efectivo: $("#txtEfectivo").val(),
@@ -415,12 +412,12 @@
                         {
                             gastoId,
                             centroCostosId: $("#slcCentroCostos").val(),
-                            usuarioId: $("#slcInstructor").val(),
                             fechaInicio: $("#txtFechaInicio").val(),
                             fechaFin: $("#txtFechaFin").val(),
                             efectivo: $("#txtEfectivo").val(),
                             chequeTransNuevo: $("#txtCheque1").val(),
                             fechaNuevo: $("#txtFecha1").val(),
+                            numeroNuevo: $("#txtNoCheque1").val(),
                             gastoDetalle: lstGastos
                         };
                 }

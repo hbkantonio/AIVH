@@ -20,7 +20,7 @@
         },
         getAllGastos() {
             fn.BlockScreen(true);
-            fn.Api("Gastos/Get", "GET", "")
+            fn.Api("Gastos/Get/2", "GET", "")
                 .done(function (data) {
                     tblReporteGastos = $('#tblReporteGastos').DataTable({
                         data: data,
@@ -51,17 +51,6 @@
                                 orderable: false
                             },
                             {
-                                data: 'saldo',
-                                render: function (data, f, d) {
-                                    return (parseFloat(data)).toLocaleString('es-mx', {
-                                        style: 'currency',
-                                        currency: 'MXN',
-                                        minimumFractionDigits: 2
-                                    });
-                                },
-                                orderable: false
-                            },
-                            {
                                 data: 'observaciones',
                                 render: function (data, f, d) {
                                     var color = "";
@@ -75,6 +64,17 @@
                                     var status = '<div class="' + color + '" role="alert">' + data + '</div><br/>';
                                     return status;
                                 }
+                            },
+                            {
+                                data: 'saldo',
+                                render: function (data, f, d) {
+                                    return (parseFloat(data)).toLocaleString('es-mx', {
+                                        style: 'currency',
+                                        currency: 'MXN',
+                                        minimumFractionDigits: 2
+                                    });
+                                },
+                                orderable: false
                             },
                             { data: 'fecha' },
                             {
@@ -250,6 +250,7 @@
                             alertify.alert("Gastos", data);
                         });
                 }, function () {
+                    fn.BlockScreen(false);
                 });
         },
         generatePdf(gastoId) {

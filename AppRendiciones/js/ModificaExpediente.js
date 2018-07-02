@@ -1,5 +1,5 @@
 $(function () {
-
+    var lstArticulos = [], message = "Copyright � YMCA.";
     var expedienteFn =
         {
             init() {
@@ -13,7 +13,10 @@ $(function () {
                 $("#aCerrar").click(this.Concluir);
                 $("#aCerrar").on("mouseout", this.MM_swapImgRestore);
                 $("#aCerrar").on("mouseover", function () { expedienteFn.MM_swapImage('btnCerrar', '', 'images/Concluir_2.png', 1); });
-
+                document.onmousedown = expedienteFn.click;
+                $("#txtUsuario").blur(this.BuscaUsuario);
+                $("#txtNota").keyup(this.ismaxlength);
+                $(".eliminar").on('click', this.EliminarPdf);
 
                 $("#txtFechaIni").datepicker({
                     minDate: null,
@@ -50,7 +53,7 @@ $(function () {
                     $("#divSegundaResolucion").css("display", "block");
                     $("#divSegundaFechaIni").css("display", "block");
                     $("#divSegundaFechaFin").css("display", "block");
-                    LlenaResolucion($("#slResolucion").val(), $("#vlResolucion2").val());
+                    expedienteFn.LlenaResolucion($("#slResolucion").val(), $("#vlResolucion2").val());
 
                     $("#txtFechaIni2").val($("#vlFechaIni2").val());
                     $("#txtFechaFin2").val($("#vlFechaFin2").val());
@@ -108,7 +111,6 @@ $(function () {
 
                     }
 
-
                     if (TipoResolucion == 3) {
                         $('#txtFechaIni').val("");
                         $('#txtFechaFin').val("");
@@ -119,7 +121,7 @@ $(function () {
                         $('#txtFechaIni2').val("");
                         $('#txtFechaFin2').val("");
 
-                        LlenaResolucion(TipoResolucion, 0);
+                        expedienteFn.LlenaResolucion(TipoResolucion, 0);
                         $("#divSegundaResolucion").css("display", "block");
                         $("#divSegundaFechaIni").css("display", "block");
                         $("#divSegundaFechaFin").css("display", "block");
@@ -137,12 +139,11 @@ $(function () {
                         $('#txtFechaIni2').val("");
                         $('#txtFechaFin2').val("");
 
-                        LlenaResolucion(TipoResolucion, 0);
+                        expedienteFn.LlenaResolucion(TipoResolucion, 0);
                         $("#divSegundaResolucion").css("display", "block");
                         $("#divSegundaFechaIni").css("display", "block");
                         $("#divSegundaFechaFin").css("display", "block");
                     }
-
 
                     if (TipoResolucion == 5) {
 
@@ -174,36 +175,12 @@ $(function () {
                         $("#divSegundaResolucion").css("display", "block");
                         $("#divSegundaFechaIni").css("display", "block");
                         $("#divSegundaFechaFin").css("display", "block");
-                        LlenaResolucion(TipoResolucion, 0);
+                        expedienteFn.LlenaResolucion(TipoResolucion, 0);
                     }
 
 
 
                 });
-
-                function Alerta(strMensaje) {
-                    $("#message-alerta").html("");
-                    $("#message-alerta").prepend('<div id="mensaje_error" class="ui-state-error ui-corner-all" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><strong>Alerta:</strong> ' + strMensaje + ' .</p></div>');
-                    $("#message-alerta").slideDown('slow');
-                    setTimeout(function () {
-                        $("#mensaje_error").slideUp(750);
-                    }, 6000);
-                }
-
-                function LlenaResolucion(strResolucion, strResolucion2) {
-
-                    $.ajax({
-                        type: "POST",
-                        url: "Asincrono/SegundaResolucion.asp",
-                        data: "Resolucion=" + strResolucion + "&Resolucion2=" + strResolucion2,
-                        cache: false,
-                        success: function (html) {
-                            $("#slResolucion2").html(html)
-                            //$("#txtFechaIni2").val( '' );
-                            //$("#txtFechaFin2").val( '' );
-                        }
-                    });
-                }
 
                 $("#btnGuardar").click(function (evento) {
 
@@ -247,46 +224,46 @@ $(function () {
                     //SALOME
 
                     if ($("#txtDescripcion").val().length < 1) {
-                        Alerta('Capture una descripci�n corta y clara de la sanci�n');
+                        expedienteFn.Alerta('Capture una descripción corta y clara de la sanción');
                         $("#txtDescripcion").focus();
                         return false;
                     }
 
                     if ($("#slInfraccion").val() == 0) {
-                        Alerta('Seleccione un tipo de Infracci�n');
+                        expedienteFn.Alerta('Seleccione un tipo de Infracción');
                         $("#slInfraccion").focus();
                         return false;
                     }
 
 
                     if ($("#slResolucion").val() == 0) {
-                        Alerta('Seleccione un tipo de Resoluci�n');
+                        expedienteFn.Alerta('Seleccione un tipo de Resolución');
                         $("#slResolucion").focus();
                         return false;
                     }
 
                     if ($("#txtFechaIni").val().length < 1) {
-                        Alerta('Capture la fecha de inicio');
+                        expedienteFn.Alerta('Capture la fecha de inicio');
                         $("#txtFechaIni").focus();
                         return false;
                     }
 
                     if ($("#txtFechaFin").val().length < 1) {
-                        Alerta('Capture la fecha final');
+                        expedienteFn.Alerta('Capture la fecha final');
                         $("#txtFechaFin").focus();
                         return false;
                     }
 
 
                     if ($("#ArchivosAnexados").val() == "0") {
-                        Alerta('Debe anexar por lo menos un archivo PDF.');
+                        expedienteFn.Alerta('Debe anexar por lo menos un archivo PDF.');
                         return false;
                     }
 
 
                     $.msgBox({
                         title: "Expedientes Comisi�n de Usuarios y Conducta",
-                        content: "� Desea Concluir y Cerrar Definitivamente el Expediente ?",
+                        content: "¿ Desea Concluir y Cerrar Definitivamente el Expediente ?",
                         type: "confirm",
                         buttons: [{ value: "Yes" }, { value: "No" }],
                         success: function (result) {
@@ -313,153 +290,10 @@ $(function () {
 
                 });
 
-                var message = "Copyright � YMCA.";
-
-                function click(e) {
-                    if (document.all) {
-                        if (event.button == 2 || event.button == 3) {
-                            alert(message);
-                            return;
-                        }
-                    }
-                    if (document.layers) {
-                        if (e.which == 3) {
-                            alert(message);
-                            return;
-                        }
-                    }
-                }
-
                 if (document.layers) {
                     document.captureEvents(Event.MOUSEDOWN);
                 }
 
-                document.onmousedown = click;
-
-                function ismaxlength(obj) {
-                    var mlength = obj.getAttribute ? parseInt(obj.getAttribute("maxlength")) : ""
-                    var vlTecla = window.event.keyCode
-                    var vlAncho = document.frmMain.txtNota.value.length
-                    //alert(vlAncho);
-                    //alert(vlTecla);
-                    if (obj.getAttribute && obj.value.length > mlength)
-                        obj.value = obj.value.substring(0, mlength)
-
-                    if (vlTecla == 219)
-                        obj.value = obj.value.substring(0, vlAncho - 1)
-
-                }
-
-                function BuscaUsuario() {
-                    idUnidad = $("#idUnidad").val();
-                    idUsuario = $("#txtUsuario").val();
-
-
-                    $.ajax({
-                        type: "POST",
-                        url: "Asincrono/ConsultaPlan.asp",
-                        data: "idUnidad=" + idUnidad + "&idUsuario=" + idUsuario,
-                        cache: false,
-                        success: function (html) {
-                            $("#txtPlan").val(html);
-                        }
-                    });
-
-
-                    $.ajax({
-                        type: "POST",
-                        url: "Asincrono/ConsultaUsuario.asp",
-                        data: "idUnidad=" + idUnidad + "&idUsuario=" + idUsuario,
-                        cache: false,
-                        success: function (html) {
-                            $("#txtNombre").val(html);
-                        }
-                    });
-
-
-                }
-
-                function PresentaNota() {
-
-                    if (document.frmMain.vlMuestraNota.value == "1") {
-
-
-                        vlTabla = "<table width='200' border='0'>"
-                        vlTabla = vlTabla + "<tr>"
-                        vlTabla = vlTabla + "<th scope='col'><textarea name='txtNota' maxlength='300' cols='80' rows='5' id='txtNota' onkeyup='return ismaxlength(this)'></textarea></th>"
-                        vlTabla = vlTabla + "</tr>"
-                        vlTabla = vlTabla + "</table>"
-
-                        document.getElementById('DivComentario').innerHTML = vlTabla;
-                        document.frmMain.vlMuestraNota.value = 0;
-                    }
-
-                    document.frmMain.txtNota.focus();
-                    document.frmMain.txtNota.select();
-
-
-                }
-
-                function Grabar() {
-
-                    if (document.frmMain.txtNota.value == "") {
-                        alert('Debe ingresar un comentario');
-                        return;
-                    }
-
-                    //document.getElementById('progress').style.visibility = 'visible';
-                    //document.getElementById('grabar').style.visibility = 'hidden';
-                    //document.getElementById('comentario').style.visibility = 'hidden';
-                    //document.body.style.cursor = 'wait';
-                    //document.frmMain.TipoMov.value="1"; // 1 = Graba, 2 = Cancela, 3 = Atendido, 4 = Cerrar
-                    //document.frmMain.target = "_blank"
-                    vlObservaciones = document.frmMain.txtNota.value;
-                    vlFolio = document.frmMain.idFolio.value;
-                    vlUnidad = document.frmMain.idUnidad.value;
-                    document.frmMain.action = "ModificaExpediente.asp?Graba=1&Folio=" + vlFolio + "&txtNota=" + vlObservaciones + "&idUnidad=" + vlUnidad;
-                    document.frmMain.submit();
-
-                }
-
-                function EliminarPdf(documentoId) {
-                    var DocumentoId = documentoId.substring(0, documentoId.length - 4);
-
-                    $.msgBox({
-                        title: "Expedientes Comisión de Usuarios y Conducta",
-                        content: "¿ Seguro que desea  eliminar este documento ?",
-                        type: "confirm",
-                        buttons: [{ value: "Yes" }, { value: "No" }],
-                        success: function (result) {
-                            if (result == "Yes") {
-                                $.ajax({
-                                    type: 'GET',
-                                    url: "Asincrono/EliminarDocumento.asp?DocumentoId=" + DocumentoId,
-                                    dataType: "html",
-                                    contentType: "application/x-www-form-urlencoded",
-                                    cache: false,
-                                    //data:cadena,
-                                    beforeSend: function () {
-                                        //$(".progress-bar").css("display","block");
-                                        //mbe.presentation.progressBarSimulate();
-                                    },
-                                    success: function (data) {
-                                        //alert(data);
-                                        imagen = document.getElementById(documentoId + "1");
-                                        padre = imagen.parentNode;
-                                        padre.removeChild(imagen);
-
-                                        imagen1 = document.getElementById(documentoId + "2");
-                                        padre1 = imagen1.parentNode;
-                                        padre1.removeChild(imagen1);
-                                    },
-                                    async: false,
-                                });// end $.ajax
-
-                            } // end if
-                        } //function (result)
-                    }); // end msgbox
-
-                }
 
             },
             MM_swapImgRestore: function () { //v3.0
@@ -485,44 +319,43 @@ $(function () {
                     if ((x = expedienteFn.MM_findObj(a[i])) != null) { document.MM_sr[j++] = x; if (!x.oSrc) x.oSrc = x.src; x.src = a[i + 2]; }
             },
             Regresa() {
-                debugger;
                 idUnidad = $("#idUnidad").val();
                 document.frmMain.action = "Expedientes.asp?idUnidad=" + idUnidad;
                 document.frmMain.submit();
             },
             Concluir() {
                 if ($("#txtDescripcion").val().length < 1) {
-                    Alerta('Capture una descripción corta y clara de la sanción');
+                    expedienteFn.Alerta('Capture una descripción corta y clara de la sanción');
                     $("#txtDescripcion").focus();
                     return false;
                 }
 
                 if ($("#slInfraccion").val() == 0) {
-                    Alerta('Seleccione un tipo de Infracción');
+                    expedienteFn.Alerta('Seleccione un tipo de Infracción');
                     $("#slInfraccion").focus();
                     return false;
                 }
 
                 if ($("#slResolucion").val() == 0) {
-                    Alerta('Seleccione un tipo de Resolución');
+                    expedienteFn.Alerta('Seleccione un tipo de Resolución');
                     $("#slResolucion").focus();
                     return false;
                 }
 
                 if ($("#txtFechaIni").val().length < 1) {
-                    Alerta('Capture la fecha de inicio');
+                    expedienteFn.Alerta('Capture la fecha de inicio');
                     $("#txtFechaIni").focus();
                     return false;
                 }
 
                 if ($("#txtFechaFin").val().length < 1) {
-                    Alerta('Capture la fecha final');
+                    expedienteFn.Alerta('Capture la fecha final');
                     $("#txtFechaFin").focus();
                     return false;
                 }
 
                 if ($("#ArchivosAnexados").val() == "0") {
-                    Alerta('Debe anexar por lo menos un archivo PDF.');
+                    expedienteFn.Alerta('Debe anexar por lo menos un archivo PDF.');
                     return false;
                 }
 
@@ -557,7 +390,7 @@ $(function () {
                 strAttach = $("#attach1").val();
                 posicion = strAttach.indexOf(',');
                 if (posicion != -1) {
-                    Alerta('El nombre del archivo PDF contiene comas, por favor renombre el archivo y vuelva a anexarlo.');
+                    expedienteFn.Alerta('El nombre del archivo PDF contiene comas, por favor renombre el archivo y vuelva a anexarlo.');
                     return false;
                 }
 
@@ -629,6 +462,156 @@ $(function () {
                         } // end if
                     } //function (result)
                 }); // end msgbox
+            },
+            Alerta(strMensaje) {
+                $("#message-alerta").html("");
+                $("#message-alerta").prepend('<div id="mensaje_error" class="ui-state-error ui-corner-all" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><strong>Alerta:</strong> ' + strMensaje + ' .</p></div>');
+                $("#message-alerta").slideDown('slow');
+                setTimeout(function () {
+                    $("#mensaje_error").slideUp(750);
+                }, 6000);
+            },
+            LlenaResolucion(strResolucion, strResolucion2) {
+                $.ajax({
+                    type: "POST",
+                    url: "Asincrono/SegundaResolucion.asp",
+                    data: "Resolucion=" + strResolucion + "&Resolucion2=" + strResolucion2,
+                    cache: false,
+                    success: function (html) {
+                        $("#slResolucion2").html(html)
+                        //$("#txtFechaIni2").val( '' );
+                        //$("#txtFechaFin2").val( '' );
+                    }
+                });
+            },
+            click(e) {
+                if (document.all) {
+                    if (event.button == 2 || event.button == 3) {
+                        alert(message);
+                        return;
+                    }
+                }
+                if (document.layers) {
+                    if (e.which == 3) {
+                        alert(message);
+                        return;
+                    }
+                }
+            },
+            ismaxlength(obj) {
+                var mlength = obj.getAttribute ? parseInt(obj.getAttribute("maxlength")) : ""
+                var vlTecla = window.event.keyCode
+                var vlAncho = document.frmMain.txtNota.value.length
+                //alert(vlAncho);
+                //alert(vlTecla);
+                if (obj.getAttribute && obj.value.length > mlength)
+                    obj.value = obj.value.substring(0, mlength)
+
+                if (vlTecla == 219)
+                    obj.value = obj.value.substring(0, vlAncho - 1)
+            },
+            BuscaUsuario() {
+                idUnidad = $("#idUnidad").val();
+                idUsuario = $("#txtUsuario").val();
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "Asincrono/ConsultaPlan.asp",
+                    data: "idUnidad=" + idUnidad + "&idUsuario=" + idUsuario,
+                    cache: false,
+                    success: function (html) {
+                        $("#txtPlan").val(html);
+                    }
+                });
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "Asincrono/ConsultaUsuario.asp",
+                    data: "idUnidad=" + idUnidad + "&idUsuario=" + idUsuario,
+                    cache: false,
+                    success: function (html) {
+                        $("#txtNombre").val(html);
+                    }
+                });
+
+
+            },
+            PresentaNota() {
+
+                if (document.frmMain.vlMuestraNota.value == "1") {
+                    vlTabla = "<table width='200' border='0'>"
+                    vlTabla = vlTabla + "<tr>"
+                    vlTabla = vlTabla + "<th scope='col'><textarea name='txtNota' maxlength='300' cols='80' rows='5' id='txtNota'></textarea></th>"
+                    vlTabla = vlTabla + "</tr>"
+                    vlTabla = vlTabla + "</table>"
+
+                    document.getElementById('DivComentario').innerHTML = vlTabla;
+                    document.frmMain.vlMuestraNota.value = 0;
+                }
+
+                document.frmMain.txtNota.focus();
+                document.frmMain.txtNota.select();
+            },
+            Grabar() {
+
+                if (document.frmMain.txtNota.value == "") {
+                    alert('Debe ingresar un comentario');
+                    return;
+                }
+                //document.getElementById('progress').style.visibility = 'visible';
+                //document.getElementById('grabar').style.visibility = 'hidden';
+                //document.getElementById('comentario').style.visibility = 'hidden';
+                //document.body.style.cursor = 'wait';
+                //document.frmMain.TipoMov.value="1"; // 1 = Graba, 2 = Cancela, 3 = Atendido, 4 = Cerrar
+                //document.frmMain.target = "_blank"
+                vlObservaciones = document.frmMain.txtNota.value;
+                vlFolio = document.frmMain.idFolio.value;
+                vlUnidad = document.frmMain.idUnidad.value;
+                document.frmMain.action = "ModificaExpediente.asp?Graba=1&Folio=" + vlFolio + "&txtNota=" + vlObservaciones + "&idUnidad=" + vlUnidad;
+                document.frmMain.submit();
+
+            },
+            EliminarPdf() {
+                var documentoId = this.id;
+                var DocumentoId = documentoId.substring(0, documentoId.length - 4);
+
+                $.msgBox({
+                    title: "Expedientes Comisión de Usuarios y Conducta",
+                    content: "¿ Seguro que desea  eliminar este documento ?",
+                    type: "confirm",
+                    buttons: [{ value: "Yes" }, { value: "No" }],
+                    success: function (result) {
+                        if (result == "Yes") {
+                            $.ajax({
+                                type: 'GET',
+                                url: "Asincrono/EliminarDocumento.asp?DocumentoId=" + DocumentoId,
+                                dataType: "html",
+                                contentType: "application/x-www-form-urlencoded",
+                                cache: false,
+                                //data:cadena,
+                                beforeSend: function () {
+                                    //$(".progress-bar").css("display","block");
+                                    //mbe.presentation.progressBarSimulate();
+                                },
+                                success: function (data) {
+                                    //alert(data);
+                                    imagen = document.getElementById(documentoId + "1");
+                                    padre = imagen.parentNode;
+                                    padre.removeChild(imagen);
+
+                                    imagen1 = document.getElementById(documentoId + "2");
+                                    padre1 = imagen1.parentNode;
+                                    padre1.removeChild(imagen1);
+                                },
+                                async: false,
+                            });// end $.ajax
+
+                        } // end if
+                    } //function (result)
+                }); // end msgbox
+
             }
         };
     expedienteFn.init();

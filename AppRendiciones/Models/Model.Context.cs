@@ -45,7 +45,6 @@ namespace AppRendiciones.Models
         public virtual DbSet<Gasto> Gasto { get; set; }
         public virtual DbSet<GastoDetalle> GastoDetalle { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
-        public virtual DbSet<PagoForma> PagoForma { get; set; }
         public virtual DbSet<Sede> Sede { get; set; }
         public virtual DbSet<SubConcepto> SubConcepto { get; set; }
         public virtual DbSet<SubMenu> SubMenu { get; set; }

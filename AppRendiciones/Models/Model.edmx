@@ -109,7 +109,7 @@
           <Property Name="NumeroChequeTans" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Fecha" Type="date" Nullable="false" />
           <Property Name="Hora" Type="time" Precision="0" Nullable="false" />
-          <Property Name="UsuarioIdGenero" Type="int" Nullable="false" />
+          <Property Name="UsuarioIdActualizo" Type="int" Nullable="false" />
           <Property Name="EstatusId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CursoGastoDetalle">
@@ -176,7 +176,7 @@
           <Property Name="NumeroChequeTans" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Fecha" Type="date" Nullable="false" />
           <Property Name="Hora" Type="time" Precision="0" Nullable="false" />
-          <Property Name="UsuarioIdGenero" Type="int" Nullable="false" />
+          <Property Name="UsuarioIdActualizo" Type="int" Nullable="false" />
           <Property Name="EstatusId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="EventoDonante">
@@ -233,7 +233,7 @@
           <Property Name="NumeroChequeTans" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Fecha" Type="date" Nullable="false" />
           <Property Name="Hora" Type="time" Precision="0" Nullable="false" />
-          <Property Name="UsuarioIdGenero" Type="int" Nullable="false" />
+          <Property Name="UsuarioIdActualizo" Type="int" Nullable="false" />
           <Property Name="EstatusId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="GastoDetalle">
@@ -259,13 +259,6 @@
           <Property Name="MenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Icono" Type="varchar" MaxLength="200" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PagoForma">
-          <Key>
-            <PropertyRef Name="PagoFormaId" />
-          </Key>
-          <Property Name="PagoFormaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="Sede">
           <Key>
@@ -402,7 +395,7 @@
               <PropertyRef Name="UsuarioId" />
             </Principal>
             <Dependent Role="Curso">
-              <PropertyRef Name="UsuarioIdGenero" />
+              <PropertyRef Name="UsuarioIdActualizo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -662,7 +655,7 @@
               <PropertyRef Name="UsuarioId" />
             </Principal>
             <Dependent Role="Gasto">
-              <PropertyRef Name="UsuarioIdGenero" />
+              <PropertyRef Name="UsuarioIdActualizo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -832,7 +825,6 @@
           <EntitySet Name="Gasto" EntityType="Self.Gasto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GastoDetalle" EntityType="Self.GastoDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PagoForma" EntityType="Self.PagoForma" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sede" EntityType="Self.Sede" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubConcepto" EntityType="Self.SubConcepto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubMenu" EntityType="Self.SubMenu" Schema="dbo" store:Type="Tables" />
@@ -1022,7 +1014,6 @@
           <EntitySet Name="Gasto" EntityType="AIVHModel.Gasto" />
           <EntitySet Name="GastoDetalle" EntityType="AIVHModel.GastoDetalle" />
           <EntitySet Name="Menu" EntityType="AIVHModel.Menu" />
-          <EntitySet Name="PagoForma" EntityType="AIVHModel.PagoForma" />
           <EntitySet Name="Sede" EntityType="AIVHModel.Sede" />
           <EntitySet Name="SubConcepto" EntityType="AIVHModel.SubConcepto" />
           <EntitySet Name="SubMenu" EntityType="AIVHModel.SubMenu" />
@@ -1292,7 +1283,7 @@
           <Property Name="NumeroChequeTans" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Hora" Type="Time" Nullable="false" Precision="0" />
-          <Property Name="UsuarioIdGenero" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioIdActualizo" Type="Int32" Nullable="false" />
           <Property Name="EstatusId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CentroCosto" Relationship="AIVHModel.FK_Curso_CentroCosto" FromRole="Curso" ToRole="CentroCosto" />
           <NavigationProperty Name="CursoTipo" Relationship="AIVHModel.FK_Curso_CursoTipo" FromRole="Curso" ToRole="CursoTipo" />
@@ -1378,7 +1369,7 @@
           <Property Name="NumeroChequeTans" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Hora" Type="Time" Nullable="false" Precision="0" />
-          <Property Name="UsuarioIdGenero" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioIdActualizo" Type="Int32" Nullable="false" />
           <Property Name="EstatusId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CentroCosto" Relationship="AIVHModel.FK_Evento_CentroCosto" FromRole="Evento" ToRole="CentroCosto" />
           <NavigationProperty Name="Estatus" Relationship="AIVHModel.FK_Evento_Estatus" FromRole="Evento" ToRole="Estatus" />
@@ -1447,7 +1438,7 @@
           <Property Name="NumeroChequeTans" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Hora" Type="Time" Nullable="false" Precision="0" />
-          <Property Name="UsuarioIdGenero" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioIdActualizo" Type="Int32" Nullable="false" />
           <Property Name="EstatusId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CentroCosto" Relationship="AIVHModel.FK_RendicionGasto_CentroCosto" FromRole="Gasto" ToRole="CentroCosto" />
           <NavigationProperty Name="Estatus" Relationship="AIVHModel.FK_Gasto_Estatus" FromRole="Gasto" ToRole="Estatus" />
@@ -1482,13 +1473,6 @@
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Icono" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="SubMenu" Relationship="AIVHModel.FK_SubMenu_Menu" FromRole="Menu" ToRole="SubMenu" />
-        </EntityType>
-        <EntityType Name="PagoForma">
-          <Key>
-            <PropertyRef Name="PagoFormaId" />
-          </Key>
-          <Property Name="PagoFormaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Sede">
           <Key>
@@ -1748,7 +1732,7 @@
               <PropertyRef Name="UsuarioId" />
             </Principal>
             <Dependent Role="Curso">
-              <PropertyRef Name="UsuarioIdGenero" />
+              <PropertyRef Name="UsuarioIdActualizo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1928,7 +1912,7 @@
               <PropertyRef Name="UsuarioId" />
             </Principal>
             <Dependent Role="Gasto">
-              <PropertyRef Name="UsuarioIdGenero" />
+              <PropertyRef Name="UsuarioIdActualizo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2123,7 +2107,7 @@
             <EntityTypeMapping TypeName="AIVHModel.Curso">
               <MappingFragment StoreEntitySet="Curso">
                 <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
-                <ScalarProperty Name="UsuarioIdGenero" ColumnName="UsuarioIdGenero" />
+                <ScalarProperty Name="UsuarioIdActualizo" ColumnName="UsuarioIdActualizo" />
                 <ScalarProperty Name="Hora" ColumnName="Hora" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="NumeroChequeTans" ColumnName="NumeroChequeTans" />
@@ -2196,7 +2180,7 @@
             <EntityTypeMapping TypeName="AIVHModel.Evento">
               <MappingFragment StoreEntitySet="Evento">
                 <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
-                <ScalarProperty Name="UsuarioIdGenero" ColumnName="UsuarioIdGenero" />
+                <ScalarProperty Name="UsuarioIdActualizo" ColumnName="UsuarioIdActualizo" />
                 <ScalarProperty Name="Hora" ColumnName="Hora" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="NumeroChequeTans" ColumnName="NumeroChequeTans" />
@@ -2257,7 +2241,7 @@
             <EntityTypeMapping TypeName="AIVHModel.Gasto">
               <MappingFragment StoreEntitySet="Gasto">
                 <ScalarProperty Name="EstatusId" ColumnName="EstatusId" />
-                <ScalarProperty Name="UsuarioIdGenero" ColumnName="UsuarioIdGenero" />
+                <ScalarProperty Name="UsuarioIdActualizo" ColumnName="UsuarioIdActualizo" />
                 <ScalarProperty Name="Hora" ColumnName="Hora" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="NumeroChequeTans" ColumnName="NumeroChequeTans" />
@@ -2294,14 +2278,6 @@
                 <ScalarProperty Name="Icono" ColumnName="Icono" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PagoForma">
-            <EntityTypeMapping TypeName="AIVHModel.PagoForma">
-              <MappingFragment StoreEntitySet="PagoForma">
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="PagoFormaId" ColumnName="PagoFormaId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -21,13 +21,14 @@ namespace AppRendiciones.Controllers
         private AIVHEntities db = new AIVHEntities();
 
 
-        [Route("Get")]
+        [Route("Get/{RolId:int}")]
         [HttpGet]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int RolId)
         {
             try
             {
-                var cursosDb = db.Curso.ToList();
+                int usuarioId = int.Parse(DbContextAIVH.GetUserName(User));
+                var cursosDb = RolId == 1 ? db.Curso.Where(a => a.UsuarioId1 == usuarioId || a.UsuarioId2 == usuarioId).ToList() : db.Curso.ToList();
                 List<Models.DTO.Curso> cursos = cursosDb.Select(b => new Models.DTO.Curso
                 {
                     folio = b.CentroCosto.Nomenglatura + b.CursoId,
@@ -40,7 +41,7 @@ namespace AppRendiciones.Controllers
                     cursoTipoId = b.CursoTipo.CursoTipoId,
                     cursoTipo = b.CursoTipo.Descripcion,
                     instructorId1 = b.UsuarioId1,
-                    instructor1 = b.Usuario1.Nombre + " " + b.Usuario1.Paterno + " " + b.Usuario1.Materno,
+                    instructor1 = b.Usuario.Nombre + " " + b.Usuario.Paterno + " " + b.Usuario.Materno,
                     comision1 = b.Comision1,
                     instructorId2 = b.UsuarioId2,
                     instructor2 = db.Usuario.Where(a => a.UsuarioId == b.UsuarioId2).Select(c => c.Nombre + " " + c.Paterno + " " + c.Materno).FirstOrDefault(),
@@ -264,7 +265,7 @@ namespace AppRendiciones.Controllers
                         NumeroChequeTans = "",
                         Fecha = DateTime.Now,
                         Hora = DateTime.Now.TimeOfDay,
-                        UsuarioIdGenero = usuarioId,
+                        UsuarioIdActualizo = usuarioId,
                         EstatusId = 1,
                         CursoParticipante = cursoParticipante,
                         CursoGastoDetalle = cursoGastoDetalle
@@ -287,7 +288,7 @@ namespace AppRendiciones.Controllers
                     cursoDb.FechaCurso = DateTime.ParseExact((curso.fechaCurso.Replace('-', '/')), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     cursoDb.Fecha = DateTime.Now;
                     cursoDb.Hora = DateTime.Now.TimeOfDay;
-                    cursoDb.UsuarioIdGenero = usuarioId;
+                    cursoDb.UsuarioIdActualizo = usuarioId;
                     cursoDb.EstatusId = 1;
                     db.CursoParticipante.AddRange(cursoParticipante);
                     db.CursoGastoDetalle.AddRange(cursoGastoDetalle);
@@ -349,7 +350,7 @@ namespace AppRendiciones.Controllers
                 cursoDb.NumeroChequeTans = curso.numeroChequeTans;
                 cursoDb.Fecha = DateTime.Now;
                 cursoDb.Hora = DateTime.Now.TimeOfDay;
-                cursoDb.UsuarioIdGenero = usuarioId;
+                cursoDb.UsuarioIdActualizo = usuarioId;
 
                 if (cursoGastoDetalle.Count > 0) { db.CursoGastoDetalle.AddRange(cursoGastoDetalle); }
 
@@ -395,7 +396,7 @@ namespace AppRendiciones.Controllers
                     fechachequeTans = a.FechasChequeTans != null ? a.FechasChequeTans?.ToString("dd/MM/yyyy", Cultura) : "SF",
                     numeroChequeTans = a.NumeroChequeTans != "" ? a.NumeroChequeTans : "SN",
                     usuarioGenero = a.Usuario1.Nombre + " " + a.Usuario1.Paterno + " " + a.Usuario1.Materno,
-                    totalGastosD = a.CursoGastoDetalle.Sum(s=> s.Total)
+                    totalGastosD = a.CursoGastoDetalle.Sum(s => s.Total)
                 }).ToList();
 
 
@@ -462,7 +463,7 @@ namespace AppRendiciones.Controllers
                 curso.EstatusId = 3;
                 curso.Fecha = DateTime.Now;
                 curso.Hora = DateTime.Now.TimeOfDay;
-                curso.UsuarioIdGenero = usuarioId;
+                curso.UsuarioIdActualizo = usuarioId;
 
                 db.SaveChanges();
 

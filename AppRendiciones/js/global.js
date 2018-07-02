@@ -9,9 +9,9 @@
         ).done(function (token) {
             localStorage.setItem("token_id", JSON.stringify(token));
             window.location.href = 'index.html';
-        }).fail(function (error) {
+            }).fail(function (error) {
             console.log(error);
-            alertify.alert("Login", "¡El usuario o el password son incorrectos!");
+            alertify.alert("Login", error.responseJSON.error_description );
         }
         ).always(function () {
             fn.BlockScreen(false);

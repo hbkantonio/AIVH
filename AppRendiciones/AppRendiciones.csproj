@@ -281,9 +281,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\PagoForma.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Sede.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

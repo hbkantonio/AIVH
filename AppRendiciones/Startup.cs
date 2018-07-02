@@ -33,7 +33,7 @@ namespace AppRendiciones
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(60),
                 Provider = new Autentificacion(),
                 // RefreshTokenProvider = new RefreshTokenProvider()
             };

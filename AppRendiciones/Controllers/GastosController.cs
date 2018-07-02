@@ -19,14 +19,14 @@ namespace AppRendiciones.Controllers
         static CultureInfo Cultura = CultureInfo.CreateSpecificCulture("es-MX");
         private AIVHEntities db = new AIVHEntities();
 
-        [Route("Get")]
+        [Route("Get/{RolId:int}")]
         [HttpGet]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int RolId)
         {
             try
             {
                 int usuarioId = int.Parse(DbContextAIVH.GetUserName(User));
-                var gastosDb = db.Gasto.Where(a => a.UsuarioIdGenero == usuarioId);
+                var gastosDb = RolId == 1 ? db.Gasto.Where(a => a.UsuarioId == usuarioId).ToList() : db.Gasto.ToList();
                 List<GetGasto> gastos = gastosDb.Select(b => new GetGasto
                 {
                     gastoId = b.GastoId,
@@ -34,7 +34,7 @@ namespace AppRendiciones.Controllers
                     resposable = b.Usuario1.Nombre + " " + b.Usuario1.Paterno + " " + b.Usuario1.Materno,
                     fechaInicial = b.FechaInicio,
                     fechaFinal2 = b.FechaFin,
-                    anticipo = (b.Efectivo + b.ChequeTans ).ToString(),
+                    anticipo = (b.Efectivo + b.ChequeTans).ToString(),
                     gastos = b.GastoDetalle.Sum(c => c.Total).ToString(),
                     saldo = Math.Abs((b.Efectivo + b.ChequeTans) - b.GastoDetalle.Sum(c => c.Total)).ToString(),
                     observaciones = (b.Efectivo + b.ChequeTans) > b.GastoDetalle.Sum(c => c.Total) ? "Devolucion" : (b.Efectivo + b.ChequeTans) == b.GastoDetalle.Sum(c => c.Total) ? "" : "Reembolso",
@@ -65,7 +65,7 @@ namespace AppRendiciones.Controllers
                     centroCostosId = a.CentroCostoId,
                     centroCostos = a.CentroCosto.Descripcion,
                     usuarioId = a.UsuarioId,
-                    usuario= a.Usuario1.Nombre +" " + a.Usuario1.Paterno + " " + a.Usuario1.Materno,
+                    usuario = a.Usuario1.Nombre + " " + a.Usuario1.Paterno + " " + a.Usuario1.Materno,
                     fechaInicio = a.FechaFin.ToString("dd/MM/yyyy", Cultura),
                     fechaFin = a.FechaFin.ToString("dd/MM/yyyy", Cultura),
                     efectivo = a.Efectivo,
@@ -153,7 +153,7 @@ namespace AppRendiciones.Controllers
                     db.Gasto.Add(new Models.Gasto
                     {
                         CentroCostoId = gastos.centroCostosId,
-                        UsuarioId = gastos.usuarioId,
+                        UsuarioId = usuarioId,
                         FechaInicio = DateTime.ParseExact((gastos.fechaInicio.Replace('-', '/')), "dd/MM/yyyy", CultureInfo.InvariantCulture),
                         FechaFin = DateTime.ParseExact((gastos.fechaFin.Replace('-', '/')), "dd/MM/yyyy", CultureInfo.InvariantCulture),
                         Efectivo = gastos.efectivo,
@@ -162,7 +162,7 @@ namespace AppRendiciones.Controllers
                         NumeroChequeTans = gastos.numeroNuevo,
                         Fecha = DateTime.Now,
                         Hora = DateTime.Now.TimeOfDay,
-                        UsuarioIdGenero = usuarioId,
+                        UsuarioIdActualizo = usuarioId,
                         EstatusId = 1,
                         GastoDetalle = gastoDetalle
                     });
@@ -173,7 +173,6 @@ namespace AppRendiciones.Controllers
                     db.GastoDetalle.RemoveRange(gastoDb.GastoDetalle);
 
                     gastoDb.CentroCostoId = gastos.centroCostosId;
-                    gastoDb.UsuarioId = gastos.usuarioId;
                     gastoDb.FechaInicio = DateTime.ParseExact((gastos.fechaInicio.Replace('-', '/')), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     gastoDb.FechaFin = DateTime.ParseExact((gastos.fechaFin.Replace('-', '/')), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     gastoDb.Efectivo = gastos.efectivo;
@@ -182,7 +181,7 @@ namespace AppRendiciones.Controllers
                     gastoDb.NumeroChequeTans = gastos.numeroNuevo;
                     gastoDb.Fecha = DateTime.Now;
                     gastoDb.Hora = DateTime.Now.TimeOfDay;
-                    gastoDb.UsuarioIdGenero = usuarioId;
+                    gastoDb.UsuarioIdActualizo = usuarioId;
                     db.GastoDetalle.AddRange(gastoDetalle);
                 }
 
@@ -272,7 +271,7 @@ namespace AppRendiciones.Controllers
                 gasto.EstatusId = 3;
                 gasto.Fecha = DateTime.Now;
                 gasto.Hora = DateTime.Now.TimeOfDay;
-                gasto.UsuarioIdGenero = usuarioId;
+                gasto.UsuarioIdActualizo = usuarioId;
 
                 db.SaveChanges();
 

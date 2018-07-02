@@ -1,4 +1,4 @@
-<%@LANGUAGE="VBSCRIPT" CODEPAGE="65001"%>
+﻿<%@LANGUAGE="VBSCRIPT" CODEPAGE="65001"%>
 <%Response.CharSet = "utf-8"%>
 
 <!--#include file="inc/Database.asp"-->
@@ -122,13 +122,13 @@ end if
 %>
 
 <body>
-<form id='frmMain' name='frmMain' action=""  method='post' enctype="multipart/form-data" >
+<form id='frmMain' name='frmMain' action="" method='post' enctype="multipart/form-data" >
   <table  width="1024" border="0">
   <tr class="a">
     <th colspan="6" scope="row">
     <table width="800" border="0">
       <tr>
-        <td width="116"><strong><a href="" id="aRegresar"><img src="images/FleReg1.png" alt='Regresar al Men&uacute; de Opciones' name="regresar" id="regresar" width="60" height="28" border="0"></a> </strong></td>
+        <td width="116"><strong><a href="javascript:return false;" id="aRegresar" ><img src="images/FleReg1.png" alt='Regresar al Men&uacute; de Opciones' name="regresar" id="regresar" width="60" height="28" border="0"></a> </strong></td>
         <td width="554"><div align="center"><strong><img src="images/bullet.gif" width="16" height="12"><span class="Estilo1">Seguimiento Expediente de Comisi&oacute;n de Usuarios y Conducta</span></strong></div></td>
         <td width="116">&nbsp;</td>
       </tr>
@@ -157,7 +157,7 @@ end if
             <tr>
               <td align="right" class="menu_activo"><div align="right">Usuario:</div></td>
               <td colspan="2"><div align="left">
-                  <input type="text" name="txtUsuario" id="txtUsuario" onBlur='BuscaUsuario()' value="<%=idUsuario%>" disabled>
+                  <input type="text" name="txtUsuario" id="txtUsuario" value="<%=idUsuario%>" disabled>
                 </div></td>
             </tr>
             <tr>
@@ -178,7 +178,7 @@ end if
                   <input name="txtDescripcion" type="text" id="txtDescripcion" size="80" maxlength="80" value="<%=strDescrpcion%>" <%if idEstatus = 3 then response.write "disabled"  end if %>>
                 </div></td>
             </tr>
-						<tr>
+						<!--<tr>
 							<td class="menu_activo"><div align="right">Articulos:</div></td>
 							<td colspan="2"><div align="left">
 						<select name="slArticulo" id="slArticulo">
@@ -212,7 +212,7 @@ end if
 
 								</div></td>
 
-						</tr>
+						</tr>-->
             <tr>
               <td class="menu_activo"><div align="right">Categor&iacute;a de infracci&oacute;n:</div></td>
               <td colspan="2"><div align="left">
@@ -302,7 +302,7 @@ end if
 							do while not RsAdo2.eof%>
    <a id = "<%=RsAdo2("FIDOCTO_PDF")%>1" target="_blank" href="../../../DoctosPermisos/DoctosComision/<%=RsAdo2("FIDOCTO_PDF")%>"><img src="../../BaseIncluidos/images/pdf.jpg"  width="20" height="20" border="0"  title="<%=RsAdo2("FCNOMBRE_PDF")%>"></a>
    <%if idEstatus <> 3 THEN%>
-   <a id = "<%=RsAdo2("FIDOCTO_PDF")%>2" href="JavaScript:EliminarPdf('<%=RsAdo2("FIDOCTO_PDF")%>');" > <img src="../../BaseIncluidos/images/error.png"  width="10" height="10" border="0"  title="Eliminar <%=RsAdo2("FCNOMBRE_PDF")%>"></a>
+   <a id="<%=RsAdo2("FIDOCTO_PDF")%>" class="eliminar"> <img   src="../../BaseIncluidos/images/error.png"  width="10" height="10" border="0"  title="Eliminar <%=RsAdo2("FCNOMBRE_PDF")%>"></a>
    <%end if%>
                                <%
                                RsAdo2.movenext
@@ -314,7 +314,7 @@ end if
               <%if idEstatus <> 3 THEN%>
                 <tr>
                 <td class="menu_activo"><div align="right">Nuevo comentario:</div></td>
-                <td colspan="2"><textarea name='txtNota' maxlength='300' cols='80' rows='5' id='txtNota' onkeyup='return ismaxlength(this)'></textarea></td>
+                <td colspan="2"><textarea name='txtNota' maxlength='300' cols='80' rows='5' id='txtNota' ></textarea></td>
                 </tr>
                 <tr>
                 <td>

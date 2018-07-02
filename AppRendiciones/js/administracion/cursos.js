@@ -41,7 +41,7 @@
         },
         getCursos() {
             fn.BlockScreen(true);
-            fn.Api("Cursos/Get", "GET", "")
+            fn.Api("Cursos/Get/2", "GET", "")
                 .done(function (data) {
                     tblCursos = $('#tblCursos').DataTable({
                         data: data,
@@ -81,17 +81,6 @@
                                 orderable: false
                             },
                             {
-                                data: 'saldo',
-                                render: function (data, f, d) {
-                                    return (parseFloat(data)).toLocaleString('es-mx', {
-                                        style: 'currency',
-                                        currency: 'MXN',
-                                        minimumFractionDigits: 2
-                                    });
-                                },
-                                orderable: false
-                            },
-                            {
                                 data: 'observaciones',
                                 render: function (data, f, d) {
                                     var color = "";
@@ -105,6 +94,17 @@
                                     var status = '<div class="' + color + '" role="alert">' + data + '</div><br/>';
                                     return status;
                                 }
+                            },
+                            {
+                                data: 'saldo',
+                                render: function (data, f, d) {
+                                    return (parseFloat(data)).toLocaleString('es-mx', {
+                                        style: 'currency',
+                                        currency: 'MXN',
+                                        minimumFractionDigits: 2
+                                    });
+                                },
+                                orderable: false
                             },
                             {
                                 data: null,
@@ -481,6 +481,7 @@
                             alertify.alert("Cursos", data);
                         });
                 }, function () {
+                    fn.BlockScreen(false);
                 });
         },
         generatePdf(cursoId) {

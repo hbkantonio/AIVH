@@ -21,13 +21,14 @@ namespace AppRendiciones.Controllers
         private AIVHEntities db = new AIVHEntities();
 
 
-        [Route("Get")]
+        [Route("Get/{RolId:int}")]
         [HttpGet]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int RolId)
         {
             try
             {
-                var EventosDb = db.Evento.ToList();
+                int usuarioId = int.Parse(DbContextAIVH.GetUserName(User));
+                var EventosDb = RolId == 1 ? db.Evento.Where(a=> a.UsuarioId== usuarioId).ToList() : db.Evento.ToList();
                 List<Models.DTO.Evento> cursos = EventosDb.Select(b => new Models.DTO.Evento
                 {
                     folio = b.CentroCosto.Nomenglatura + b.EventoId,
@@ -117,7 +118,7 @@ namespace AppRendiciones.Controllers
                         NumeroChequeTans = "",
                         Fecha = DateTime.Now,
                         Hora = DateTime.Now.TimeOfDay,
-                        UsuarioIdGenero = usuarioId,
+                        UsuarioIdActualizo = usuarioId,
                         EstatusId = 1
                     });
                 }
@@ -133,7 +134,7 @@ namespace AppRendiciones.Controllers
                     eventoDb.FechaEvento = DateTime.ParseExact((evento.fechaEvento.Replace('-', '/')), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     eventoDb.Fecha = DateTime.Now;
                     eventoDb.Hora = DateTime.Now.TimeOfDay;
-                    eventoDb.UsuarioIdGenero = usuarioId;
+                    eventoDb.UsuarioIdActualizo = usuarioId;
                     eventoDb.EstatusId = 1;
                 }
 
@@ -215,7 +216,7 @@ namespace AppRendiciones.Controllers
                 eventoDb.NumeroChequeTans = evento.numeroChequeTans;
                 eventoDb.Fecha = DateTime.Now;
                 eventoDb.Hora = DateTime.Now.TimeOfDay;
-                eventoDb.UsuarioIdGenero = usuarioId;
+                eventoDb.UsuarioIdActualizo = usuarioId;
 
                 if (eventoGastoDetalle.Count > 0) { db.EventoGastoDetalle.AddRange(eventoGastoDetalle); }
                 if (eventoDonante.Count > 0) { db.EventoDonante.AddRange(eventoDonante); }
@@ -325,7 +326,7 @@ namespace AppRendiciones.Controllers
                 evento.EstatusId = 3;
                 evento.Fecha = DateTime.Now;
                 evento.Hora = DateTime.Now.TimeOfDay;
-                evento.UsuarioIdGenero = usuarioId;
+                evento.UsuarioIdActualizo = usuarioId;
 
                 db.SaveChanges();
 

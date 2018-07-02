@@ -34,7 +34,7 @@ namespace AppRendiciones.Models
         public string NumeroChequeTans { get; set; }
         public System.DateTime Fecha { get; set; }
         public System.TimeSpan Hora { get; set; }
-        public int UsuarioIdGenero { get; set; }
+        public int UsuarioIdActualizo { get; set; }
         public int EstatusId { get; set; }
     
         public virtual CentroCosto CentroCosto { get; set; }
