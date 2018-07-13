@@ -24,7 +24,7 @@ namespace AppRendiciones.Models.DTO
         public DateTime fechaEvento2
         {
             get { return fechaEvento1; }
-            set { fechaEvento = value.ToString("dd/MM/yyyy", Cultura); }
+            set { if (value != DateTime.Parse("01/01/0001 0:00:00")) fechaEvento = value.ToString("dd/MM/yyyy", Cultura); }
         }
         public decimal anticipo { get; set; }
         public decimal efectivo { get; set; }
@@ -72,7 +72,7 @@ namespace AppRendiciones.Models.DTO
         public DateTime fecha2
         {
             get { return fecha1; }
-            set { fecha = value.ToString("dd/MM/yyyy", Cultura); }
+            set { if (value != DateTime.Parse("01/01/0001 0:00:00")) fecha = value.ToString("dd/MM/yyyy", Cultura); }
         }
         public int conceptoId { get; set; }
         public string concepto { get; set; }

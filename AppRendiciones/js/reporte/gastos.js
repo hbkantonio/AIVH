@@ -36,6 +36,12 @@
                 var info = tblReporteGastos.page.info();
                 tblReporteGastos.page.len($(this).val()).draw();
             });
+            $('#slcPeriodos').change(function () {
+                tblReporteGastos
+                    .column(1)
+                    .search(this.value)
+                    .draw();
+            });
             $("#tblReporteGastos").on("click", "a", this.clickReporteGastos);
             $("#btnNueva").click(this.newRendicion);
             $("#btnreturn").click(this.returnRendicion);
@@ -44,8 +50,9 @@
             fn.BlockScreen(true);
             fn.Api("Gastos/Get/1", "GET", "")
                 .done(function (data) {
+                    fn.GetPeriodos(data.periodos);
                     tblReporteGastos = $('#tblReporteGastos').DataTable({
-                        data: data,
+                        data: data.gastos,
                         columns: [
                             { data: 'centroCostos' },
                             { data: 'periodo' },
@@ -103,8 +110,7 @@
                                 render: function (data, f, d) {
                                     if (data == 1) {
                                         return '<a class="btn btn-info btn-sm" href="" onclick="return false;">Editar</a> ';
-                                    } else
-                                    {
+                                    } else {
                                         return '<a class="btn btn-success btn-sm" href="" onclick="return false;">Ver</a> ';
                                     }
                                 },
@@ -117,7 +123,7 @@
                         searching: true,
                         ordering: true,
                         info: false,
-                        stateSave: true,
+                        stateSave: false,
                         destroy: true,
                         responsive: true,
                         language: {
@@ -128,6 +134,7 @@
                             processing: "Procesando..."
                         }
                     });
+                    $('#slcPeriodos').change();
                     fn.BlockScreen(false);
                 })
                 .fail(function (data) {
@@ -138,14 +145,12 @@
 
 
         },
-        newRendicion()
-        {
+        newRendicion() {
             gastosFn.resetForm();
             $("#divGenerales").show();
             $("#divTabla").hide();
         },
-        returnRendicion()
-        {
+        returnRendicion() {
             $("#divGenerales").hide();
             $("#divTabla").show();
         },
@@ -217,7 +222,7 @@
                 if (this.id == "txtCheque1") {
                     $("#txtFecha1").prop("disabled", false);
                     $("#txtNoCheque1").prop("disabled", false);
-                } 
+                }
             } else {
                 if (this.id == "txtCheque1") {
                     $("#txtFecha1").prop("disabled", true);
@@ -228,7 +233,12 @@
         inputGasto() {
             var subtotal = (parseFloat($("#txtSubtotal").val()) || 0);
             var iva = (parseFloat($("#txtIva").val()) || 0);
-            $("#txtTotal").val(subtotal + iva);
+            var total = (subtotal + iva).toLocaleString('es-mx', {
+                style: 'currency',
+                currency: 'MXN',
+                minimumFractionDigits: 2
+            });
+            $("#txtTotal").val(total);
         },
         addGasto(e) {
             e.preventDefault();
@@ -249,7 +259,7 @@
                         proveedor: $("#txtProveedor").val(),
                         subTotal: $("#txtSubtotal").val(),
                         iva: $('#txtIva').val(),
-                        total: $("#txtTotal").val()
+                        total: parseFloat($("#txtSubtotal").val()) + parseFloat($('#txtIva').val())
                     });
             } else {
                 var gasto = lstGastos.filter(function (e) { return e.consecutivoId === cons; });
@@ -264,7 +274,7 @@
                 gasto[0].proveedor = $("#txtProveedor").val();
                 gasto[0].subTotal = $("#txtSubtotal").val();
                 gasto[0].iva = $('#txtIva').val();
-                gasto[0].total = $("#txtTotal").val();
+                gasto[0].total = parseFloat($("#txtSubtotal").val()) + parseFloat($('#txtIva').val());
             }
 
             gastosFn.loadTableGastos(lstGastos);
@@ -406,8 +416,7 @@
                             numeroNuevo: $("#txtNoCheque1").val(),
                             gastoDetalle: lstGastos
                         };
-                } else
-                {
+                } else {
                     var gastos =
                         {
                             gastoId,
@@ -421,7 +430,7 @@
                             gastoDetalle: lstGastos
                         };
                 }
-               
+
                 fn.Api("Gastos/Save", "Post", JSON.stringify(gastos))
                     .done(function (data) {
                         gastosFn.resetForm();
@@ -450,13 +459,17 @@
                     alertify.alert("Gastos", data);
                 });
         },
-        resetForm()
-        {
+        resetForm() {
             $('#btnSave').removeData('gastoId');
             $("#frmGenerales")[0].reset();
             $("#txtFecha1").prop("disabled", true);
             $("#txtNoCheque1").prop("disabled", true);
-            $('#tblGastos').DataTable().clear().draw();
+            if (tblGastos != undefined) {
+                tblGastos
+                    .clear()
+                    .draw();
+                document.getElementById("tblGastos").deleteTFoot();
+            }
             lstGastos = [];
             consecutivo = 0;
         }

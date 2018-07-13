@@ -12,11 +12,14 @@
 
                                 <div id="divTabla">
                                     <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="slcPeriodos">Periodo</label>
+                                            <select id="slcPeriodos" name="slcPeriodos" aria-controls="tblCursos" class="form-control form-control-sm"></select>
+                                        </div>
                                         <div class="col-md-6">
-                                            <label for="txtBusqueda">Buscar:</label>
+                                            <label for="txtBusqueda">Buscar</label>
                                             <input type="text" class="form-control form-control-sm" id="txtBusqueda" />
                                         </div><div class="col-md-1"></div>
-                                        <div class="col-md-3"></div>
                                         <div class="col-md-2 float-right">
                                             <label for="slcLength">Mostrar</label>
                                             <select id="slcLength" name="slcLength" aria-controls="tblCursos" class="form-control form-control-sm">
@@ -28,24 +31,26 @@
                                         </div>
                                     </div>
                                     <br />
-                                    <table id="tblCursos" class="table  table-striped table-hover table-bordered table-response" cellspacing="1">
-                                        <thead class="table-secondary">
-                                            <tr>
-                                                <th>Folio</th>
-                                                <th>Centro de costos </th>
-                                                <th>Sede</th>
-                                                <th>Lugar </th>
-                                                <th>Tipo de curso</th>
-                                                <th>Instructor(es)</th>
-                                                <th>Fecha de curso</th>
-                                                <th>Monto anticipo</th>
-                                                <th>Monto gastos</th>
-                                                <th>Observaciones</th>
-                                                <th>Saldo</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                                    <div class="col-md-12 table-responsive">
+                                        <table id="tblCursos" class="table  table-striped table-hover table-bordered table-response" cellspacing="1">
+                                            <thead class="table-secondary">
+                                                <tr>
+                                                    <th>Folio</th>
+                                                    <th>Centro de costos </th>
+                                                    <th>Sede</th>
+                                                    <th>Lugar </th>
+                                                    <th>Tipo de curso</th>
+                                                    <th>Instructor(es)</th>
+                                                    <th>Fecha de curso</th>
+                                                    <th>Monto anticipo</th>
+                                                    <th>Monto gastos</th>
+                                                    <th>Observaciones</th>
+                                                    <th>Saldo</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
                                 </div>
 
                                 <div id="divGenerales" style="display:none;">
@@ -259,7 +264,7 @@
                                             <div class="row">
                                                 <div class="form-group  col-md-6">
                                                     <label>Importe total</label>
-                                                    <input type="text" class="form-control" id="txtTotal" value="0" required disabled>
+                                                    <input type="text" class="form-control" id="txtTotal" value="$0.00" required disabled>
                                                 </div>
                                             </div>
                                         </div>

@@ -1,5 +1,5 @@
 $(function () {
-    var lstArticulos = [], message = "Copyright � YMCA.";
+    var lstArticulos = [], message = "Copyright � YMCA.", tblArticulos;
     var expedienteFn =
         {
             init() {
@@ -13,6 +13,9 @@ $(function () {
                 $("#aCerrar").click(this.Concluir);
                 $("#aCerrar").on("mouseout", this.MM_swapImgRestore);
                 $("#aCerrar").on("mouseover", function () { expedienteFn.MM_swapImage('btnCerrar', '', 'images/Concluir_2.png', 1); });
+                $("#aApelar").click(this.Apelar);
+                $("#aApelar").on("mouseout", this.MM_swapImgRestore);
+                $("#aApelar").on("mouseover", function () { expedienteFn.MM_swapImage('btnApelar', '', 'images/Apelar_2.png', 1); });
                 document.onmousedown = expedienteFn.click;
                 $("#txtUsuario").blur(this.BuscaUsuario);
                 $("#txtNota").keyup(this.ismaxlength);
@@ -57,6 +60,11 @@ $(function () {
 
                     $("#txtFechaIni2").val($("#vlFechaIni2").val());
                     $("#txtFechaFin2").val($("#vlFechaFin2").val());
+                }
+                ///validar estatus 
+                if ($("#vlEstatus").val() == 3) {
+                    $("#trArticulo").remove();
+                    $("#trArticuloO").remove();
                 }
 
                 $("#slResolucion").change(function () {
@@ -294,7 +302,12 @@ $(function () {
                     document.captureEvents(Event.MOUSEDOWN);
                 }
 
+                /////////////////////////////////////////////////////////////
 
+
+                this.ConsultarArticulos();
+                $("#btnAgregarA").click(this.AgregarArticulo);
+                $("#tblArticulos").on("click", "a", this.DeleteArticulo);
             },
             MM_swapImgRestore: function () { //v3.0
                 var i, x, a = document.MM_sr; for (i = 0; a && i < a.length && (x = a[i]) && x.oSrc; i++) x.src = x.oSrc;
@@ -322,6 +335,69 @@ $(function () {
                 idUnidad = $("#idUnidad").val();
                 document.frmMain.action = "Expedientes.asp?idUnidad=" + idUnidad;
                 document.frmMain.submit();
+            },
+            ConsultarArticulos() {
+                $.ajax({
+                    type: "POST",
+                    url: "Asincrono/ConsultarArticulos.asp",
+                    data: "folio=" + $("#idFolio").val(),
+                    cache: false,
+                })
+                    .done(function (data) {
+                        lstArticulos = data.data;
+                        expedienteFn.LoadArticulos();
+                    })
+                    .fail(function (error) {
+                        alert(error.responseText);
+                    });
+
+            },
+            AgregarArticulo() {
+                if ($("#slArticulo").val() == 0) {
+                    expedienteFn.Alerta('Debe seleccionar un artículo');
+                    return false;
+                }
+
+                if (lstArticulos.filter(function (e) { return e.articuloId == $("#slArticulo").val(); }).length > 0) {
+                    expedienteFn.Alerta('No puedes seleccionar dos veces el mismo artículo');
+                    return false;
+                }
+                lstArticulos.push(
+                    {
+                        "folio": $("#idFolio").val(),
+                        "articuloId": $("#slArticulo").val(),
+                        "articulo": $("#slArticulo :selected").text(),
+                        "observaciones": $("#txtObservaciones").val()
+                    });
+                expedienteFn.LoadArticulos();
+                $("#slArticulo").val(0);
+                $("#txtObservaciones").val("");
+            },
+            LoadArticulos() {
+                var mostrar = $("#vlEstatus").val() == 3 ? false : true
+                tblArticulos = $('#tblArticulos').dataTable({
+                    aaData: lstArticulos,
+                    aoColumns: [
+                        { mDataProp: 'articulo' },
+                        { mDataProp: 'observaciones' },
+                        {
+                            mDataProp: null,
+                            mRender: function (data) {
+                                return '<a><img src="../../BaseIncluidos/images/error.png" width="10" height="10" border="0" title="Eliminar"></a>';
+                            },
+                            visible: mostrar
+                        }
+                    ],
+                    bFilter: false,
+                    bPaginate: false,
+                    bInfo: false,
+                    bDestroy: true,
+                });
+            },
+            DeleteArticulo() {
+                var articulo = tblArticulos.fnGetData($(this).closest('tr'));
+                lstArticulos = lstArticulos.filter(function (e) { return e.articuloId !== articulo.articuloId; });
+                expedienteFn.LoadArticulos();
             },
             Concluir() {
                 if ($("#txtDescripcion").val().length < 1) {
@@ -456,12 +532,43 @@ $(function () {
                             strAttach = $("#attach1").val();
                             strDescPDF = $("#txtDescPDF").val();
 
+
                             $.blockUI({ message: "<h1> Procesando expediente...</h1>" });
-                            document.frmMain.action = "CargaPDF/CargaDocumento.asp?txtUnidad=" + txtUnidad + "&txtUsuario=" + txtUsuario + "&txtInfraccion=" + txtInfraccion + "&txtResolucion=" + txtResolucion + "&txtFechaIni=" + txtFechaIni + "&txtFechaFin=" + txtFechaFin + "&txtDescripcion=" + txtDescripcion + "&attach1=" + strAttach + "&idFolio=" + idFolio + "&txtNota=" + vlObservaciones + "&strDescPDF=" + strDescPDF + "&txtResolucion2=" + txtResolucion2 + "&txtFechaIni2=" + txtFechaIni2 + "&txtFechaFin2=" + txtFechaFin2;
-                            document.frmMain.submit();
+                            expedienteFn.GuardarArticulos()
+                                .done(function (data) {
+                                    document.frmMain.action = "CargaPDF/CargaDocumento.asp?txtUnidad=" + txtUnidad + "&txtUsuario=" + txtUsuario + "&txtInfraccion=" + txtInfraccion + "&txtResolucion=" + txtResolucion + "&txtFechaIni=" + txtFechaIni + "&txtFechaFin=" + txtFechaFin + "&txtDescripcion=" + txtDescripcion + "&attach1=" + strAttach + "&idFolio=" + idFolio + "&txtNota=" + vlObservaciones + "&strDescPDF=" + strDescPDF + "&txtResolucion2=" + txtResolucion2 + "&txtFechaIni2=" + txtFechaIni2 + "&txtFechaFin2=" + txtFechaFin2;
+                                    document.frmMain.submit();
+                                })
+                                .fail(function (error) {
+                                    $.unblockUI({ onUnblock: function () { } });
+                                    alert(error);
+                                });
                         } // end if
                     } //function (result)
                 }); // end msgbox
+            },
+            GuardarArticulos() {
+                var dfd = $.Deferred();
+                if (lstArticulos.length == 0) {
+                    lstArticulos.push(
+                        {
+                            "folio": $("#idFolio").val(),
+                            "articuloId": 0
+                        });
+                }
+                $.ajax({
+                    url: "Asincrono/AgregarArticulo.asp",
+                    type: 'Post',
+                    data: 'datos=' + JSON.stringify(lstArticulos),
+                    contentType: "application/x-www-form-urlencoded"
+                })
+                    .done(function (data) {
+                        dfd.resolve(data);
+                    })
+                    .fail(function (error) {
+                        dfd.reject(error.responseText);
+                    });
+                return dfd.promise();
             },
             Alerta(strMensaje) {
                 $("#message-alerta").html("");
@@ -601,7 +708,7 @@ $(function () {
                                     padre = imagen.parentNode;
                                     padre.removeChild(imagen);
 
-                                    imagen1 = document.getElementById(documentoId + "2");
+                                    imagen1 = document.getElementById(documentoId);
                                     padre1 = imagen1.parentNode;
                                     padre1.removeChild(imagen1);
                                 },
@@ -612,6 +719,29 @@ $(function () {
                     } //function (result)
                 }); // end msgbox
 
+            },
+            Apelar() {
+
+                if ($("#txtNota").val() == "") {
+                    expedienteFn.Alerta('Favor de indicar el motivo de la apelación en un nuevo cometario');
+                    return false;
+                }
+
+                $.msgBox({
+                    title: "Expedientes Comisión de Usuarios y Conducta",
+                    content: "¿ Desea apelar la resolución ?",
+                    type: "confirm",
+                    buttons: [{ value: "Yes" }, { value: "No" }],
+                    success: function (result) {
+                        if (result == "Yes") {
+
+                            $.blockUI({ message: "<h1> Procesando expediente...</h1>" });
+                            document.frmMain.action = "CargaPDF/ApelarResolucion.asp?unidad=" + $("#idUnidad").val() + "&folio=" + $("#idFolio").val() + "&comentario=" + $("#txtNota").val() ;
+                            document.frmMain.submit();
+
+                        } // end if
+                    } //function (result)
+                }); // end msgbox
             }
         };
     expedienteFn.init();

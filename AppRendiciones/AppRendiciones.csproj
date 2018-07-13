@@ -187,6 +187,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Auth\Autentificacion.cs" />
+    <Compile Include="Business\General\General.cs" />
     <Compile Include="Business\General\Modulo.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EventosController.cs" />

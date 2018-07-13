@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AppRendiciones.Business;
 
 namespace AppRendiciones.Controllers
 {
@@ -91,7 +92,13 @@ namespace AppRendiciones.Controllers
                     observaciones = (b.Efectivo + b.ChequeTans) > b.CursoGastoDetalle.Sum(c => c.Total) ? "Devolucion" : (b.Efectivo + b.ChequeTans) == b.CursoGastoDetalle.Sum(c => c.Total) ? "" : "Reembolso"
                 }).ToList();
 
-                return Ok(cursos);
+                var periodos = cursosDb.Select(x => new
+                {
+                    value = x.FechaCurso.ToString("MM/yyyy"),
+                    text = Business.General.General.MonthName(x.FechaCurso.Month) + " " + x.FechaCurso.Year
+                }).Distinct().ToList();
+
+                return Ok(new {cursos,periodos });
             }
             catch (Exception Ex)
             {

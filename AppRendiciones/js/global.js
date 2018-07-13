@@ -9,13 +9,13 @@
         ).done(function (token) {
             localStorage.setItem("token_id", JSON.stringify(token));
             window.location.href = 'index.html';
-            }).fail(function (error) {
+        }).fail(function (error) {
             console.log(error);
-            alertify.alert("Login", error.responseJSON.error_description );
+            alertify.alert("Login", error.responseJSON.error_description);
         }
-        ).always(function () {
-            fn.BlockScreen(false);
-           
+            ).always(function () {
+                fn.BlockScreen(false);
+
             });
     },
     GetToken() {
@@ -290,8 +290,7 @@
                 console.log(data);
             });
     },
-    GetRol()
-    {
+    GetRol() {
         fn.Api("General/GetRol", "GET", "")
             .done(function (data) {
                 $(data).each(function () {
@@ -307,5 +306,17 @@
             .fail(function (data) {
                 console.log(data);
             });
-    }
+    },
+    GetPeriodos(periodos) {
+        $('#slcPeriodos').empty();
+        $(periodos).each(function () {
+            var option = $(document.createElement('option'));
+            option.text(this.text);
+            option.val(this.value);
+            $('#slcPeriodos').append(option);
+        });
+        if ($('#slcPeriodos').length > 0) {
+            $('#slcPeriodos').val($('#slcPeriodos option:last').val());
+        }
+    },
 };

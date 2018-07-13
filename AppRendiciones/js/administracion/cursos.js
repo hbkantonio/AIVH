@@ -1,5 +1,5 @@
 ﻿$(function () {
-    var tblCursos, tblParticipantes, lstParticipantes = [], consecutivo = 0;
+    var tblCursos, tblParticipantes, tblGastos, lstParticipantes = [], consecutivo = 0;
     var cursosFn = {
         init() {
             //Cargar Catolagos
@@ -26,6 +26,10 @@
             $("#txtDeposito").focusout(this.focusout);
             $("#txtCheque").focusout(this.focusout);
             $("#txtTarjeta").focusout(this.focusout);
+            $("#txtEfectivo").on("input", this.inputParticipante);
+            $("#txtDeposito").on("input", this.inputParticipante);
+            $("#txtCheque").on("input", this.inputParticipante);
+            $("#txtTarjeta").on("input", this.inputParticipante);
             $("#frmParticipante").submit(this.addParticipante);
             $('#tblParticipantes').on('click', 'button', this.deleteParticipante);
             $('#tblParticipantes').on('click', 'a', this.editParticipante);
@@ -38,13 +42,20 @@
                 tblCursos.page.len($(this).val()).draw();
             });
 
+            $('#slcPeriodos').change(function () {
+                tblCursos
+                    .column(6)
+                    .search(this.value)
+                    .draw();
+            });
         },
         getCursos() {
             fn.BlockScreen(true);
             fn.Api("Cursos/Get/2", "GET", "")
                 .done(function (data) {
+                    fn.GetPeriodos(data.periodos);
                     tblCursos = $('#tblCursos').DataTable({
-                        data: data,
+                        data: data.cursos,
                         columns: [
                             { data: 'folio' },
                             { data: 'centroCostos' },
@@ -136,7 +147,7 @@
                         searching: true,
                         ordering: true,
                         info: false,
-                        stateSave: true,
+                        stateSave: false,
                         destroy: true,
                         responsive: true,
                         language: {
@@ -147,6 +158,7 @@
                             processing: "Procesando..."
                         },
                     });
+                    $('#slcPeriodos').change();
                     fn.BlockScreen(false);
                 })
                 .fail(function (data) {
@@ -161,8 +173,17 @@
             consecutivo = 0;
             $('#btnSave').removeData('cursoId');
             $("#frmCurso")[0].reset();
+            lstParticipantes = [];
+            if (tblParticipantes != undefined) {
+                tblParticipantes
+                    .clear()
+                    .draw();
+                document.getElementById("tblParticipantes").deleteTFoot();
+            }
             $("#divGenerales").show();
             $("#divTabla").hide();
+            $("#divAnticipos").hide();
+            $("#divGastos").hide();
         },
         returnRendicion() {
             $("#divGenerales").hide();
@@ -240,15 +261,24 @@
             } else if (this.innerHTML == "Ver") {
                 fn.BlockScreen(true);
                 cursosFn.generatePdf(curso.cursoId);
-            } else if (this.innerHTML == "Aprobar")
-            {
+            } else if (this.innerHTML == "Aprobar") {
                 cursosFn.aprobar(curso.cursoId);
             }
         },
         clickAgregar() {
             $("#frmParticipante")[0].reset();
+            $("#validFormas").hide();
             $('#btnAdd').removeData('participanteId');
             $("#modalParticipante").modal("show");
+        },
+        inputParticipante() {
+            var total = (parseFloat($("#txtEfectivo").val()) || 0) + (parseFloat($("#txtDeposito").val()) || 0) + (parseFloat($("#txtCheque").val()) || 0) + (parseFloat($("#txtTarjeta").val()) || 0);
+            total = (total).toLocaleString('es-mx', {
+                style: 'currency',
+                currency: 'MXN',
+                minimumFractionDigits: 2
+            });
+            $("#txtTotalP").val(total);
         },
         editarCurso(curso) {
 
@@ -262,7 +292,7 @@
             $("#slcInstructor1").val(curso.instructorId1);
             $("#slcComision1").val(curso.comision1);
             $("#slcInstructor2").val(curso.instructorId2);
-            $("#slcComision2").val(curso.comision2 == 0 ? 5 : curso.comision2 );
+            $("#slcComision2").val(curso.comision2 == 0 ? 5 : curso.comision2);
             $("#txtEfectivoA").val(curso.efectivo);
             $("#txtCheque1").val(curso.chequeTans);
             $("#txtFecha1").val(curso.fechachequeTans);
@@ -270,6 +300,8 @@
 
             $("#divGenerales").show();
             $("#divTabla").hide();
+            $("#divAnticipos").show();
+            $("#divGastos").show();
             lstParticipantes = curso.participantes.slice();
             consecutivo = lstParticipantes.length;
             cursosFn.loadTableParticipante(lstParticipantes);
@@ -281,35 +313,36 @@
         },
         addParticipante(e) {
             e.preventDefault();
-            var cons = $("#btnAdd").data("participanteId");
-            if (cons === undefined) {
-                consecutivo += 1;
-                lstParticipantes.push(
-                    {
-                        participanteId: consecutivo,
-                        nombre: $("#txtNombre").val(),
-                        apellido: $("#txtApellido").val(),
-                        efectivo: $("#txtEfectivo").val(),
-                        deposito: $("#txtDeposito").val(),
-                        cheque: $("#txtCheque").val(),
-                        tarjeta: $("#txtTarjeta").val(),
-                        email: $("#txtEmail").val(),
-                        celular: $("#txtCelular").val()
-                    });
-            } else {
-                var participante = lstParticipantes.filter(function (e) { return e.participanteId === cons; });
-                participante[0].nombre = $("#txtNombre").val();
-                participante[0].apellido = $("#txtApellido").val();
-                participante[0].efectivo = $("#txtEfectivo").val();
-                participante[0].deposito = $("#txtDeposito").val();
-                participante[0].cheque = $("#txtCheque").val();
-                participante[0].tarjeta = $("#txtTarjeta").val();
-                participante[0].email = $("#txtEmail").val();
-                participante[0].celular = $("#txtCelular").val();
+            if (cursosFn.validFormasPago()) {
+                var cons = $("#btnAdd").data("participanteId");
+                if (cons === undefined) {
+                    consecutivo += 1;
+                    lstParticipantes.push(
+                        {
+                            participanteId: consecutivo,
+                            nombre: $("#txtNombre").val(),
+                            apellido: $("#txtApellido").val(),
+                            efectivo: $("#txtEfectivo").val(),
+                            deposito: $("#txtDeposito").val(),
+                            cheque: $("#txtCheque").val(),
+                            tarjeta: $("#txtTarjeta").val(),
+                            email: $("#txtEmail").val(),
+                            celular: $("#txtCelular").val()
+                        });
+                } else {
+                    var participante = lstParticipantes.filter(function (e) { return e.participanteId === cons; });
+                    participante[0].nombre = $("#txtNombre").val();
+                    participante[0].apellido = $("#txtApellido").val();
+                    participante[0].efectivo = $("#txtEfectivo").val();
+                    participante[0].deposito = $("#txtDeposito").val();
+                    participante[0].cheque = $("#txtCheque").val();
+                    participante[0].tarjeta = $("#txtTarjeta").val();
+                    participante[0].email = $("#txtEmail").val();
+                    participante[0].celular = $("#txtCelular").val();
+                }
+                cursosFn.loadTableParticipante(lstParticipantes);
+                $("#modalParticipante").modal("hide");
             }
-
-            cursosFn.loadTableParticipante(lstParticipantes);
-            $("#modalParticipante").modal("hide");
         },
         loadTableParticipante(lst) {
             document.getElementById("tblParticipantes").deleteTFoot();
@@ -465,8 +498,7 @@
             var iva = (parseFloat($("#txtIva").val()) || 0);
             $("#txtTotal").val(subtotal + iva);
         },
-        aprobar(cursoId)
-        {
+        aprobar(cursoId) {
             alertify.confirm('Aprobar rendición', '¿Estas seguro que deseas aprobar esta rendición?',
                 function () {
                     fn.BlockScreen(true);
@@ -496,7 +528,18 @@
                     console.log(data);
                     alertify.alert("Rendir", data);
                 });
-        }
+        },
+        validFormasPago() {
+            var sumFormas = parseFloat($("#txtEfectivo").val()) + parseFloat($("#txtDeposito").val()) + parseFloat($("#txtCheque").val()) + parseFloat($("#txtTarjeta").val())
+            if (sumFormas > 0) {
+                $("#validFormas").hide();
+                return true;
+            }
+            else {
+                $("#validFormas").show();
+                return false;
+            }
+        },
     };
 
 

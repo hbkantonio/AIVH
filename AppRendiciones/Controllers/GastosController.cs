@@ -43,7 +43,13 @@ namespace AppRendiciones.Controllers
                     estatusId = b.EstatusId
                 }).ToList();
 
-                return Ok(gastos);
+                var periodos = gastosDb.Select(x => new
+                {
+                    value = x.FechaInicio.ToString("MM/yyyy"),
+                    text = Business.General.General.MonthName(x.FechaInicio.Month) + " " + x.FechaInicio.Year
+                }).Distinct().ToList();
+
+                return Ok(new { gastos, periodos });
             }
             catch (Exception Ex)
             {
@@ -66,7 +72,7 @@ namespace AppRendiciones.Controllers
                     centroCostos = a.CentroCosto.Descripcion,
                     usuarioId = a.UsuarioId,
                     usuario = a.Usuario1.Nombre + " " + a.Usuario1.Paterno + " " + a.Usuario1.Materno,
-                    fechaInicio = a.FechaFin.ToString("dd/MM/yyyy", Cultura),
+                    fechaInicio = a.FechaInicio.ToString("dd/MM/yyyy", Cultura),
                     fechaFin = a.FechaFin.ToString("dd/MM/yyyy", Cultura),
                     efectivo = a.Efectivo,
                     chequeTransNuevo = a.ChequeTans,

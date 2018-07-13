@@ -4,10 +4,9 @@
         init() {
             //Cargar Catolagos
             this.getAllGastos();
-          
+
             //inicializar eventos
 
-           
             $('#txtBusqueda').keyup(function () {
                 tblReporteGastos.search($(this).val()).draw();
             });
@@ -15,6 +14,14 @@
                 var info = tblReporteGastos.page.info();
                 tblReporteGastos.page.len($(this).val()).draw();
             });
+
+            $('#slcPeriodos').change(function () {
+                tblReporteGastos
+                    .column(2)
+                    .search(this.value)
+                    .draw();
+            });
+
             $("#tblReporteGastos").on("click", "a", this.clickReporteGastos);
             $("#btnreturn").click(this.returnRendicion);
         },
@@ -22,8 +29,9 @@
             fn.BlockScreen(true);
             fn.Api("Gastos/Get/2", "GET", "")
                 .done(function (data) {
+                    fn.GetPeriodos(data.periodos);
                     tblReporteGastos = $('#tblReporteGastos').DataTable({
-                        data: data,
+                        data: data.gastos,
                         columns: [
                             { data: 'centroCostos' },
                             { data: 'resposable' },
@@ -103,7 +111,7 @@
                         searching: true,
                         ordering: true,
                         info: false,
-                        stateSave: true,
+                        stateSave: false,
                         destroy: true,
                         responsive: true,
                         language: {
@@ -114,6 +122,7 @@
                             processing: "Procesando..."
                         }
                     });
+                    $('#slcPeriodos').change();
                     fn.BlockScreen(false);
                 })
                 .fail(function (data) {
@@ -134,7 +143,7 @@
             if (this.innerHTML == "Ver") {
                 fn.BlockScreen(true);
                 gastosFn.generatePdf(gasto.gastoId);
-            } else if (this.innerHTML == "Detalle"){
+            } else if (this.innerHTML == "Detalle") {
                 fn.BlockScreen(true);
                 gastosFn.editarReporteGastos(gasto.gastoId);
             } else if (this.innerHTML == "Aprobar") {
@@ -234,8 +243,7 @@
             }) + "</td></tr></tfoot > ";
             $("#tblGastos").append(tfoot);
         },
-        aprobar(gastoId)
-        {
+        aprobar(gastoId) {
             alertify.confirm('Aprobar rendición', '¿Estas seguro que deseas aprobar esta rendición?',
                 function () {
                     fn.BlockScreen(true);

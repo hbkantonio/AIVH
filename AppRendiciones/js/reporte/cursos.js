@@ -34,13 +34,21 @@
                 tblCursos.page.len($(this).val()).draw();
             });
 
+            $('#slcPeriodos').change(function () {
+                tblCursos
+                    .column(6)
+                    .search(this.value)
+                    .draw();
+            });
+
         },
         getCursos() {
             fn.BlockScreen(true);
             fn.Api("Cursos/Get/1", "GET", "")
                 .done(function (data) {
+                    fn.GetPeriodos(data.periodos);
                     tblCursos = $('#tblCursos').DataTable({
-                        data: data,
+                        data: data.cursos,
                         columns: [
                             { data: 'folio' },
                             { data: 'centroCostos' },
@@ -121,7 +129,7 @@
                         searching: true,
                         ordering: true,
                         info: false,
-                        stateSave: true,
+                        stateSave: false,
                         destroy: true,
                         responsive: true,
                         language: {
@@ -132,6 +140,7 @@
                             processing: "Procesando..."
                         }
                     });
+                    $('#slcPeriodos').change();
                     fn.BlockScreen(false);
                 })
                 .fail(function (data) {
@@ -322,7 +331,12 @@
         inputGasto() {
             var subtotal = (parseFloat($("#txtSubtotal").val()) || 0);
             var iva = (parseFloat($("#txtIva").val()) || 0);
-            $("#txtTotal").val(subtotal + iva);
+            var total = (subtotal + iva).toLocaleString('es-mx', {
+                style: 'currency',
+                currency: 'MXN',
+                minimumFractionDigits: 2
+            });
+            $("#txtTotal").val(total);
         },
         addGasto(e) {
             e.preventDefault();
@@ -345,7 +359,7 @@
                         proveedor: $("#txtProveedor").val(),
                         subTotal: $("#txtSubtotal").val(),
                         iva: $('#txtIva').val(),
-                        total: $("#txtTotal").val()
+                        total: parseFloat($("#txtSubtotal").val()) + parseFloat($('#txtIva').val()) 
                     });
             } else {
                 var gasto = lstGastos.filter(function (e) { return e.consecutivoId === cons; });
@@ -362,7 +376,7 @@
                 gasto[0].proveedor = $("#txtProveedor").val();
                 gasto[0].subTotal = $("#txtSubtotal").val();
                 gasto[0].iva = $('#txtIva').val();
-                gasto[0].total = $("#txtTotal").val();
+                gasto[0].total = parseFloat($("#txtSubtotal").val()) + parseFloat($('#txtIva').val());
             }
 
             cursosFn.loadTableGastos(lstGastos);

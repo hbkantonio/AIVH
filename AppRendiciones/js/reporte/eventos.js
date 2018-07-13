@@ -1,5 +1,5 @@
 ﻿$(function () {
-    var tblEventos, tblDonantes, lstDonantes = [], tblGastos, lstGastos = [], consecutivo = 0,consecutivo1 = 0;
+    var tblEventos, tblDonantes, lstDonantes = [], tblGastos, lstGastos = [], consecutivo = 0, consecutivo1 = 0;
     var eventosFn = {
         init() {
             //Cargar Catolagos
@@ -24,6 +24,11 @@
             $("#txtDeposito").focusout(this.focusout);
             $("#txtCheque").focusout(this.focusout);
             $("#txtTarjeta").focusout(this.focusout);
+            $("#txtEfectivoD").on("input", this.inputDonativo);
+            $("#txtDeposito").on("input", this.inputDonativo);
+            $("#txtCheque").on("input", this.inputDonativo);
+            $("#txtTarjeta").on("input", this.inputDonativo);
+
             $("#btnNewD").click(this.clickAgregarD);
             $("#frmDonante").submit(this.addDonante);
             $('#tblDonantes').on('click', 'button', this.deleteDonante);
@@ -44,14 +49,21 @@
                 var info = tblEventos.page.info();
                 tblEventos.page.len($(this).val()).draw();
             });
+            $('#slcPeriodos').change(function () {
+                tblEventos
+                    .column(6)
+                    .search(this.value)
+                    .draw();
+            });
 
         },
         getEventos() {
             fn.BlockScreen(true);
             fn.Api("Eventos/Get/1", "GET", "")
                 .done(function (data) {
+                    fn.GetPeriodos(data.periodos);
                     tblEventos = $('#tblEventos').DataTable({
-                        data: data,
+                        data: data.eventos,
                         columns: [
                             { data: 'folio' },
                             { data: 'centroCostos' },
@@ -137,7 +149,7 @@
                         searching: true,
                         ordering: true,
                         info: false,
-                        stateSave: true,
+                        stateSave: false,
                         destroy: true,
                         responsive: true,
                         language: {
@@ -148,6 +160,7 @@
                             processing: "Procesando..."
                         }
                     });
+                    $('#slcPeriodos').change();
                     fn.BlockScreen(false);
                 })
                 .fail(function (data) {
@@ -208,39 +221,51 @@
         },
         clickAgregarD() {
             $("#frmDonante")[0].reset();
+            $("#validFormas").hide();
             $('#btnAddD').removeData('donanteId');
             $("#modalDonantes").modal("show");
         },
+        inputDonativo() {
+            var total = (parseFloat($("#txtEfectivoD").val()) || 0) + (parseFloat($("#txtDeposito").val()) || 0) + (parseFloat($("#txtCheque").val()) || 0) + (parseFloat($("#txtTarjeta").val()) || 0);
+            total = (total).toLocaleString('es-mx', {
+                style: 'currency',
+                currency: 'MXN',
+                minimumFractionDigits: 2
+            });
+            $("#txtTotalD").val(total);
+        },
         addDonante(e) {
             e.preventDefault();
-            var cons = $("#btnAddD").data("donanteId");
-            if (cons === undefined) {
-                consecutivo += 1;
-                lstDonantes.push(
-                    {
-                        donanteId: consecutivo,
-                        nombre: $("#txtNombre").val(),
-                        apellido: $("#txtApellido").val(),
-                        efectivo: $("#txtEfectivoD").val(), 
-                        deposito: $("#txtDeposito").val(),
-                        cheque: $("#txtCheque").val(),
-                        tarjeta: $("#txtTarjeta").val(),
-                        email: $("#txtEmail").val(),
-                        celular: $("#txtCelular").val()
-                    });
-            } else {
-                var donante = lstDonantes.filter(function (e) { return e.donanteId === cons; });
-                donante[0].nombre = $("#txtNombre").val();
-                donante[0].apellido = $("#txtApellido").val();
-                donante[0].efectivo = $("#txtEfectivoD").val();
-                donante[0].deposito = $("#txtDeposito").val();
-                donante[0].cheque = $("#txtCheque").val();
-                donante[0].tarjeta = $("#txtTarjeta").val();
-                donante[0].email = $("#txtEmail").val();
-                donante[0].celular = $("#txtCelular").val();
+            if (eventosFn.validFormasPago()) {
+                var cons = $("#btnAddD").data("donanteId");
+                if (cons === undefined) {
+                    consecutivo += 1;
+                    lstDonantes.push(
+                        {
+                            donanteId: consecutivo,
+                            nombre: $("#txtNombre").val(),
+                            apellido: $("#txtApellido").val(),
+                            efectivo: $("#txtEfectivoD").val(),
+                            deposito: $("#txtDeposito").val(),
+                            cheque: $("#txtCheque").val(),
+                            tarjeta: $("#txtTarjeta").val(),
+                            email: $("#txtEmail").val(),
+                            celular: $("#txtCelular").val()
+                        });
+                } else {
+                    var donante = lstDonantes.filter(function (e) { return e.donanteId === cons; });
+                    donante[0].nombre = $("#txtNombre").val();
+                    donante[0].apellido = $("#txtApellido").val();
+                    donante[0].efectivo = $("#txtEfectivoD").val();
+                    donante[0].deposito = $("#txtDeposito").val();
+                    donante[0].cheque = $("#txtCheque").val();
+                    donante[0].tarjeta = $("#txtTarjeta").val();
+                    donante[0].email = $("#txtEmail").val();
+                    donante[0].celular = $("#txtCelular").val();
+                }
+                eventosFn.loadTableDonantes(lstDonantes);
+                $("#modalDonantes").modal("hide");
             }
-            eventosFn.loadTableDonantes(lstDonantes);
-            $("#modalDonantes").modal("hide");
         },
         loadTableDonantes(lst) {
             document.getElementById("tblDonantes").deleteTFoot();
@@ -350,7 +375,12 @@
         inputGasto() {
             var subtotal = (parseFloat($("#txtSubtotal").val()) || 0);
             var iva = (parseFloat($("#txtIva").val()) || 0);
-            $("#txtTotal").val(subtotal + iva);
+            var total = (subtotal + iva).toLocaleString('es-mx', {
+                style: 'currency',
+                currency: 'MXN',
+                minimumFractionDigits: 2
+            });
+            $("#txtTotal").val(total);
         },
         addGasto(e) {
             e.preventDefault();
@@ -514,13 +544,14 @@
                 return false;
             }
         },
-        validGastos() {
-            if (lstGastos.length > 0) {
-                $("#validGastos").hide();
+        validFormasPago() {
+            var sumFormas = parseFloat($("#txtEfectivoD").val()) + parseFloat($("#txtDeposito").val()) + parseFloat($("#txtCheque").val()) + parseFloat($("#txtTarjeta").val())
+            if (sumFormas > 0) {
+                $("#validFormas").hide();
                 return true;
             }
             else {
-                $("#validGastos").show();
+                $("#validFormas").show();
                 return false;
             }
         },

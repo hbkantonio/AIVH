@@ -29,7 +29,7 @@ namespace AppRendiciones.Controllers
             {
                 int usuarioId = int.Parse(DbContextAIVH.GetUserName(User));
                 var EventosDb = RolId == 1 ? db.Evento.Where(a=> a.UsuarioId== usuarioId).ToList() : db.Evento.ToList();
-                List<Models.DTO.Evento> cursos = EventosDb.Select(b => new Models.DTO.Evento
+                List<Models.DTO.Evento> eventos = EventosDb.Select(b => new Models.DTO.Evento
                 {
                     folio = b.CentroCosto.Nomenglatura + b.EventoId,
                     eventoId = b.EventoId,
@@ -85,7 +85,13 @@ namespace AppRendiciones.Controllers
                     observaciones = (b.Efectivo + b.ChequeTans) > b.EventoGastoDetalle.Sum(c => c.Total) ? "Devolucion" : (b.Efectivo + b.ChequeTans) == b.EventoGastoDetalle.Sum(c => c.Total) ? "" : "Reembolso"
                 }).ToList();
 
-                return Ok(cursos);
+                var periodos = EventosDb.Select(x => new
+                {
+                    value = x.FechaEvento.ToString("MM/yyyy"),
+                    text = Business.General.General.MonthName(x.FechaEvento.Month) + " " + x.FechaEvento.Year
+                }).Distinct().ToList();
+
+                return Ok(new{ eventos, periodos});
             }
             catch (Exception Ex)
             {

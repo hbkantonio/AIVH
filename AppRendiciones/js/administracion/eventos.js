@@ -25,13 +25,21 @@
                 tblEventos.page.len($(this).val()).draw();
             });
 
+            $('#slcPeriodos').change(function () {
+                tblEventos
+                    .column(6)
+                    .search(this.value)
+                    .draw();
+            });
+
         },
         getEventos() {
             fn.BlockScreen(true);
             fn.Api("Eventos/Get/2", "GET", "")
                 .done(function (data) {
+                    fn.GetPeriodos(data.periodos);
                     tblEventos = $('#tblEventos').DataTable({
-                        data: data,
+                        data: data.eventos,
                         columns: [
                             { data: 'folio' },
                             { data: 'centroCostos' },
@@ -129,7 +137,7 @@
                         searching: true,
                         ordering: true,
                         info: false,
-                        stateSave: true,
+                        stateSave: false,
                         destroy: true,
                         responsive: true,
                         language: {
@@ -140,6 +148,7 @@
                             processing: "Procesando..."
                         },
                     });
+                    $('#slcPeriodos').change();
                     fn.BlockScreen(false);
                 })
                 .fail(function (data) {
@@ -156,6 +165,9 @@
             $("#frmEvento")[0].reset();
             $("#divGenerales").show();
             $("#divTabla").hide();
+            $("#divDonantes").hide();
+            $("#divAnticipos").hide();
+            $("#divGastos").hide();
         },
         returnRendicion() {
             $("#divGenerales").hide();
@@ -237,6 +249,9 @@
 
             $("#divGenerales").show();
             $("#divTabla").hide();
+            $("#divDonantes").show();
+            $("#divAnticipos").show();
+            $("#divGastos").show();
             eventosFn.loadTableDonante(evento.donantes);
             eventosFn.loadTableGastos(evento.gastos);
             fn.BlockScreen(false);
